@@ -49,8 +49,8 @@ The structure, contract, skills and ontology seed are here. Two things are not:
   new-note default, and ADR 001 records what would justify removing it.
 
 irori provides the desktop environment;
-[LayeredKB](https://github.com/DeL-TaiseiOzaki/LayeredKB-vscode-extention) provides the same capabilities as a
-VS Code extension. This repository owns the knowledge structure used within
-them. The three have independent histories and releases.
+[irori for VS Code](https://github.com/DeL-TaiseiOzaki/irori-extention) provides
+the same capabilities as a VS Code extension. This repository owns the knowledge
+structure used within them. The three have independent histories and releases.
 
 To work on the template itself, read [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md).
