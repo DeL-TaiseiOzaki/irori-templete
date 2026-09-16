@@ -140,8 +140,11 @@ KB from the same template unregisterable, and incoming Git changes to that file
 abort a pull by design (`src/git/service.ts:481`). The shipped `.gitignore`
 therefore carries `/contents/` and `/.irori/scope.json`.
 
-`.obsidian/` is not shipped either: it is not in irori's schema list, so it would
-be classified as knowledge and appear in the KB's own search results.
+`.obsidian/` is not shipped either. It holds one person's workspace layout, open
+panes and plugin state, it churns on every session, and a template has no business
+deciding any of it. A KB that is also an Obsidian vault will grow the directory on
+its own; irori classifies a hidden top-level entry as schema and its search skips
+hidden paths, so it stays out of the way once it exists.
 
 ### D11 — Promotion is separate repositories, not submodules
 
