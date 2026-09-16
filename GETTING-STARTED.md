@@ -80,9 +80,13 @@ or `restricted` and you have not said otherwise.
 
 irori runs Codex, Claude Code, OpenCode and Pi. Codex reads `.agents/skills/`
 natively as repository-scope skills, so the five skills are available there
-without setup. The other harnesses cannot discover that directory yet; ask them
-to read `.agents/skills/<name>/SKILL.md` directly, or use Codex for skill-driven
-work. See [ADR 001](docs/decisions/001-kb-structure.md).
+without setup.
+
+A recent irori also offers them itself: with this KB selected, a skill selector
+sits beside the agent selector in the composer, and the chosen skill is sent with
+your request to whichever harness is running. If your build does not show that
+selector, ask the agent to read `.agents/skills/<name>/SKILL.md` directly, or use
+Codex for skill-driven work. See [ADR 001](docs/decisions/001-kb-structure.md).
 
 Every agent reads `AGENTS.md` — that is where the rules are, and it is worth
 reading yourself before the first week rather than after it.

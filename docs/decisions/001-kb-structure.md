@@ -123,12 +123,14 @@ it — Codex is asked for its own repository-scope skills over the app-server RP
 (`src/providers/codex/skills/CodexSkillListingService.ts`) rather than being
 given generated files.
 
-**Blocking dependency.** Claude Code reads only `.claude/skills`. Until irori
-gains an equivalent registry that reads `.agents/skills` and supplies it to the
-selected harness, skills shipped by this template are invisible to the Claude
-Code harness inside irori. The owner chose to implement that in irori first
-rather than commit duplicate copies here. This is proposed work for the irori
-repository, not a change made by this template.
+**Dependency, now implemented in review.** Claude Code reads only
+`.claude/skills`, so without host support the skills here would be invisible to
+three of irori's four harnesses. The owner chose to implement that in irori
+rather than commit duplicate copies here, and irori pull request 27 does it: the
+composer lists `.agents/skills/` packages and prepends the chosen one to the
+request, so the same skill reaches Codex, Claude Code, OpenCode or Pi. Until that
+pull request is merged and released, only Codex — which reads the directory
+natively — sees these skills in an installed build.
 
 ### D10 — What the template must not ship
 
@@ -178,6 +180,5 @@ things should be reviewed once it has been:
 - whether the ontology alone is enough to find things again without a map index
   (D4), or whether a person ends up keeping one somewhere anyway.
 
-D9 remains blocked on the irori skill registry. Until it exists, the Claude Code,
-OpenCode and Pi harnesses inside irori cannot discover `.agents/skills/`; only
-Codex can.
+D9's host support exists in irori pull request 27 but is not merged or released.
+Until it ships, only Codex sees these skills in an installed build.
