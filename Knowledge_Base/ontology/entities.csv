@@ -1,0 +1,3 @@
+id,label,note,parentId,group
+self,Me,Knowledge_Base/entities/person/self.md,,person
+how-this-kb-works,How this knowledge base works,Knowledge_Base/library/how-this-kb-works.md,,topic
