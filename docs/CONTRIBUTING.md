@@ -14,7 +14,7 @@ and do not describe it as this repository's contributor guidance.
 Guidance for working on the template belongs in this file. When this repository is checked out inside the
 `KB_design` development workspace, that workspace's `AGENTS.md` still applies:
 shared development skills and runtime configuration live at its root, and this
-repository's history stays independent from irori and LayeredKB. That path does
+repository's history stays independent from irori and irori-extention. That path does
 not exist in a knowledge base created from this template, which is why it is not
 linked.
 

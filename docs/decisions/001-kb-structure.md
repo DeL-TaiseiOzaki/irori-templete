@@ -12,7 +12,7 @@ enterprise KB is referenced back on members' machines. Deliverables live in each
 project's Google Drive, not in a KB.
 
 A prior investigation produced "structure G" for `claudian-orchestra-template`
-running under the LayeredKB VS Code extension. That checkout no longer exists and
+running under the irori VS Code extension. That checkout no longer exists and
 irori, the desktop application, is now the runtime. The role split G recommended
 survives; the container, the ontology format, the provenance owner and the
 promotion mechanism are re-fitted here against what irori actually implements.
@@ -41,7 +41,7 @@ irori classifies a path as `schema` (`.irori`, `.claude`, `.codex`, `.opencode`,
 path is a declared contents root, and as `Knowledge_Base` otherwise
 (`src/domain/scopes.ts:12-33`). A literal folder is therefore not required, but
 irori's new-note dialog defaults to `Knowledge_Base/Notes`
-(`src/app/main.tsx:270`, `src/host/files.ts:361`) and the LayeredKB design
+(`src/app/main.tsx:270`, `src/host/files.ts:361`) and the extension's design
 documents use the same name. The wrapper is kept so the default lands inside the
 template's structure rather than beside it.
 
