@@ -1,53 +1,53 @@
 # irori-templete
 
 The recommended starting point for a knowledge base used inside
-[irori](https://github.com/DeL-TaiseiOzaki/irori). Use this repository as a template, register the copy in
-irori, and you have a knowledge base with a structure, an operating contract for
-the agents that work in it, and five skills that keep it from drifting.
+[irori](https://github.com/DeL-TaiseiOzaki/irori). Create a repository from it,
+register the copy in irori, run the `init` skill, and you have a knowledge base
+that agents compile and keep consistent, in a format any agent can read.
 
-The same template serves all three levels of the picture: your personal vault, a
-project's shared knowledge base, and an organization's. They have the same shape
-and differ only in a few rules, which [AGENTS.md](AGENTS.md) states.
+## What it is
 
-## What you get
+- **Files and knowledge are kept apart.** `contents/` is where irori mounts
+  your cloud folders: source material, deliverables, incoming items. Nothing
+  there is committed. `Knowledge_Base/` holds what was learned and decided,
+  including one page per deliverable that says what it was made from.
+- **`Knowledge_Base/` is an [Open Knowledge Format](https://github.com/GoogleCloudPlatform/open-knowledge-format)
+  0.2 bundle.** Every page has typed frontmatter with a one-line description,
+  provenance (`sources`) and lifecycle (`status`, `verified`, `stale_after`).
+  Every folder has an `index.md`, so an agent reads indexes first and pages
+  second. Tools that speak OKF read it as is.
+- **Agents do the bookkeeping.** Six skills, `init`, `ingest`, `query`, `lint`,
+  `journal` and `promote`, cover the loop of Karpathy's LLM wiki: material
+  comes in, pages are written with citations, questions are answered from the
+  pages and filed back, and a lint pass keeps indexes, links and claims honest.
+- **One template, three shapes.** A personal vault, a project knowledge base and
+  an organization knowledge base share the contract and the format; `init`
+  creates the folder set for the category you register in irori.
 
 ```text
-AGENTS.md                     the contract every agent in this KB reads
-CLAUDE.md                     points at it
-.agents/skills/               capture · journal · distill · entity · promote
-.irori/ontology.json          tells irori which CSVs are the ontology
+AGENTS.md                the contract every agent reads; init fills its Folders block
+CLAUDE.md                points at it
+.agents/skills/          init · ingest · query · lint · journal · promote
 Knowledge_Base/
-  journal/<year>/             records tied to a date; append-only
-  library/                    one reusable claim per note; flat
-  entities/{person,org,repo}/ identity records
-  Notes/                      where irori's new-note button lands
-  ontology/                   entities.csv · relations.csv — the graph
-  templates/                  daily · meeting · note · decision · entity
-  attachments/
-contents/                     mounted Google Drive; never committed
+  index.md               the root index (okf_version 0.2); init adds the folders
+  journal/<year>/        dated records people write               (personal, team)
+  wiki/                  concept · reference · artifact · synthesis pages
+  decisions/             decision pages                           (team)
+  entities/              person · org · repo · product · project  (team, organization)
+  policies/              policies and standards                   (organization)
+contents/                mounted cloud folders; never committed
 ```
 
-Two ideas hold it together. **A folder answers one question, decided when a note
-is created** — is this tied to a date, is it a reusable claim, is it an identity
-— and the answer never changes, so notes do not migrate as they mature.
-Distilling writes a new note and records where it came from. **The ontology is
-the way back in**: irori draws `ontology/*.csv` as a graph you filter and click
-through to notes, and there is no hand-written index competing with it.
-
-Start with [GETTING-STARTED.md](GETTING-STARTED.md).
+Start with [GETTING-STARTED.md](GETTING-STARTED.md). The reasoning is in
+[ADR 002](docs/decisions/002-okf-bundle.md).
 
 ## Status
 
-The structure, contract, skills and ontology seed are here. Two limits remain:
-
-- The skills reach every harness only from irori 0.1.6 (`v0.1.6-preview.1`),
-  whose composer offers them. With irori 0.1.5 or earlier, only Codex — which
-  reads `.agents/skills/` natively — sees them.
-  [ADR 001](docs/decisions/001-kb-structure.md) records why they are not
-  duplicated per runtime instead.
-- Nothing here has been exercised against a real knowledge base over time.
-  `Knowledge_Base/Notes/` in particular is a compromise with irori's fixed
-  new-note default, and ADR 001 records what would justify removing it.
+The contract, the skills and the root index are here. The skills reach every
+harness from irori 0.1.6 (`v0.1.6-preview.1`); with an earlier build only Codex,
+which reads `.agents/skills/` natively, sees them. Nothing has been exercised
+against a real knowledge base over time; the first months will tell whether the
+three folder sets and the 150-entry index rule hold.
 
 irori provides the desktop environment;
 [irori for VS Code](https://github.com/DeL-TaiseiOzaki/irori-extention) provides
