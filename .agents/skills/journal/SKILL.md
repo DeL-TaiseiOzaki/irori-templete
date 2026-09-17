@@ -1,42 +1,43 @@
 ---
 name: journal
-description: Write or append to a dated record — today's entry, a weekly summary, or a meeting record.
+description: "Write or append a person's dated record, such as today's entry, a meeting record or a weekly summary, in journal/<year>/, in the person's own words and without rewriting what is already there."
 ---
 
 # journal
 
-`Knowledge_Base/journal/<year>/` is append-only. You add to it. You do not go
-back and rewrite what is already there, and you do not delete an entry because
-it turned out to be wrong — you write what you now know, in today's entry.
+`journal/<year>/` holds records written by people. It is append-only: you add,
+you do not rewrite or delete, and what turned out wrong is corrected in a later
+entry. An organization scope has no journal.
 
 ## Which file
 
-| Ask | File |
-| --- | --- |
-| today's log | `journal/<year>/<yyyy-mm-dd>.md`, type `daily` |
-| a week's summary | `journal/<year>/<yyyy>-W<nn>.md`, type `weekly` |
-| a meeting | `journal/<year>/<yyyy-mm-dd>--mtg-<slug>.md`, type `meeting` |
-
-In a **team or organization** scope, only meetings, decisions and weekly
-summaries belong here. Members' personal dailies stay in their own vaults.
+| Ask | File | `type` |
+| --- | --- | --- |
+| today's log | `journal/<year>/<yyyy-mm-dd>.md` | `daily` (personal only) |
+| a meeting | `journal/<year>/<yyyy-mm-dd>--mtg-<slug>.md` | `meeting` |
+| a week's summary | `journal/<year>/<yyyy>-W<nn>.md` | `weekly` |
 
 ## Steps
 
-1. Work out the date. If the person is recording something that happened
-   earlier, use the date it happened, not today.
-2. If the file exists, append under the right heading and leave everything above
-   untouched. If it does not, start from the matching template and generate a
-   fresh ULID.
-3. Keep the entry in the person's own words where they gave you words. A journal
-   entry is evidence, and smoothing it out destroys what it is for.
-4. Record decisions as decisions: what was decided, and what it rules out. A
-   decision that survives the week is usually worth a `library/` note — offer
-   `distill`, do not do it silently.
-5. For a meeting, list who was present using their ontology ids where they have
-   one.
+1. Work out the date: the day it happened, not today, if the person is
+   recording something earlier.
+2. If the file exists, append under the right heading and leave the rest
+   untouched. If not, create it with `type`, `title`, a one-line `description`,
+   `generated: { by: human:<id>, at: <now> }` (the person is the author even
+   when you type) and the headings `## Log`, `## Decided`, `## Open` for a daily
+   or weekly entry, or `## Present`, `## Discussed`, `## Decided`, `## Actions`
+   for a meeting. List attendees with links to their identity pages where they
+   exist.
+3. Keep the person's wording. An entry is evidence; smoothing it destroys what
+   it is for.
+4. Add the file to `journal/<year>/index.md` with its description. If the year
+   folder is new, create it with an `index.md` (`# Entries`) and add the year to
+   `journal/index.md`.
+5. A decision that will outlive the week belongs in a `decision` page as well;
+   offer `ingest`, do not do it silently.
 
 ## Boundaries
 
-Do not promote a journal entry to another scope. Journal entries are the raw
-record of one scope; what travels is a distilled note. Do not add journal entries
-to the ontology — they are reached by date, not by graph.
+Do not promote a journal entry; what travels is a distilled page that cites it.
+Do not edit an entry to record that something was distilled from it: the
+distilled page's `sources` carries that.

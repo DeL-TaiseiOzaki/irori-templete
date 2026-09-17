@@ -1,7 +1,9 @@
 # ADR 001 — Knowledge base structure for the irori main-KB template
 
-Date: 2026-09-16. Status: structure confirmed by the owner and implemented in
-this repository. D9 and part of D10 depend on irori pull request 27, released
+Date: 2026-09-16. Status: superseded in part by
+[ADR 002](002-okf-bundle.md) on 2026-09-17, which replaces D3, D4, D5, D6, D8
+and D9 and keeps D1, D2, D7, D10, D11 and D12. The text below is kept as the
+record of the earlier structure. D9 and part of D10 depend on irori pull request 27, released
 in irori 0.1.6 (`v0.1.6-preview.1`), and are marked. Nothing here has been
 exercised against a real knowledge base.
 
