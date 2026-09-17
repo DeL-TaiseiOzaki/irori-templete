@@ -1,8 +1,9 @@
 # ADR 001 — Knowledge base structure for the irori main-KB template
 
 Date: 2026-09-16. Status: structure confirmed by the owner and implemented in
-this repository. One decision (D9) depends on unimplemented irori work and is
-marked. Nothing here has been exercised against a real knowledge base.
+this repository. D9 and part of D10 depend on irori pull request 27, which is
+not merged, and are marked. Nothing here has been exercised against a real
+knowledge base.
 
 ## Context
 
@@ -16,7 +17,8 @@ running under the irori VS Code extension. That checkout no longer exists and
 irori, the desktop application, is now the runtime. The role split G recommended
 survives; the container, the ontology format, the provenance owner and the
 promotion mechanism are re-fitted here against what irori actually implements.
-Cited line numbers are in the sibling `irori` repository at this date.
+Cited line numbers are in the sibling `irori` repository's `main` branch at this
+date unless a pull request is named.
 
 ## Decisions
 
@@ -35,12 +37,16 @@ structure must not encode it. The three differences are stated as conditions in
 
 ### D2 — The knowledge layer is wrapped in `Knowledge_Base/`
 
-irori classifies a path as `schema` (`.irori`, `.claude`, `.codex`, `.opencode`,
-`.pi`, `.agents`, `.cursor`, `.gemini`, `.hermes`, `schema/`, and root
-`AGENTS.md`/`CLAUDE.md`/`.mcp.json`/`opencode.json[c]`), as `contents` when the
-path is a declared contents root, and as `Knowledge_Base` otherwise
-(`src/domain/scopes.ts:12-33`). A literal folder is therefore not required, but
-irori's new-note dialog defaults to `Knowledge_Base/Notes`
+irori classifies a path as `contents` when it is under a declared contents root,
+as `schema` when it is agent or tool configuration, and as `Knowledge_Base`
+otherwise. On `main` the configuration entries are a fixed list: `.irori`,
+`.claude`, `.codex`, `.opencode`, `.pi`, `.agents`, `.cursor`, `.gemini`,
+`.hermes`, `schema/`, and root `AGENTS.md`, `CLAUDE.md`, `.mcp.json` and
+`opencode.json[c]` (`src/domain/scopes.ts:12-33`). irori pull request 27
+replaces the list with any hidden top-level entry, `schema/`, and root
+`AGENTS.md`, `CLAUDE.md` and `opencode.json[c]` (`src/domain/scopes.ts:12-24`
+there; see D10). A literal folder is therefore not required, but irori's
+new-note dialog defaults to `Knowledge_Base/Notes`
 (`src/app/main.tsx:270`, `src/host/files.ts:361`) and the extension's design
 documents use the same name. The wrapper is kept so the default lands inside the
 template's structure rather than beside it.
@@ -143,8 +149,10 @@ therefore carries `/contents/` and `/.irori/scope.json`.
 `.obsidian/` is not shipped either. It holds one person's workspace layout, open
 panes and plugin state, it churns on every session, and a template has no business
 deciding any of it. A KB that is also an Obsidian vault will grow the directory on
-its own; irori classifies a hidden top-level entry as schema and its search skips
-hidden paths, so it stays out of the way once it exists.
+its own. irori's search already skips hidden paths (`src/host/search.ts:20`).
+With pull request 27, irori also classifies a hidden top-level entry as schema,
+so the directory stays out of the knowledge pane. Until that ships, `.obsidian/`
+is listed in the knowledge pane as if it held notes.
 
 ### D11 — Promotion is separate repositories, not submodules
 
@@ -184,4 +192,5 @@ things should be reviewed once it has been:
   (D4), or whether a person ends up keeping one somewhere anyway.
 
 D9's host support exists in irori pull request 27 but is not merged or released.
-Until it ships, only Codex sees these skills in an installed build.
+Until it ships, only Codex sees these skills in an installed build. The
+hidden-entry classification D10 relies on is in the same pull request.
