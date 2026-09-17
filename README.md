@@ -38,11 +38,11 @@ Start with [GETTING-STARTED.md](GETTING-STARTED.md).
 
 ## Status
 
-The structure, contract, skills and ontology seed are here. Two things are not:
+The structure, contract, skills and ontology seed are here. Two limits remain:
 
-- Host support for `.agents/skills/` is merged into irori (pull request 27) but
-  is not in a released build yet, so in an installed build only Codex — which
-  reads the directory natively — sees these skills.
+- The skills reach every harness only from irori 0.1.6 (`v0.1.6-preview.1`),
+  whose composer offers them. With irori 0.1.5 or earlier, only Codex — which
+  reads `.agents/skills/` natively — sees them.
   [ADR 001](docs/decisions/001-kb-structure.md) records why they are not
   duplicated per runtime instead.
 - Nothing here has been exercised against a real knowledge base over time.
