@@ -26,6 +26,7 @@ Walk every `.md` under `Knowledge_Base/` except `index.md`.
 | contradictions | two pages that state incompatible claims; check by re-reading the cited sources, not by comparing the pages | report both, with the source that supports each |
 | size | a page over 800 lines; a folder index over about 150 entries | propose a split |
 | category rules | organization: a `stable` page without `verified`; team and organization: a concept without `sources` | report as an error |
+| irori declaration | `.irori/notes.json` parses; `newNoteDirectory` exists in the knowledge layer and, when it names a year, names the current one; `daily.template` exists | advance the year folder and create it with an index; otherwise report |
 
 Report by folder, errors first. Then apply the mechanical fixes as one change
 the person can read in the diff.

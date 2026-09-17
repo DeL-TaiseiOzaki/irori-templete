@@ -50,7 +50,36 @@ Then:
    writes there. Take the types from the **Page types** table and the discipline
    from the category table that follows the block. Edit nothing else in
    `AGENTS.md`.
-4. Report what was created. Do not commit; the person reviews the diff.
+4. Write `.irori/notes.json` so irori puts notes where this scope keeps them:
+
+   | Category | `newNoteDirectory` | `daily` |
+   | --- | --- | --- |
+   | personal | `Knowledge_Base/journal/<this year>` | `{ "path": "Knowledge_Base/journal/{{yyyy}}/{{date}}.md", "template": ".irori/templates/daily.md" }` |
+   | team | `Knowledge_Base/journal/<this year>` | none |
+   | organization | `Knowledge_Base/wiki` | none |
+
+   with `"schemaVersion": 1`. For a personal scope also write
+   `.irori/templates/daily.md`; irori fills `{{date}}` and `{{datetime}}` when it
+   creates the day's entry:
+
+   ```markdown
+   ---
+   type: daily
+   title: {{date}}
+   description: Daily record for {{date}}.
+   generated: { by: human:<handle>, at: {{datetime}} }
+   ---
+
+   # {{date}}
+
+   ## Log
+
+   ## Decided
+
+   ## Open
+   ```
+
+5. Report what was created. Do not commit; the person reviews the diff.
 
 ## Boundaries
 

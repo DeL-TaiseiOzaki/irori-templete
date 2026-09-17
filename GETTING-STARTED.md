@@ -26,8 +26,9 @@ Select the knowledge base, pick `init` in the composer's skill selector (irori
 0.1.6 or later; with Codex the skill is available without it), and answer three
 questions: the category, your handle (or the project's or organization's name),
 and the language you write in. The agent creates the folders and their indexes,
-fills the **Folders** block in `AGENTS.md`, writes one identity page, and stops
-for you to review the diff. Commit it.
+fills the **Folders** block in `AGENTS.md`, writes one identity page and
+`.irori/notes.json` (with a daily template for a personal scope), and stops for
+you to review the diff. Commit it.
 
 ## 4. Connect the cloud folder
 
@@ -40,8 +41,10 @@ the same folder resolves it.
 
 ## 5. The first weeks
 
-**Every day (personal).** Ask for `journal`, or write
-`Knowledge_Base/journal/<year>/<date>.md` by hand. Do not tidy it.
+**Every day (personal).** Press **今日のノート** (irori 0.1.8 or later): the
+entry for today opens, created from the template on first use. Write into it
+during the day, or ask for `journal` to append. Do not tidy it. With an older
+irori, create `Knowledge_Base/journal/<year>/<date>.md` by hand.
 
 **When something arrives.** Put it in the cloud folder's `Inbox/` and ask for
 `ingest`. The file stays where it is; the knowledge base gets a `reference`

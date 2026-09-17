@@ -17,6 +17,10 @@ entry. An organization scope has no journal.
 | a meeting | `journal/<year>/<yyyy-mm-dd>--mtg-<slug>.md` | `meeting` |
 | a week's summary | `journal/<year>/<yyyy>-W<nn>.md` | `weekly` |
 
+In irori 0.1.8 and later, **今日のノート** opens or creates today's daily entry
+from `.irori/templates/daily.md`; this skill then appends to it. Create the
+file yourself only when the person is not using that button.
+
 ## Steps
 
 1. Work out the date: the day it happened, not today, if the person is

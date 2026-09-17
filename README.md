@@ -28,6 +28,7 @@ that agents compile and keep consistent, in a format any agent can read.
 AGENTS.md                the contract every agent reads; init fills its Folders block
 CLAUDE.md                points at it
 .agents/skills/          init · ingest · query · lint · journal · promote
+.irori/                  notes.json and templates/daily.md, written by init (irori 0.1.8+)
 Knowledge_Base/
   index.md               the root index (okf_version 0.2); init adds the folders
   journal/<year>/        dated records people write               (personal, team)
