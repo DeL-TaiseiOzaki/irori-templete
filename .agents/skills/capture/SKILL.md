@@ -23,9 +23,10 @@ dump — and wants it represented in the knowledge base.
      in `journal/<year>/` as a record with the date it happened.
    - **something that is neither yet** — `Knowledge_Base/Notes/`, for `distill`
      to file later.
-3. Write the note from the template in `Knowledge_Base/templates/`. Generate a
-   fresh ULID for `id`. Set `created` to today. Set `sensitivity` from what the
-   material actually contains, not from habit.
+3. Write the note from the template in `Knowledge_Base/templates/`. Set `id` to
+   this scope's name from `AGENTS.md`, a slash and a fresh ULID. Set `created`
+   to today. Set `sensitivity` from what the material actually contains, not
+   from habit.
 4. In the note, name the source by its path under `contents/` and by what it is.
    Do not paste a large document in. Quote what the note's claim rests on.
 5. If the material introduces a person, organisation or repository that is not in

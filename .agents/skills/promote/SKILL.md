@@ -24,8 +24,9 @@ Journal entries are not promoted. Distil first, then promote the distilled note.
    people who are not part of it, unreleased plans, quotes from private
    material, credentials of any kind. Report them; do not silently redact.
 4. Copy the note into the receiving scope's `library/` (or `entities/`, for an
-   identity the receiving scope should own). Generate a **new** ULID under the
-   receiving scope's namespace. Set `derived_from` to the source note's `id`.
+   identity the receiving scope should own). Give it a **new** `id`: the
+   receiving scope's name, from that scope's own `AGENTS.md`, a slash and a
+   fresh ULID. Set `derived_from` to the source note's `id`.
    From an organization scope, `derived_from` names the project note, not the
    personal note behind it.
 5. Resolve the links. Every relative link must resolve in the receiving scope or

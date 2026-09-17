@@ -1,5 +1,5 @@
 ---
-id: scope/00000000000000000000000002
+id: UNNAMED/00000000000000000000000002
 title: How this knowledge base works
 type: knowledge
 status: active

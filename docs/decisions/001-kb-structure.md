@@ -115,6 +115,24 @@ covered by those records, so `derived_from` stays in frontmatter.
 holds it, and no `tags`, because nothing in irori can query them. irori does not
 read frontmatter identifiers today; this contract is for people and agents.
 
+`<scope>` is a name declared once in root `AGENTS.md`, under **This scope's
+name**. Decided by the owner on 2026-09-17, for now. Until then the template
+said to choose a slug but gave it nowhere to live, and its seed notes carried a
+literal `scope/` prefix. A real Claude Code turn with the `journal` skill copied
+that prefix into a new note. Promotion refers to another scope's note by `id`, so
+a prefix every knowledge base shares says nothing about where a note came from.
+
+The template ships the name as `UNNAMED`. It is not a valid slug, so a knowledge
+base that was never named is obvious. Agents are told to ask for a name rather
+than write an `id` under it. Alternatives considered:
+
+- **A bare ULID.** It is still unique, but a `derived_from` from a promoted note
+  no longer says which repository holds its source.
+- **The repository name.** It changes when a repository is renamed or forked,
+  while ids must not.
+- **The `scopeId` in `.irori/scope.json`.** It is untracked and differs on every
+  clone and device (D10).
+
 ### D9 — One canonical skill set in `.agents/skills/` — depends on irori
 
 Skills are written once as `.agents/skills/<name>/SKILL.md` and are not

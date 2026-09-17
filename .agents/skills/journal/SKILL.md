@@ -25,8 +25,8 @@ summaries belong here. Members' personal dailies stay in their own vaults.
 1. Work out the date. If the person is recording something that happened
    earlier, use the date it happened, not today.
 2. If the file exists, append under the right heading and leave everything above
-   untouched. If it does not, start from the matching template and generate a
-   fresh ULID.
+   untouched. If it does not, start from the matching template, with an `id` of
+   this scope's name from `AGENTS.md`, a slash and a fresh ULID.
 3. Keep the entry in the person's own words where they gave you words. A journal
    entry is evidence, and smoothing it out destroys what it is for.
 4. Record decisions as decisions: what was decided, and what it rules out. A

@@ -6,9 +6,13 @@ first week looks like.
 ## 1. Make it yours
 
 1. Create your repository from this template and clone it.
-2. Decide the scope's identity. It is a slug you will see in every note's `id`:
-   `p-<handle>` for a personal vault, `pjt-<slug>` for a project, `ent` for an
-   organization. Nothing enforces it; consistency is the point.
+2. Name the scope. In `AGENTS.md`, under **This scope's name**, replace
+   `UNNAMED` with a slug: `p-<handle>` for a personal vault, `pjt-<slug>` for a
+   project, `ent` for an organization. Replace the same prefix in the `id` of
+   `Knowledge_Base/entities/person/self.md` and
+   `Knowledge_Base/library/how-this-kb-works.md`. Every note's `id` starts with
+   this name, so choose it once. Scopes you promote between need different
+   names. Until it is set, agents ask for it instead of writing an `id`.
 3. Open `Knowledge_Base/entities/person/self.md`, replace it with your own
    record, and change the `label` of the `self` row in
    `Knowledge_Base/ontology/entities.csv`.

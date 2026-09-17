@@ -1,5 +1,5 @@
 ---
-id: scope/00000000000000000000000001
+id: UNNAMED/00000000000000000000000001
 title: Me
 type: person
 status: active

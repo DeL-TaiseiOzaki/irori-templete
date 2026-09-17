@@ -21,8 +21,9 @@ directory. It has no home yet. You give it one and the in-tray gets shorter.
 2. For each, write `Knowledge_Base/library/<slug>.md` from `templates/note.md`
    or `templates/decision.md`. One claim per note. If you are writing "and also",
    start another note.
-3. Set `derived_from` to the journal entry's `id`. Generate a fresh ULID for the
-   new note; never reuse the source's.
+3. Set `derived_from` to the journal entry's `id`. Give the new note its own
+   `id` — this scope's name from `AGENTS.md`, a slash and a fresh ULID — and
+   never reuse the source's.
 4. Add the id of each new note to the journal entry's `## Distilled` section.
    That is the only edit you make to the entry.
 5. If an existing `library/` note already makes the claim, strengthen that note

@@ -23,7 +23,8 @@ merged.
 1. Check `Knowledge_Base/ontology/entities.csv` for an existing row. Names
    collide; ids do not. Search for the id, the label, and plausible spellings
    before creating anything.
-2. Write the record from `templates/entity.md`, with a fresh ULID. Keep it to
+2. Write the record from `templates/entity.md`. Its `id` is this scope's name
+   from `AGENTS.md`, a slash and a fresh ULID. Keep it to
    what stays true — naming, responsibility, how to reach them. Judgements go in
    `library/`.
 3. Add the row: `id,label,note,parentId,group`. The `id` is a stable slug, not
