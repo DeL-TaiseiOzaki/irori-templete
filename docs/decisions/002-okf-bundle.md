@@ -138,10 +138,12 @@ trust tiers are advisory and not access control (SPEC §5.3).
 
 ## Consequences
 
-- irori needs no change for the format. Two small changes would help: a
-  declarable new-note directory (today `Knowledge_Base/Notes`), so hand-written
-  notes land in `journal/`; and drawing the graph from the bundle instead of a
-  declared CSV.
+- irori needs no change for the format. irori 0.1.8 adds `.irori/notes.json`,
+  a tracked declaration of the new-note directory and of today's note (path
+  with date tokens plus a template), which `init` writes for the category; that
+  is what makes `journal/` the place hand-written notes land. Drawing the graph
+  from the bundle instead of a declared CSV remains an open decision recorded in
+  irori's STATUS.
 - OKF is a 0.2 draft from one vendor and renamed a field within three months.
   Extension keys are kept to two (`sensitivity`, `relations`) and the version is
   declared in the root index.

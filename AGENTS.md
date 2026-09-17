@@ -15,7 +15,8 @@ that crosses repositories.
 irori registers this directory and writes `.irori/scope.json` with a random
 identifier. That file is device-local and untracked; never commit it and never
 ask a person to. `.irori/cloud-mounts.json`, which irori writes when a cloud
-folder is attached, is portable and stays tracked.
+folder is attached, and `.irori/notes.json`, which `init` writes to tell irori
+where notes go, are portable and stay tracked.
 
 ## Layers
 
@@ -74,6 +75,13 @@ Skills read that block; they do not assume folder names.
 | personal | `journal/<year>/`, `wiki/` | `journal/` (daily, meeting) | not used |
 | team | `journal/<year>/`, `decisions/`, `wiki/`, `entities/` | `journal/` (meeting, weekly) | the project owner, as `human:<id>` |
 | organization | `entities/`, `policies/`, `wiki/` | `policies/` (curators) | a curator, as `human:<id>`; lint rejects a `stable` page without it |
+
+irori reads `.irori/notes.json` for two things: the folder its new-note dialog
+offers (`newNoteDirectory`), and, in a personal scope, where today's note lives
+(`daily.path`, `journal/<year>/<date>.md`) and the template it starts from
+(`.irori/templates/daily.md`). **今日のノート** in irori 0.1.8 and later creates
+the entry from that template with the date filled in; `lint` adds it to the
+year's index. `init` writes both files.
 
 A folder answers "who writes here and under what discipline", not "what
 subject". Within a folder the `type` in frontmatter tells pages apart, and the
