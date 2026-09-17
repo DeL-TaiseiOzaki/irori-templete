@@ -40,10 +40,11 @@ Start with [GETTING-STARTED.md](GETTING-STARTED.md).
 
 The structure, contract, skills and ontology seed are here. Two things are not:
 
-- Host support for `.agents/skills/` exists in irori pull request 27 but is not
-  merged or released, so in an installed build only Codex — which reads the
-  directory natively — sees these skills. [ADR 001](docs/decisions/001-kb-structure.md)
-  records why they are not duplicated per runtime instead.
+- Host support for `.agents/skills/` is merged into irori (pull request 27) but
+  is not in a released build yet, so in an installed build only Codex — which
+  reads the directory natively — sees these skills.
+  [ADR 001](docs/decisions/001-kb-structure.md) records why they are not
+  duplicated per runtime instead.
 - Nothing here has been exercised against a real knowledge base over time.
   `Knowledge_Base/Notes/` in particular is a compromise with irori's fixed
   new-note default, and ADR 001 records what would justify removing it.

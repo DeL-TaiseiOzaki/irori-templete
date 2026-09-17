@@ -2,8 +2,8 @@
 
 Date: 2026-09-16. Status: structure confirmed by the owner and implemented in
 this repository. D9 and part of D10 depend on irori pull request 27, which is
-not merged, and are marked. Nothing here has been exercised against a real
-knowledge base.
+merged into irori's `main` but not in a released build, and are marked. Nothing
+here has been exercised against a real knowledge base.
 
 ## Context
 
@@ -17,8 +17,8 @@ running under the irori VS Code extension. That checkout no longer exists and
 irori, the desktop application, is now the runtime. The role split G recommended
 survives; the container, the ontology format, the provenance owner and the
 promotion mechanism are re-fitted here against what irori actually implements.
-Cited line numbers are in the sibling `irori` repository's `main` branch at this
-date unless a pull request is named.
+Cited line numbers are in the sibling `irori` repository's `main` branch, checked
+on 2026-09-17 after pull request 27 merged, unless a release is named.
 
 ## Decisions
 
@@ -39,15 +39,14 @@ structure must not encode it. The three differences are stated as conditions in
 
 irori classifies a path as `contents` when it is under a declared contents root,
 as `schema` when it is agent or tool configuration, and as `Knowledge_Base`
-otherwise. On `main` the configuration entries are a fixed list: `.irori`,
-`.claude`, `.codex`, `.opencode`, `.pi`, `.agents`, `.cursor`, `.gemini`,
-`.hermes`, `schema/`, and root `AGENTS.md`, `CLAUDE.md`, `.mcp.json` and
-`opencode.json[c]` (`src/domain/scopes.ts:12-33`). irori pull request 27
-replaces the list with any hidden top-level entry, `schema/`, and root
-`AGENTS.md`, `CLAUDE.md` and `opencode.json[c]` (`src/domain/scopes.ts:12-24`
-there; see D10). A literal folder is therefore not required, but irori's
-new-note dialog defaults to `Knowledge_Base/Notes`
-(`src/app/main.tsx:270`, `src/host/files.ts:361`) and the extension's design
+otherwise. Configuration is any hidden top-level entry, `schema/`, and root
+`AGENTS.md`, `CLAUDE.md` and `opencode.json[c]` (`src/domain/scopes.ts:12-24`;
+see D10). Released builds up to `v0.1.5-preview.3` predate pull request 27 and
+use a fixed list instead: `.irori`, `.claude`, `.codex`, `.opencode`, `.pi`,
+`.agents`, `.cursor`, `.gemini`, `.hermes`, `schema/`, and root `AGENTS.md`,
+`CLAUDE.md`, `.mcp.json` and `opencode.json[c]`. A literal folder is therefore
+not required, but irori's new-note dialog defaults to `Knowledge_Base/Notes`
+(`src/app/main.tsx:274`, `src/host/files.ts:361`) and the extension's design
 documents use the same name. The wrapper is kept so the default lands inside the
 template's structure rather than beside it.
 
@@ -129,14 +128,14 @@ it — Codex is asked for its own repository-scope skills over the app-server RP
 (`src/providers/codex/skills/CodexSkillListingService.ts`) rather than being
 given generated files.
 
-**Dependency, now implemented in review.** Claude Code reads only
-`.claude/skills`, so without host support the skills here would be invisible to
-three of irori's four harnesses. The owner chose to implement that in irori
-rather than commit duplicate copies here, and irori pull request 27 does it: the
-composer lists `.agents/skills/` packages and prepends the chosen one to the
-request, so the same skill reaches Codex, Claude Code, OpenCode or Pi. Until that
-pull request is merged and released, only Codex — which reads the directory
-natively — sees these skills in an installed build.
+**Dependency, now merged in irori.** Claude Code reads only `.claude/skills`, so
+without host support the skills here would be invisible to three of irori's four
+harnesses. The owner chose to implement that in irori rather than commit
+duplicate copies here, and irori pull request 27 does it: the composer lists
+`.agents/skills/` packages and prepends the chosen one to the request, so the
+same skill reaches Codex, Claude Code, OpenCode or Pi. It is merged into irori's
+`main` but not in a released build. Until one ships, only Codex — which reads
+the directory natively — sees these skills in an installed build.
 
 ### D10 — What the template must not ship
 
@@ -150,9 +149,10 @@ therefore carries `/contents/` and `/.irori/scope.json`.
 panes and plugin state, it churns on every session, and a template has no business
 deciding any of it. A KB that is also an Obsidian vault will grow the directory on
 its own. irori's search already skips hidden paths (`src/host/search.ts:20`).
-With pull request 27, irori also classifies a hidden top-level entry as schema,
-so the directory stays out of the knowledge pane. Until that ships, `.obsidian/`
-is listed in the knowledge pane as if it held notes.
+Since pull request 27, irori also classifies a hidden top-level entry as schema,
+so the directory stays out of the knowledge pane. Released builds up to
+`v0.1.5-preview.3` predate that and still list `.obsidian/` there as if it held
+notes.
 
 ### D11 — Promotion is separate repositories, not submodules
 
@@ -191,6 +191,6 @@ things should be reviewed once it has been:
 - whether the ontology alone is enough to find things again without a map index
   (D4), or whether a person ends up keeping one somewhere anyway.
 
-D9's host support exists in irori pull request 27 but is not merged or released.
-Until it ships, only Codex sees these skills in an installed build. The
-hidden-entry classification D10 relies on is in the same pull request.
+D9's host support and the hidden-entry classification D10 relies on are merged
+into irori (pull request 27) but are not in a released build. Until one ships,
+only Codex sees these skills in an installed build.
