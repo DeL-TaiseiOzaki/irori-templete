@@ -40,7 +40,13 @@ a toolchain for a Markdown repository is out of scope. For a change here:
 
 - read the diff and check relative links resolve;
 - for a skill: `name` equals the directory name, `description` is at most 400
-  characters, and the file is under 16 KiB (irori's limits);
+  characters, and the file is under 16 KiB (irori's limits); `metadata.roles`
+  and `metadata.projects`, when present, hold at most 20 names each of letters,
+  digits, `-` and `_`, each at most 64 characters;
+- for a retired skill: the directory holds `RETIRED.md` and no `SKILL.md`; its
+  frontmatter has `retired` as `YYYY-MM-DD`, a `reason` of at most 400
+  characters, an optional `replacement` naming an existing skill, and no `name`
+  or `description`;
 - for anything under `Knowledge_Base/` or in the `init` skill: copy the
   template to a disposable directory, perform `init` for each category by hand
   or with an agent, and check that every page other than `index.md` has

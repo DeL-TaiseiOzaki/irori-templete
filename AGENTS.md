@@ -184,6 +184,51 @@ Before editing, list the pages you will touch and why, and get agreement. Do not
 rewrite pages you were not asked to touch. Re-read the cited file or page
 before changing a claim; do not trust an earlier page's summary over its source.
 
+### Who a skill is for
+
+A skill may name the roles and projects it serves under `metadata` in its
+frontmatter. irori 0.1.19 and later let a person pick their own role and project
+per knowledge base, on their device, and then list only the skills naming them
+plus the ones naming none. The other CLIs ignore these keys.
+
+```yaml
+---
+name: promote
+description: Opens a promotion pull request to a higher scope.
+metadata:
+  roles: editor, maintainer   # names separated by commas or spaces
+  projects: thesis
+---
+```
+
+A name is letters (any script), digits, `-` and `_`, at most 64 characters,
+and at most 20 per key. A skill with neither key is for everyone, which is the
+default for every skill shipped here. This is a view, not a permission: do not
+rely on it to keep a skill from anyone.
+
+### Retiring a skill
+
+Do not delete a skill that people have used. Replace its `SKILL.md` with
+`RETIRED.md` in the same directory, keeping the directory and the name, so
+irori (0.1.19 and later) can say why the skill is gone instead of reporting
+that it does not exist:
+
+```markdown
+---
+retired: 2026-09-21
+reason: Folded into journal, which now carries the same steps.
+replacement: journal
+---
+
+A longer explanation may follow for people; irori does not read it.
+```
+
+`retired` is a date (`YYYY-MM-DD`), `reason` is one or two sentences of at most
+400 characters, and `replacement` is an optional skill name. A `RETIRED.md`
+never carries `name` or `description` (Pi would load it as a skill), and a
+directory never keeps both files. Never reuse a retired name for a different
+skill; choose a new one.
+
 ## Promotion
 
 Promotion copies a page into the receiving repository; the source is not moved,
