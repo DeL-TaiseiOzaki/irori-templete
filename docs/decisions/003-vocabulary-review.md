@@ -1,7 +1,7 @@
 # ADR 003 — The vocabulary changes through reviewed proposals
 
-Date: 2026-09-22. Status: proposed. Keeps ADR 002 and adds to its D2, D9 and
-D10.
+Date: 2026-09-22. Status: proposed. Keeps ADR 002 and adds to its D2, D4, D7,
+D9 and D10.
 
 ## Context
 
@@ -71,6 +71,25 @@ replace a folded one mechanically.
 Two scopes' vocabularies can now differ, so the pre-promotion check requires
 the page's `type` and `rel` names to exist in the receiving scope, and
 `promote` either takes the nearest entry there and says so or stops.
+
+### D5 — Each type names its index heading
+
+The decided one-section-per-type rule was not what `init` created: journal
+years had only `# Entries`, team entities lacked `# Projects` for the first
+identity page, and no wiki had `# Syntheses` for answers filed by `query`.
+Personal identities and organization policies also shared headings across
+types. The organization's `# Patterns and lessons`, `# Glossary` and
+`# People and teams` named no type, so they became type headings; patterns,
+lessons and glossary entries are `concept` pages. Separate types remain a
+proposal through `lint --vocabulary`.
+
+The **Page types** table in `AGENTS.md` now names each type's index heading.
+The folder rule uses those headings in table order, adds a heading with the
+first page of its type, and keeps year folders under `# Years`. `init` declares
+directories and types and creates their headings from that table; `journal`
+does the same for new years and files entries under their type's heading.
+`lint` adds a missing type heading while keeping existing headings, order and
+prose. A new type proposed in a vocabulary review must name its heading.
 
 ## Consequences
 

@@ -17,7 +17,7 @@ Walk every `.md` under `Knowledge_Base/` except `index.md`.
 | --- | --- | --- |
 | conformance | parseable frontmatter with a non-empty `type`; `index.md` has no frontmatter except `okf_version` at the root; no `log.md` anywhere | add a missing `type` only when the folder makes it obvious; otherwise report |
 | required keys | `title`, `description`, `generated` present; `sources` present on concept, synthesis, artifact and decision pages | report; `generated` may be filled from Git history with `by: process:lint` |
-| index drift | every page appears once in its folder's `index.md`, under the heading for its type, with its current `description`; every subdirectory is listed; no entry points at a missing page | rewrite the entry lines additively, keeping the person's headings, order and prose |
+| index drift | every page appears once in its folder's `index.md`, under the heading for its type, with its current `description`; every subdirectory is listed; no entry points at a missing page | rewrite the entry lines additively, keeping the person's headings, order and prose; add a type's heading when the index has none for it |
 | links | every relative link resolves inside this repository | report; fix only a link broken by a move you can see in Git history |
 | resources | every `resource` and `sources[].resource` under `contents/` resolves when its mount is present; when the mount is absent, report "not checked" | never create anything under `contents/` |
 | orphans | a page that nothing links to and no index lists | report |

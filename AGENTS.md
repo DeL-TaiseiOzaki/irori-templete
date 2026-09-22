@@ -85,22 +85,24 @@ year's index. `init` writes both files.
 
 A folder answers "who writes here and under what discipline", not "what
 subject". Within a folder the `type` in frontmatter tells pages apart, and the
-folder's `index.md` groups them by type. Do not create subject subfolders. When
-one index grows past about 150 entries, split that folder by year or by topic
-and give each part its own `index.md`.
+folder's `index.md` lists them under the index heading **Page types** gives
+their type, in that table's order; a heading is added with the first page of its
+type, and `journal/` lists its year folders under `# Years`. Do not create
+subject subfolders. When one index grows past about 150 entries, split that
+folder by year or by topic and give each part its own `index.md`.
 
 ## Page types
 
-| `type` | What it is | Where | Bound to a file |
-| --- | --- | --- | --- |
-| `concept` | One reusable claim, pattern or explanation | `wiki/` | no |
-| `synthesis` | An answer to a question, filed back so it is not re-derived | `wiki/` | no |
-| `reference` | What a file someone else wrote says, and where it matters | `wiki/` | `resource` is the file |
-| `artifact` | A deliverable we made: what it is, what it was made from, what was decided | `wiki/` | `resource` is the file |
-| `decision` | What was decided, why, what was rejected | `decisions/` (team); `wiki/` (personal) | no |
-| `policy`, `standard` | A rule the organization holds | `policies/` | no |
-| `person`, `org`, `repo`, `project`, `product` | The record of an identity | `entities/` (team, organization); `wiki/` (personal) | `resource` is the canonical URL, optional |
-| `daily`, `meeting`, `weekly` | A dated record written by a person | `journal/<year>/` | no |
+| `type` | What it is | Where | Bound to a file | Index heading |
+| --- | --- | --- | --- | --- |
+| `concept` | One reusable claim, pattern or explanation | `wiki/` | no | `# Concepts` |
+| `synthesis` | An answer to a question, filed back so it is not re-derived | `wiki/` | no | `# Syntheses` |
+| `reference` | What a file someone else wrote says, and where it matters | `wiki/` | `resource` is the file | `# References` |
+| `artifact` | A deliverable we made: what it is, what it was made from, what was decided | `wiki/` | `resource` is the file | `# Artifacts` |
+| `decision` | What was decided, why, what was rejected | `decisions/` (team); `wiki/` (personal) | no | `# Decisions` |
+| `policy`, `standard` | A rule the organization holds | `policies/` | no | `# Policies`, `# Standards` |
+| `person`, `org`, `repo`, `project`, `product` | The record of an identity | `entities/` (team, organization); `wiki/` (personal) | `resource` is the canonical URL, optional | `# People`, `# Organizations`, `# Repositories`, `# Projects`, `# Products` |
+| `daily`, `meeting`, `weekly` | A dated record written by a person | `journal/<year>/` | no | `# Daily notes`, `# Meetings`, `# Weekly records` |
 
 ### Relations
 
@@ -115,17 +117,17 @@ with these names:
 
 ### Changing the vocabulary
 
-OKF registers no types or relations, so the page types and `rel` names above
-are this knowledge base's own vocabulary. A page takes the entry that fits;
-when none does, it takes the nearest type, or an ordinary link instead of a
-relation, and the agent says so rather than invent a name. The vocabulary
-changes only through lint's vocabulary review (`lint --vocabulary`): one
-proposal at a time, with the pages it would change, agreed by the person before
-anything is written, and in a team or organization scope through a pull request
-its reviewer approves. A change never moves a page: a new type lives in a
-folder that already exists, and retyping a page changes its `type` and its
-index entry, not its path, its prose or its `generated`. A page that belongs in
-another folder needs a move, which is not a vocabulary change.
+OKF registers no types or relations, so the page types and `rel` names above are
+this knowledge base's own vocabulary. A page takes the entry that fits; when
+none does, it takes the nearest type, or an ordinary link instead of a relation,
+and the agent says so rather than invent a name. The vocabulary changes only
+through lint's vocabulary review (`lint --vocabulary`): one proposal at a time,
+with the pages it would change, agreed by the person before anything is written,
+and in a team or organization scope through a pull request its reviewer
+approves. A change never moves a page: a new type lives in a folder that already
+exists and names its index heading, and retyping a page changes its `type` and
+its index entry, not its path, its prose or its `generated`. A page that belongs
+in another folder needs a move, which is not a vocabulary change.
 
 Names not to use are listed here, each with the entry to use instead or with "a
 link" when no relation fits: a name the person turned down, and a name a review
