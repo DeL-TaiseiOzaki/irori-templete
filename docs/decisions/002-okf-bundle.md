@@ -121,6 +121,12 @@ generates both from identity pages and `relations`, so the graph is available
 without a second thing to maintain. This changes the 2026-09-11 premise that
 the ontology CSV is hand-kept, and is recorded here for the owner to confirm.
 
+2026-09-22, decided (irori ADR 008): irori 0.1.24 and later generate
+`Knowledge_Base/ontology/` deterministically from the pages, with no
+declaration, and the person commits it so every device shows the same graph.
+`lint --irori-graph` checks that it is current and no longer writes it. A
+declared `.irori/ontology.json` still wins, for tables people maintain.
+
 ### D9 — Six skills form the loop
 
 `init`, `ingest`, `query`, `lint`, `journal` and `promote`. The `capture`,
@@ -142,8 +148,8 @@ trust tiers are advisory and not access control (SPEC §5.3).
   a tracked declaration of the new-note directory and of today's note (path
   with date tokens plus a template), which `init` writes for the category; that
   is what makes `journal/` the place hand-written notes land. Drawing the graph
-  from the bundle instead of a declared CSV remains an open decision recorded in
-  irori's STATUS.
+  from the bundle was decided on 2026-09-22: irori 0.1.24 generates the graph
+  index from the pages (D8).
 - OKF is a 0.2 draft from one vendor and renamed a field within three months.
   Extension keys are kept to two (`sensitivity`, `relations`) and the version is
   declared in the root index.
@@ -152,5 +158,5 @@ trust tiers are advisory and not access control (SPEC §5.3).
 ## Open
 
 Whether the three folder sets hold up in use; whether 150 entries is the right
-threshold for splitting a folder; whether substring search suffices past about
-a hundred pages; and D8.
+threshold for splitting a folder; and whether substring search suffices past
+about a hundred pages. D8 was settled on 2026-09-22.

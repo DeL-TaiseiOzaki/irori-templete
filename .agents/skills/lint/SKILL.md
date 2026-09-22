@@ -1,6 +1,6 @@
 ---
 name: lint
-description: "Check the bundle and repair what is mechanical: OKF conformance, missing descriptions, index drift, broken links and resources, orphans, stale and duplicate pages, contradictions. Also runs the pre-promotion check and the optional irori graph export."
+description: "Check the bundle and repair what is mechanical: OKF conformance, missing descriptions, index drift, broken links and resources, orphans, stale and duplicate pages, contradictions. Also runs the pre-promotion check and checks the graph index irori generates."
 ---
 
 # lint
@@ -41,36 +41,22 @@ does not hold; do not redact silently.
 
 ## irori graph (`lint --irori-graph`)
 
-irori draws a graph from a declared CSV pair. On request, write two CSV files,
-quoting any field that holds a comma, a double quote or a line break:
+irori 0.1.24 and later generate the graph index, `Knowledge_Base/ontology/`,
+from the pages' `type`, `title` and `relations` when the person presses
+**グラフ索引を更新** in its ontology panel, and the person commits it, so every
+device shows the same graph. Never write or edit those files. On request, check
+that the index is current:
 
-- `Knowledge_Base/ontology/entities.csv`, columns `id,label,note,parentId,group`:
-  one row per page that is an identity page, has `relations` or is where such a
-  relation points, each page once. `id` is the page's path in the bundle without
-  `.md` (`wiki/retry-budget`); `label` its `title`, or its file name when it has
-  none; `note` its path from the repository root; `parentId` empty; `group` its
-  `type`.
-- `Knowledge_Base/ontology/relations.csv`, columns `sourceId,relation,targetId`:
-  one row per `relations` entry whose target, resolved from its page, is a page
-  of the bundle other than an `index.md`. A URL, such as the record a `same_as`
-  names, and a missing page get no row; say how many were left out.
+- every page with a `relations` entry that resolves to a page of the bundle
+  other than an `index.md`, and every page such an entry points at, has one row
+  in `entities.csv` with its `type` and its `title`, or its file name when it
+  has none;
+- every such entry has one row in `relations.csv`, and no row names a page or a
+  relation that is gone.
 
-Write both files with their header lines even when one has no rows, give the
-folder an `index.md` saying its files are generated, list it in the root index,
-and write `.irori/ontology.json`:
-
-```json
-{
-  "schemaVersion": 1,
-  "entities": { "path": "Knowledge_Base/ontology/entities.csv", "id": "id", "label": "label", "note": "note", "parent": "parentId", "group": "group" },
-  "relations": { "path": "Knowledge_Base/ontology/relations.csv", "source": "sourceId", "target": "targetId", "label": "relation" }
-}
-```
-
-irori rejects the whole file when a relation's endpoint is not a row, when two
-rows share an `id` or a `label` is empty, when parents form a cycle, and past
-2,000 rows or 10,000 relations; past those limits, say so instead of writing.
-These files are generated; regenerate them rather than editing them.
+Report the differences and ask the person to update the index in irori. A
+knowledge base with `.irori/ontology.json` keeps the tables it declares; leave
+them to the person.
 
 ## Boundaries
 
