@@ -289,6 +289,7 @@ repo owns its record; a lower scope keeps a thin page whose `relations` carry
 - Write into `contents/` except as the explicit output of a task, or assume a
   mount is present.
 - Copy a file into `Knowledge_Base/`, or paste a large document into a page.
+- Write or edit `Knowledge_Base/ontology/`, which irori generates from the pages.
 - Reuse a path, renumber anything, or bulk-rewrite frontmatter you were not
   asked to touch.
 - Keep a work log, a session diary or a timeline page. Relations and `generated`

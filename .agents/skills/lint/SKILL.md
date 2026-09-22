@@ -1,6 +1,6 @@
 ---
 name: lint
-description: "Check the bundle and repair what is mechanical: OKF conformance, missing descriptions, index drift, broken links and resources, orphans, stale and duplicate pages, contradictions. Also runs the pre-promotion check and the optional irori graph export."
+description: "Check the bundle and repair what is mechanical: OKF conformance, missing descriptions, index drift, broken links and resources, orphans, stale and duplicate pages, contradictions. Also runs the pre-promotion check and checks the graph index irori generates."
 ---
 
 # lint
@@ -76,25 +76,22 @@ leaving the vocabulary as it is is always an acceptable outcome.
 
 ## irori graph (`lint --irori-graph`)
 
-irori draws a graph from a declared CSV pair. On request, generate
-`Knowledge_Base/ontology/entities.csv` with the columns
-`id,label,note,parentId,group` (one row per identity page and per page that has
-`relations`; `id` is the page's slug, `note` the page path from the repository
-root, `group` the `type`) and `Knowledge_Base/ontology/relations.csv` with
-`sourceId,relation,targetId` (one row per `relations` entry), and write
-`.irori/ontology.json`:
+irori 0.1.24 and later generate the graph index, `Knowledge_Base/ontology/`,
+from the pages' `type`, `title` and `relations` when the person presses
+**グラフ索引を更新** in its ontology panel, and the person commits it, so every
+device shows the same graph. Never write or edit those files. On request, check
+that the index is current:
 
-```json
-{
-  "schemaVersion": 1,
-  "entities": { "path": "Knowledge_Base/ontology/entities.csv", "id": "id", "label": "label", "note": "note", "parent": "parentId", "group": "group" },
-  "relations": { "path": "Knowledge_Base/ontology/relations.csv", "source": "sourceId", "target": "targetId", "label": "relation" }
-}
-```
+- every page with a `relations` entry that resolves to a page of the bundle
+  other than an `index.md`, and every page such an entry points at, has one row
+  in `entities.csv` with its `type` and its `title`, or its file name when it
+  has none;
+- every such entry has one row in `relations.csv`, and no row names a page or a
+  relation that is gone.
 
-Both endpoints of every relation must exist as rows, ids must be unique, and
-parents must not form a cycle, or irori rejects the whole file. These files are
-generated; regenerate them rather than editing them.
+Report the differences and ask the person to update the index in irori. A
+knowledge base with `.irori/ontology.json` keeps the tables it declares; leave
+them to the person.
 
 ## Boundaries
 
