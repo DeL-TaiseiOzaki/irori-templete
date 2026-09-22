@@ -102,6 +102,38 @@ and give each part its own `index.md`.
 | `person`, `org`, `repo`, `project`, `product` | The record of an identity | `entities/` (team, organization); `wiki/` (personal) | `resource` is the canonical URL, optional |
 | `daily`, `meeting`, `weekly` | A dated record written by a person | `journal/<year>/` | no |
 
+### Relations
+
+A link in the body is a relationship whose sentence says what kind it is. Use
+`relations` only when the kind matters to a reader or to the graph, and only
+with these names:
+
+| `rel` | Meaning | From → to |
+| --- | --- | --- |
+| `same_as` | The same identity, whose record a higher scope owns | identity page → that record's URL |
+| `uses` | What this page describes depends on or applies what the target describes; what the page was written from belongs in `sources` | any page → a page |
+
+### Changing the vocabulary
+
+OKF registers no types or relations, so the page types and `rel` names above
+are this knowledge base's own vocabulary. A page takes the entry that fits;
+when none does, it takes the nearest type, or an ordinary link instead of a
+relation, and the agent says so rather than invent a name. The vocabulary
+changes only through lint's vocabulary review (`lint --vocabulary`): one
+proposal at a time, with the pages it would change, agreed by the person before
+anything is written, and in a team or organization scope through a pull request
+its reviewer approves. A change never moves a page: a new type lives in a
+folder that already exists, and retyping a page changes its `type` and its
+index entry, not its path, its prose or its `generated`. A page that belongs in
+another folder needs a move, which is not a vocabulary change.
+
+Names not to use are listed here, each with the entry to use instead or with "a
+link" when no relation fits: a name the person turned down, and a name a review
+folded into an existing entry. A listed name is neither proposed nor written
+again.
+
+- none yet
+
 ### Frontmatter
 
 ```yaml
@@ -119,7 +151,7 @@ verified: [{ by: human:owner, at: 2026-09-18T09:00:00Z }]   # who confirmed it; 
 stale_after: 2027-03-31T00:00:00Z    # when a time-bound claim must be re-checked
 tags: [pricing]                      # optional
 sensitivity: internal                # internal | confidential | restricted; input to promotion, not access control
-relations:                           # optional typed edges; `lint --irori-graph` draws them
+relations:                           # optional typed edges named from Relations; irori's graph index draws them
   - { rel: uses, target: ../wiki/retry-budget.md }
 ---
 ```
