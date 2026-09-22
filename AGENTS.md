@@ -151,7 +151,7 @@ verified: [{ by: human:owner, at: 2026-09-18T09:00:00Z }]   # who confirmed it; 
 stale_after: 2027-03-31T00:00:00Z    # when a time-bound claim must be re-checked
 tags: [pricing]                      # optional
 sensitivity: internal                # internal | confidential | restricted; input to promotion, not access control
-relations:                           # optional typed edges named from Relations; `lint --irori-graph` draws them
+relations:                           # optional typed edges named from Relations; irori's graph index draws them
   - { rel: uses, target: ../wiki/retry-budget.md }
 ---
 ```
