@@ -53,9 +53,13 @@ agreement. Then:
   `relations: [{ rel: same_as, target: <URL> }]`.
 
 Every page carries `type`, `title`, `description`, `generated { by: <you>, at }`
-and, where `AGENTS.md` requires it, `sources`. Set `sensitivity` from what the
-material contains, not from habit. Add each new page to its folder's `index.md`
-with its `description`, under the heading for its type.
+and, where `AGENTS.md` requires it, `sources`. Take `type` and every `rel` from
+the vocabulary in `AGENTS.md`. When nothing fits, use the nearest type, or an
+ordinary link whose sentence says what the relationship is, and say so in your
+summary; never invent a name, since the vocabulary changes only through
+`lint --vocabulary`. Set `sensitivity` from what the material contains, not
+from habit. Add each new page to its folder's `index.md` with its
+`description`, under the heading for its type.
 
 ## Boundaries
 

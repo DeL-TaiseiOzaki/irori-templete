@@ -21,12 +21,14 @@ entries are not promoted; distil first, then promote the distilled page.
    not part of it, unreleased plans, quotes from private material, credentials
    of any kind. Report them; do not redact silently.
 4. Copy the page into the receiving scope's folder for its type (the receiving
-   `AGENTS.md` **Folders** block says which). Set `sources[0]` to the source
-   page's GitHub URL with its title; keep the other sources, rewriting any
-   `contents/` path the receiving scope cannot see into a URL or prose. Set
-   `generated` to yourself, now, and `status: draft`; remove `verified`. From an
-   organization scope, `sources` name the project page, not the personal page
-   behind it.
+   `AGENTS.md` **Folders** block says which). When the receiving vocabulary
+   lacks its `type` or a `rel` it uses, take the nearest entry there and say so
+   in the pull request, or stop and suggest `lint --vocabulary` in that
+   repository. Set `sources[0]` to the source page's GitHub URL with its title;
+   keep the other sources, rewriting any `contents/` path the receiving scope
+   cannot see into a URL or prose. Set `generated` to yourself, now, and
+   `status: draft`; remove `verified`. From an organization scope, `sources`
+   name the project page, not the personal page behind it.
 5. Resolve every relative link in the receiving scope or rewrite it. Every
    identity the page refers to must exist there or be added in the same change.
    Add the page to the folder's `index.md`.
