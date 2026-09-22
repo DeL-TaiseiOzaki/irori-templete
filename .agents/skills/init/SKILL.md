@@ -21,15 +21,16 @@ initialised.
 
 ## Create
 
-Directories, each with an `index.md` that has the headings below and no entries
-yet. An `index.md` has no frontmatter; the root one already carries
-`okf_version` and keeps it.
+Create the directories below. Each directory's `index.md` gets, for every type
+it holds, the heading **Page types** in `AGENTS.md` gives it, in that table's
+order, with no entries yet; `journal/` gets `# Years`. An `index.md` has no
+frontmatter; the root one already carries `okf_version` and keeps it.
 
-| Category | Directories and index headings |
+| Category | Directories and types |
 | --- | --- |
-| personal | `journal/` (`# Years`), `journal/<this year>/` (`# Entries`), `wiki/` (`# Concepts`, `# References`, `# Artifacts`, `# Decisions`, `# People and organizations`) |
-| team | `journal/` (`# Years`), `journal/<this year>/` (`# Entries`), `decisions/` (`# Decisions`), `wiki/` (`# Concepts`, `# References`, `# Artifacts`), `entities/` (`# People`, `# Organizations`, `# Repositories`, `# Products`) |
-| organization | `entities/` (`# People and teams`, `# Organizations`, `# Repositories`, `# Products`, `# Projects`), `policies/` (`# Policies and standards`), `wiki/` (`# Patterns and lessons`, `# Glossary`) |
+| personal | `journal/` (year folders), `journal/<this year>/` (`daily`, `meeting`), `wiki/` (`concept`, `synthesis`, `reference`, `artifact`, `decision`, `person`, `org`, `repo`, `project`, `product`) |
+| team | `journal/` (year folders), `journal/<this year>/` (`meeting`, `weekly`), `decisions/` (`decision`), `wiki/` (`concept`, `synthesis`, `reference`, `artifact`), `entities/` (`person`, `org`, `repo`, `project`, `product`) |
+| organization | `entities/` (`person`, `org`, `repo`, `project`, `product`), `policies/` (`policy`, `standard`), `wiki/` (`concept`, `synthesis`, `reference`, `artifact`) |
 
 Then:
 

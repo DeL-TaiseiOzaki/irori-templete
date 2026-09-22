@@ -34,9 +34,11 @@ file yourself only when the person is not using that button.
    exist.
 3. Keep the person's wording. An entry is evidence; smoothing it destroys what
    it is for.
-4. Add the file to `journal/<year>/index.md` with its description. If the year
-   folder is new, create it with an `index.md` (`# Entries`) and add the year to
-   `journal/index.md`.
+4. Add the file to `journal/<year>/index.md` with its description, under the
+   heading for its type. If the year folder is new, create its `index.md` with
+   the headings **Page types** gives the journal types this scope writes (from
+   the **Folders** block), in that table's order, and add the year under
+   `# Years` in `journal/index.md`.
 5. A decision that will outlive the week belongs in a `decision` page as well;
    offer `ingest`, do not do it silently.
 
