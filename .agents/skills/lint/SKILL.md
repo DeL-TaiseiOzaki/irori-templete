@@ -41,13 +41,23 @@ does not hold; do not redact silently.
 
 ## irori graph (`lint --irori-graph`)
 
-irori draws a graph from a declared CSV pair. On request, generate
-`Knowledge_Base/ontology/entities.csv` with the columns
-`id,label,note,parentId,group` (one row per identity page and per page that has
-`relations`; `id` is the page's slug, `note` the page path from the repository
-root, `group` the `type`) and `Knowledge_Base/ontology/relations.csv` with
-`sourceId,relation,targetId` (one row per `relations` entry), and write
-`.irori/ontology.json`:
+irori draws a graph from a declared CSV pair. On request, write two CSV files,
+quoting any field that holds a comma, a double quote or a line break:
+
+- `Knowledge_Base/ontology/entities.csv`, columns `id,label,note,parentId,group`:
+  one row per page that is an identity page, has `relations` or is where such a
+  relation points, each page once. `id` is the page's path in the bundle without
+  `.md` (`wiki/retry-budget`); `label` its `title`, or its file name when it has
+  none; `note` its path from the repository root; `parentId` empty; `group` its
+  `type`.
+- `Knowledge_Base/ontology/relations.csv`, columns `sourceId,relation,targetId`:
+  one row per `relations` entry whose target, resolved from its page, is a page
+  of the bundle other than an `index.md`. A URL, such as the record a `same_as`
+  names, and a missing page get no row; say how many were left out.
+
+Write both files with their header lines even when one has no rows, give the
+folder an `index.md` saying its files are generated, list it in the root index,
+and write `.irori/ontology.json`:
 
 ```json
 {
@@ -57,9 +67,10 @@ root, `group` the `type`) and `Knowledge_Base/ontology/relations.csv` with
 }
 ```
 
-Both endpoints of every relation must exist as rows, ids must be unique, and
-parents must not form a cycle, or irori rejects the whole file. These files are
-generated; regenerate them rather than editing them.
+irori rejects the whole file when a relation's endpoint is not a row, when two
+rows share an `id` or a `label` is empty, when parents form a cycle, and past
+2,000 rows or 10,000 relations; past those limits, say so instead of writing.
+These files are generated; regenerate them rather than editing them.
 
 ## Boundaries
 
