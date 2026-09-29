@@ -1,6 +1,6 @@
 ---
 name: lint
-description: "Check the bundle and repair what is mechanical: OKF conformance, missing descriptions, index drift, broken links and resources, orphans, stale and duplicate pages, contradictions. Also runs the pre-promotion check and checks the graph index irori generates."
+description: "Check the bundle and repair what is mechanical: OKF conformance, missing descriptions, index drift, broken links and resources, orphans, stale and duplicate pages, contradictions, and the pages skills name. Also runs the pre-promotion check and checks the graph index irori generates."
 ---
 
 # lint
@@ -11,11 +11,12 @@ not made.
 
 ## Checks
 
-Walk every `.md` under `Knowledge_Base/` except `index.md`.
+Walk every `.md` under `Knowledge_Base/` except `index.md`, and for the skills
+check every `.agents/skills/*/SKILL.md`.
 
 | Check | Rule | Fix |
 | --- | --- | --- |
-| conformance | parseable frontmatter with a non-empty `type`; `index.md` has no frontmatter except `okf_version` at the root; no `log.md` anywhere | add a missing `type` only when the folder makes it obvious; otherwise report |
+| conformance | parseable frontmatter with a non-empty `type`; `index.md` has no frontmatter except `okf_version` at the root; no `log.md` anywhere; no `AGENTS.md` under `Knowledge_Base/` | add a missing `type` only when the folder makes it obvious; otherwise report, and for an `AGENTS.md` propose moving its rules into the root `AGENTS.md` |
 | required keys | `title`, `description`, `generated` present; `sources` present on concept, synthesis, artifact and decision pages | report; `generated` may be filled from Git history with `by: process:lint` |
 | index drift | every page appears once in its folder's `index.md`, under the heading for its type, with its current `description`; every subdirectory is listed; no entry points at a missing page | rewrite the entry lines additively, keeping the person's headings, order and prose; add a type's heading when the index has none for it |
 | links | every relative link resolves inside this repository | report; fix only a link broken by a move you can see in Git history |
@@ -23,6 +24,7 @@ Walk every `.md` under `Knowledge_Base/` except `index.md`.
 | orphans | a page that nothing links to and no index lists | report |
 | lifecycle | `stale_after` in the past; a `deprecated` page still linked as current | report |
 | vocabulary | every `type` and every `rel` is in `AGENTS.md` and none is a listed name not to use; a relation points the way its table line says; no page lists the same relation twice | replace a listed name with the entry listed for it and drop an exact duplicate; report the rest, including a name listed with "a link", whose fix is prose |
+| skills | every `Knowledge_Base/` path a skill names resolves to a page that is not `deprecated`; a skill does not state a criterion, fact or reason that a page states or should state (AGENTS.md, Skills and knowledge) | repoint a path to the page its `deprecated` stub links to; report the rest; propose moving a stated claim to a page, never move it yourself |
 | identity | two identity pages that name the same person, org, repo, product or project | propose a merge with a `deprecated` stub |
 | contradictions | two pages that state incompatible claims; check by re-reading the cited sources, not by comparing the pages | report both, with the source that supports each |
 | size | a page over 800 lines; a folder index over about 150 entries | propose a split |

@@ -7,10 +7,12 @@ that agents compile and keep consistent, in a format any agent can read.
 
 ## What it is
 
-- **Files and knowledge are kept apart.** `contents/` is where irori mounts
+- **Knowledge is the center.** `Knowledge_Base/` holds what anyone working
+  here must understand: what was learned and decided, including one page per
+  deliverable that says what it was made from. Skills turn that knowledge into
+  procedures and name the pages they apply. `contents/` is where irori mounts
   your cloud folders: source material, deliverables, incoming items. Nothing
-  there is committed. `Knowledge_Base/` holds what was learned and decided,
-  including one page per deliverable that says what it was made from.
+  there is committed.
 - **`Knowledge_Base/` is an [Open Knowledge Format](https://github.com/GoogleCloudPlatform/open-knowledge-format)
   0.2 bundle.** Every page has typed frontmatter with a one-line description,
   provenance (`sources`) and lifecycle (`status`, `verified`, `stale_after`).
@@ -40,7 +42,8 @@ contents/                mounted cloud folders; never committed
 ```
 
 Start with [GETTING-STARTED.md](GETTING-STARTED.md). The reasoning is in
-[ADR 002](docs/decisions/002-okf-bundle.md).
+[ADR 002](docs/decisions/002-okf-bundle.md), and how
+knowledge, skills and files relate in [ADR 004](docs/decisions/004-knowledge-centered-layers.md).
 
 ## Status
 
