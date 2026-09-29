@@ -17,8 +17,8 @@ first weeks look like.
    `.gitignore` and must stay there: a shared identifier makes a second copy of
    this template unregisterable, and an incoming change to that file stops a
    pull.
-3. The left navigation should show `AGENTS.md` and `.agents/` under the schema
-   pane and `Knowledge_Base/` under the knowledge pane.
+3. The left navigation should show `AGENTS.md`, `.agents/` and `.property/`
+   under the schema pane and `Knowledge_Base/` under the knowledge pane.
 
 ## 3. Run `init`
 

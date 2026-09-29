@@ -14,7 +14,8 @@ that agents compile and keep consistent, in a format any agent can read.
   your cloud folders: source material, deliverables, incoming items. Nothing
   there is committed.
 - **`Knowledge_Base/` is an [Open Knowledge Format](https://github.com/GoogleCloudPlatform/open-knowledge-format)
-  0.2 bundle.** Every page has typed frontmatter with a one-line description,
+  0.2 bundle.** Folders are free. Every page has typed frontmatter, its
+  properties as `.property/property.json` declares them: a one-line description,
   provenance (`sources`) and lifecycle (`status`, `verified`, `stale_after`).
   Every folder has an `index.md`, so an agent reads indexes first and pages
   second. Tools that speak OKF read it as is.
@@ -30,6 +31,7 @@ that agents compile and keep consistent, in a format any agent can read.
 AGENTS.md                the contract every agent reads; init fills its Folders block
 CLAUDE.md                points at it
 .agents/skills/          init · ingest · query · lint · journal · promote
+.property/property.json  the page properties, types and relations agents and irori read
 .irori/                  notes.json and templates/daily.md, written by init (irori 0.1.8+)
 Knowledge_Base/
   index.md               the root index (okf_version 0.2); init adds the folders
@@ -43,7 +45,8 @@ contents/                mounted cloud folders; never committed
 
 Start with [GETTING-STARTED.md](GETTING-STARTED.md). The reasoning is in
 [ADR 002](docs/decisions/002-okf-bundle.md), and how
-knowledge, skills and files relate in [ADR 004](docs/decisions/004-knowledge-centered-layers.md).
+knowledge, skills and files relate in [ADR 004](docs/decisions/004-knowledge-centered-layers.md);
+free folders and declared properties are in [ADR 005](docs/decisions/005-property-declaration.md).
 
 ## Status
 

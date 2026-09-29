@@ -27,8 +27,8 @@ file yourself only when the person is not using that button.
    recording something earlier.
 2. If the file exists, append under the right heading and leave the rest
    untouched. If not, create it with `type`, `title`, a one-line `description`,
-   `generated: { by: human:<id>, at: <now> }` (the person is the author even
-   when you type) and the headings `## Log`, `## Decided`, `## Open` for a daily
+   `generated: { by: human:<id>, at: <now> }` (an entry in the person's own
+   words names the person even when you type it; see `AGENTS.md`) and the headings `## Log`, `## Decided`, `## Open` for a daily
    or weekly entry, or `## Present`, `## Discussed`, `## Decided`, `## Actions`
    for a meeting. List attendees with links to their identity pages where they
    exist.
@@ -36,8 +36,8 @@ file yourself only when the person is not using that button.
    it is for.
 4. Add the file to `journal/<year>/index.md` with its description, under the
    heading for its type. If the year folder is new, create its `index.md` with
-   the headings **Page types** gives the journal types this scope writes (from
-   the **Folders** block), in that table's order, and add the year under
+   the `heading` that `.property/property.json` gives each journal type this
+   scope writes (from the **Folders** block), in the order of its `types`, and add the year under
    `# Years` in `journal/index.md`.
 5. A decision that will outlive the week belongs in a `decision` page as well;
    offer `ingest`, do not do it silently.

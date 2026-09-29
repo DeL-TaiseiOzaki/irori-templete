@@ -43,6 +43,11 @@ a toolchain for a Markdown repository is out of scope. For a change here:
   characters, and the file is under 16 KiB (irori's limits); `metadata.roles`
   and `metadata.projects`, when present, hold at most 20 names each of letters,
   digits, `-` and `_`, each at most 64 characters;
+- for `.property/property.json`: it parses as JSON with `schemaVersion` 1;
+  every key in `required` and in a type's `required` is a declared property;
+  every `default` is one of its `options`; every type's `heading` is unique and
+  matches what `init` and the Folders table expect; a relation's `from` names
+  declared types or `any`, and its `to` is `page` or `url`;
 - for a retired skill: the directory holds `RETIRED.md` and no `SKILL.md`; its
   frontmatter has `retired` as `YYYY-MM-DD`, a `reason` of at most 400
   characters, an optional `replacement` naming an existing skill, and no `name`

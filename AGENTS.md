@@ -22,7 +22,7 @@ where notes go, are portable and stay tracked.
 
 | Layer | What is there | Tracked |
 | --- | --- | --- |
-| schema | `AGENTS.md`, `CLAUDE.md`, `.agents/`, `.irori/` | yes, except `scope.json` |
+| schema | `AGENTS.md`, `CLAUDE.md`, `.agents/`, `.property/`, `.irori/` | yes, except `scope.json` |
 | Knowledge_Base | `Knowledge_Base/**` — knowledge: what was learned, what was decided, and pages about files | yes |
 | contents | `contents/<mount>/**` — files: source material, deliverables, incoming items | no |
 
@@ -66,7 +66,8 @@ rules that matter here:
 - Every directory has an `index.md` that lists what is in it, one line per entry
   with the entry's `description`. Agents read the root `index.md` first, then the
   index of the directory they need, and only then open pages. Producers keep
-  indexes current; nothing else is a map of this knowledge base.
+  indexes current, and `lint` writes one for a folder a person added without
+  it; nothing else is a map of this knowledge base.
 - Links are ordinary relative Markdown links. Refer to a page in another scope
   by its GitHub URL, never by a local path.
 - There is no `log.md` and no work diary. When something was made is
@@ -80,8 +81,11 @@ Category: not set. Run the `init` skill before writing pages.
 
 <!-- /init:folders -->
 
-The folder set depends on the category and is declared in the block above.
-Skills read that block; they do not assume folder names.
+Folders are free. The set below is this template's design for each category,
+and `init` creates it; a person may add folders, subject folders included, and
+rename or drop the ones they do not use. What a page is comes from its `type`,
+not from its folder. The block above declares the folders this knowledge base
+uses; skills read it and do not assume folder names.
 
 | Category | Folders | Who writes by hand | `verified` |
 | --- | --- | --- | --- |
@@ -96,80 +100,77 @@ offers (`newNoteDirectory`), and, in a personal scope, where today's note lives
 the entry from that template with the date filled in; `lint` adds it to the
 year's index. `init` writes both files.
 
-A folder answers "who writes here and under what discipline", not "what
-subject". Within a folder the `type` in frontmatter tells pages apart, and the
-folder's `index.md` lists them under the index heading **Page types** gives
-their type, in that table's order; a heading is added with the first page of its
-type, and `journal/` lists its year folders under `# Years`. Do not create
-subject subfolders. When one index grows past about 150 entries, split that
-folder by year or by topic and give each part its own `index.md`.
+In the template's design a folder answers "who writes here and under what
+discipline", not "what subject". Within a folder the `type` in frontmatter tells
+pages apart, and the folder's `index.md` lists them under their type's
+`heading` in `.property/property.json`, in the order of its `types`; a heading
+is added with the first page of its type, and `journal/` lists its year folders
+under `# Years`. When one index grows past about 150 entries, split that folder
+by year or by topic and give each part its own `index.md`.
 
-## Page types
+## Properties
 
-| `type` | What it is | Where | Bound to a file | Index heading |
-| --- | --- | --- | --- | --- |
-| `concept` | One reusable claim, pattern or explanation | `wiki/` | no | `# Concepts` |
-| `synthesis` | An answer to a question, filed back so it is not re-derived | `wiki/` | no | `# Syntheses` |
-| `reference` | What a file someone else wrote says, and where it matters | `wiki/` | `resource` is the file | `# References` |
-| `artifact` | A deliverable we made: what it is, what it was made from, what was decided | `wiki/` | `resource` is the file | `# Artifacts` |
-| `decision` | What was decided, why, what was rejected | `decisions/` (team); `wiki/` (personal) | no | `# Decisions` |
-| `policy`, `standard` | A rule the organization holds | `policies/` | no | `# Policies`, `# Standards` |
-| `person`, `org`, `repo`, `project`, `product` | The record of an identity | `entities/` (team, organization); `wiki/` (personal) | `resource` is the canonical URL, optional | `# People`, `# Organizations`, `# Repositories`, `# Projects`, `# Products` |
-| `daily`, `meeting`, `weekly` | A dated record written by a person | `journal/<year>/` | no | `# Daily notes`, `# Meetings`, `# Weekly records` |
+A page's frontmatter is its properties. Which properties exist, the page types
+and the `rel` names are declared in `.property/property.json`; read it before
+writing a page. irori is to read the same file to show a page's properties
+above its body; until an irori release says it does, edit frontmatter as YAML.
 
-### Relations
+- `properties` names each key and its kind; `required` lists the keys every
+  page carries.
+- `types` gives each `type` its meaning, its index `heading` and the keys it
+  requires besides those. Where a type usually lives is the **Folders** block.
+- `relations` gives each `rel` its meaning, the types it goes from (`any` for
+  every page) and what it points at: `page` or `url`.
+- `avoid` lists names not to use as `{ "name": ..., "use": ... }`, where `use`
+  is the entry to use instead, or "a link" when no relation fits: a name the person turned down, and a name a
+  review folded into an existing entry. A listed name is neither proposed nor
+  written again.
 
 A link in the body is a relationship whose sentence says what kind it is. Use
 `relations` only when the kind matters to a reader or to the graph, and only
-with these names:
-
-| `rel` | Meaning | From → to |
-| --- | --- | --- |
-| `same_as` | The same identity, whose record a higher scope owns | identity page → that record's URL |
-| `uses` | What this page describes depends on or applies what the target describes; what the page was written from belongs in `sources` | any page → a page |
+with a declared name. `uses` is a dependency between what two pages describe;
+what a page was written from belongs in `sources`.
 
 ### Changing the vocabulary
 
-OKF registers no types or relations, so the page types and `rel` names above are
-this knowledge base's own vocabulary. A page takes the entry that fits; when
+OKF registers no types or relations, so the declared page types and `rel` names
+are this knowledge base's own vocabulary. A page takes the entry that fits; when
 none does, it takes the nearest type, or an ordinary link instead of a relation,
 and the agent says so rather than invent a name. The vocabulary changes only
 through lint's vocabulary review (`lint --vocabulary`): one proposal at a time,
 with the pages it would change, agreed by the person before anything is written,
 and in a team or organization scope through a pull request its reviewer
-approves. A change never moves a page: a new type lives in a folder that already
-exists and names its index heading, and retyping a page changes its `type` and
-its index entry, not its path, its prose or its `generated`. A page that belongs
-in another folder needs a move, which is not a vocabulary change.
-
-Names not to use are listed here, each with the entry to use instead or with "a
-link" when no relation fits: a name the person turned down, and a name a review
-folded into an existing entry. A listed name is neither proposed nor written
-again.
-
-- none yet
+approves. A change never moves a page: a new type names its index heading, and
+retyping a page changes its `type`, its index entry and its `generated`, not its
+path or its prose. A page that belongs in another folder needs a move, which is
+not a vocabulary change.
 
 ### Frontmatter
 
 ```yaml
 ---
-type: artifact                       # required; one of the types above
+type: artifact                       # required; a type in .property/property.json
 title: Proposal for customer A, v2   # required
 description: One sentence an agent reads to decide whether to open this page.  # required; becomes the index line
-generated: { by: human:taisei, at: 2026-09-17T10:00:00Z }   # required; who produced the current content, and when
+generated: { by: human:taisei, at: 2026-09-17T10:00:00Z }   # required; who last changed the page, and when
 status: stable                       # draft | stable | deprecated; absent means stable
 resource: contents/drive/output/proposal-v2.pptx             # pages bound to a file
-sources:                             # what this page was made from; required on concept, synthesis, artifact, decision
+sources:                             # what this page was made from; required by the types that say so
   - { id: rfp, resource: contents/drive/source/customer-a-rfp.pdf, title: Customer A RFP, last_modified: 2026-09-01T00:00:00Z }
   - { id: pricing, resource: ../decisions/annual-fixed-pricing.md, title: Annual fixed pricing }
 verified: [{ by: human:owner, at: 2026-09-18T09:00:00Z }]   # who confirmed it; see Promotion
 stale_after: 2027-03-31T00:00:00Z    # when a time-bound claim must be re-checked
 tags: [pricing]                      # optional
 sensitivity: internal                # internal | confidential | restricted; input to promotion, not access control
-relations:                           # optional typed edges named from Relations; irori's graph index draws them
+relations:                           # optional typed edges with declared names; irori's graph index draws them
   - { rel: uses, target: ../wiki/retry-budget.md }
 ---
 ```
+
+`generated` names whoever last changed the page, its body or its properties,
+and when. Whoever changes a page sets it: an agent names itself, and irori names
+the person when they save. The one exception is a journal entry an agent types
+for a person in their own words, which names the person.
 
 Actors follow OKF: a person is `human:<id>`, where `<id>` is the local part of
 the Git author email of this checkout (`git config user.email`); an agent is
@@ -326,6 +327,8 @@ repo owns its record; a lower scope keeps a thin page whose `relations` carry
   mount is present.
 - Copy a file into `Knowledge_Base/`, or paste a large document into a page.
 - Write or edit `Knowledge_Base/ontology/`, which irori generates from the pages.
+- Edit `.property/property.json` except as an agreed change of a vocabulary
+  review.
 - Reuse a path, renumber anything, or bulk-rewrite frontmatter you were not
   asked to touch.
 - Keep a work log, a session diary or a timeline page. Relations and `generated`

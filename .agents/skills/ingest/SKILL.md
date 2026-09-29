@@ -52,9 +52,9 @@ agreement. Then:
   not. If a higher scope owns the identity, keep the page thin and add
   `relations: [{ rel: same_as, target: <URL> }]`.
 
-Every page carries `type`, `title`, `description`, `generated { by: <you>, at }`
-and, where `AGENTS.md` requires it, `sources`. Take `type` and every `rel` from
-the vocabulary in `AGENTS.md`. When nothing fits, use the nearest type, or an
+Every page carries the keys `.property/property.json` requires, for every page
+and for its type, with `generated { by: <you>, at }`. Take `type` and every
+`rel` from that file. When nothing fits, use the nearest type, or an
 ordinary link whose sentence says what the relationship is, and say so in your
 summary; never invent a name, since the vocabulary changes only through
 `lint --vocabulary`. Set `sensitivity` from what the material contains, not
