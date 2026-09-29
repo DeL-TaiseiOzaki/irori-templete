@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "properties": {
+    "type": { "kind": "type", "description": "What the page is; one of the types below." },
+    "title": { "kind": "text", "description": "The page's name." },
+    "description": { "kind": "text", "description": "One sentence an agent reads to decide whether to open the page; it becomes the index line." },
+    "generated": { "kind": "actor-time", "auto": "last-change", "description": "Who last changed the page, its body or its properties, and when." },
+    "status": { "kind": "select", "options": ["draft", "stable", "deprecated"], "default": "stable", "description": "Lifecycle; absent means stable." },
+    "resource": { "kind": "link", "description": "The file or URL the page is about: contents/<mount>/<path>, or a URL." },
+    "sources": { "kind": "sources", "description": "What the page was made from: pages, files in contents/, or URLs." },
+    "verified": { "kind": "actor-time-list", "description": "Who confirmed the page, and when; the review that shares it." },
+    "stale_after": { "kind": "datetime", "description": "When a time-bound claim must be re-checked." },
+    "tags": { "kind": "multi-select", "description": "Free labels; offered from the tags already in use." },
+    "sensitivity": { "kind": "select", "options": ["internal", "confidential", "restricted"], "default": "internal", "description": "Input to promotion, not access control." },
+    "relations": { "kind": "relations", "description": "Typed edges to other pages or URLs; the graph index draws them." }
+  },
+  "required": ["type", "title", "description", "generated"],
+  "types": {
+    "concept": { "description": "One reusable claim, pattern or explanation.", "heading": "# Concepts", "required": ["sources"] },
+    "synthesis": { "description": "An answer to a question, filed back so it is not re-derived.", "heading": "# Syntheses", "required": ["sources"] },
+    "reference": { "description": "What a file someone else wrote says, and where it matters.", "heading": "# References", "required": ["resource"] },
+    "artifact": { "description": "A deliverable we made: what it is, what it was made from, what was decided.", "heading": "# Artifacts", "required": ["resource", "sources"] },
+    "decision": { "description": "What was decided, why, and what was rejected.", "heading": "# Decisions", "required": ["sources"] },
+    "policy": { "description": "A rule the organization holds.", "heading": "# Policies", "required": [] },
+    "standard": { "description": "A standard the organization holds.", "heading": "# Standards", "required": [] },
+    "person": { "description": "The record of a person.", "heading": "# People", "required": [] },
+    "org": { "description": "The record of an organization or team.", "heading": "# Organizations", "required": [] },
+    "repo": { "description": "The record of a repository.", "heading": "# Repositories", "required": [] },
+    "project": { "description": "The record of a project.", "heading": "# Projects", "required": [] },
+    "product": { "description": "The record of a product.", "heading": "# Products", "required": [] },
+    "daily": { "description": "A day's record written by a person.", "heading": "# Daily notes", "required": [] },
+    "meeting": { "description": "A meeting record written by a person.", "heading": "# Meetings", "required": [] },
+    "weekly": { "description": "A week's record written by a person.", "heading": "# Weekly records", "required": [] }
+  },
+  "relations": {
+    "same_as": { "description": "The same identity, whose record a higher scope owns.", "from": ["person", "org", "repo", "project", "product"], "to": "url" },
+    "uses": { "description": "What this page describes depends on or applies what the target describes; what the page was written from belongs in sources.", "from": "any", "to": "page" }
+  },
+  "avoid": []
+}

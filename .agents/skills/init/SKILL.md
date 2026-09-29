@@ -21,9 +21,10 @@ initialised.
 
 ## Create
 
-Create the directories below. Each directory's `index.md` gets, for every type
-it holds, the heading **Page types** in `AGENTS.md` gives it, in that table's
-order, with no entries yet; `journal/` gets `# Years`. An `index.md` has no
+Create the directories below, the template's design for the category; the
+person may ask for other folders, which you then create the same way. Each
+directory's `index.md` gets, for every type it holds, that type's `heading` in
+`.property/property.json`, in the order of its `types`, with no entries yet; `journal/` gets `# Years`. An `index.md` has no
 frontmatter; the root one already carries `okf_version` and keeps it.
 
 | Category | Directories and types |
@@ -48,8 +49,8 @@ Then:
 3. Replace everything between `<!-- init:folders ... -->` and
    `<!-- /init:folders -->` in `AGENTS.md` with `Category: <category>` and a
    table of the directories created, each with the types it holds and who
-   writes there. Take the types from the **Page types** table and the discipline
-   from the category table that follows the block. Edit nothing else in
+   writes there. Take the types from `.property/property.json` and the
+   discipline from the category table that follows the block. Edit nothing else in
    `AGENTS.md`.
 4. Write `.irori/notes.json` so irori puts notes where this scope keeps them:
 
