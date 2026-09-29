@@ -121,8 +121,8 @@ above its body; until an irori release says it does, edit frontmatter as YAML.
   requires besides those. Where a type usually lives is the **Folders** block.
 - `relations` gives each `rel` its meaning, the types it goes from (`any` for
   every page) and what it points at: `page` or `url`.
-- `avoid` lists names not to use, each with the entry to use instead, or with
-  "a link" when no relation fits: a name the person turned down, and a name a
+- `avoid` lists names not to use as `{ "name": ..., "use": ... }`, where `use`
+  is the entry to use instead, or "a link" when no relation fits: a name the person turned down, and a name a
   review folded into an existing entry. A listed name is neither proposed nor
   written again.
 

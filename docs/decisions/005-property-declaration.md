@@ -39,7 +39,7 @@ navigation reaches every folder.
 One JSON file in the schema layer declares the page properties (key, kind,
 options, default), the keys every page requires, the page types (meaning, index
 heading, required keys), the `rel` names (meaning, from which types, to a page
-or a URL) and the names to avoid. `AGENTS.md` explains how to read it and no
+or a URL) and the names to avoid, each as `{ "name", "use" }`. `AGENTS.md` explains how to read it and no
 longer repeats it; `init`, `journal`, `ingest` and `lint` read it; a vocabulary
 review edits it and nothing else does.
 
