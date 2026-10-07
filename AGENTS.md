@@ -17,8 +17,9 @@ irori registers this directory and writes `.irori/scope.json`: its identity
 committed, so every device sees the same knowledge base with the same layer
 names; irori 0.1.86 and later take a pulled change to it that keeps the
 `scopeId`. Never copy it into another knowledge base, which could then not be
-registered beside this one. The category in it, `personal`, `team` or
-`organization`, decides the discipline below. `.irori/cloud-mounts.json` and
+registered beside this one. The category in it decides the discipline below:
+`personal`, `team` and `organization` are irori's presets, and irori 0.1.87 and
+later also accept a name of the scope's own. `.irori/cloud-mounts.json` and
 `.irori/local-folders.json`, which irori writes when a folder is connected, and
 `.irori/notes.json`, which `init` writes to tell irori where notes go, are
 tracked too.
@@ -117,6 +118,11 @@ The category changes the discipline, not the layout:
 | personal | the person | not used |
 | team | the project owner | `human:<id>`; a `concept` needs `sources` |
 | organization | a curator | `human:<id>`; lint rejects a `stable` page without it |
+| any other, or none | the person who wrote it | not required |
+
+A category of the scope's own, such as `lab`, is a name for people; it keeps
+the lightest discipline. Choose `team` or `organization` for a scope whose
+pages someone must confirm.
 
 irori reads `.irori/notes.json` for two things: the folder its new-note dialog
 offers (`newNoteDirectory`), and, in a personal scope, where today's note lives
