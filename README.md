@@ -57,7 +57,8 @@ the current layout in
    Set your Git author email in the clone (`git config user.email`); its local
    part is your actor id, `human:<id>`, on every page you write.
 2. **Register it in irori.** Add the directory as a hibachi and choose
-   **personal**, **team** or **organization**. irori writes
+   **personal**, **team** or **organization**, or type a category of your own
+   (irori 0.1.87 and later; it keeps the personal discipline). irori writes
    `.irori/scope.json`; commit it, so every device sees the same knowledge base.
    The schema pane shows `AGENTS.md`, `README.md`, `.agents/` and `.property/`;
    the knowledge pane shows `Knowledge_Base/`.

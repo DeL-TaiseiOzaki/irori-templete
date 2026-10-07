@@ -28,7 +28,7 @@ check every `.agents/skills/*/SKILL.md`.
 | identity | two `person`, `org` or `project` pages that name the same identity | propose a merge with a `deprecated` stub |
 | contradictions | two pages that state incompatible claims; check by re-reading the cited sources, not by comparing the pages | report both, with the source that supports each |
 | size | a page over 800 lines; a folder index over about 150 entries | propose a split |
-| category rules | from `category` in `.irori/scope.json`: organization, a `stable` page in `wiki/` without `verified`; team and organization, a concept without `sources` | report as an error |
+| category rules | from `category` in `.irori/scope.json`: organization, a `stable` page in `wiki/` without `verified`; team and organization, a concept without `sources`; any other category, or none, adds no rule | report as an error |
 | property declaration | `.property/property.json` parses; every key a type requires is a declared property; every `default` is one of its `options`; every `heading` is unique; `avoid` names no declared entry | report; never edit the file outside a vocabulary review |
 | irori declaration | `.irori/notes.json` parses; `newNoteDirectory` exists in the knowledge layer and, when it names a year, names the current one; `daily.template` exists | advance the year folder and create it with an index; otherwise report |
 

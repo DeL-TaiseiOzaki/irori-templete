@@ -10,13 +10,18 @@ exists, stop and say the knowledge base is initialised.
 
 ## Ask
 
-1. The category: `personal`, `team` or `organization`. Read it from `category`
-   in `.irori/scope.json` when irori has registered this directory; ask only
-   when that file is absent.
+1. The category. Read it from `category` in `.irori/scope.json` when irori has
+   registered this directory; ask only when that file is absent. `personal`,
+   `team` and `organization` are presets; any other name, or none, is a category
+   of the scope's own (`AGENTS.md`, **Folders**).
 2. The identity that owns this scope:
    - personal: the person's handle, used as `human:<handle>`;
    - team: the project's name and a slug for it;
-   - organization: the organization's name and a slug for it.
+   - organization: the organization's name and a slug for it;
+   - a category of its own: whether a person, a project or an organization owns
+     it, then the answer above for that owner. Its rows below are the owner's:
+     personal for a person, team for a project, organization for an
+     organization.
 3. The language of the pages (default: the language the person is writing in).
 
 ## Create
