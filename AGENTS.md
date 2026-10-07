@@ -134,13 +134,21 @@ give the same text, so the indexes never disagree:
 
 - the root index keeps its frontmatter (`okf_version`); no other index has any;
 - `# Folders` first, one line per subfolder that has an `index.md` or pages in
-  it or below it, `* [name](name/) - description`, in name order. The
+  it or below it, `* [name](name/) - description`, by name. The
   description is whatever the line already said; a person writes it once;
 - then one section for each type that has pages here, under the type's
   `heading` in `.property/property.json`, in the order of its `types`, one line
-  per page in file-name order, `* [title](file.md) - description`, from the
+  per page by file name, `* [title](file.md) - description`, from the
   page's frontmatter; pages with an undeclared type last, under `# Other pages`;
 - a line without a description ends at the link;
+- text is NFC and each title or description one line, its runs of whitespace
+  one space; a title escapes `\`, `[` and `]` with `\`; a link
+  percent-encodes (as UTF-8) whitespace, `%`, `(`, `)`, `<`, `>`, `#`, `:`,
+  `\`, a backtick and control characters, and keeps every other character,
+  Japanese included, as written;
+- names sort by code point; a heading, a blank line and its lines make a
+  section, sections are separated by one blank line, and the file ends with
+  one newline;
 - nothing else: prose written into an index is not kept.
 
 ## Properties
