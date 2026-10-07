@@ -5,6 +5,8 @@ this repository. Supersedes ADR 001 D3, D4, D5, D6, D8 and D9; keeps D1, D2,
 D7, D10, D11 and D12. Nothing here has been exercised against a real knowledge
 base.
 
+> ADR 006 replaces the per-category folder sets, the **Folders** block and the index upkeep described here.
+
 ## Context
 
 ADR 001 built a knowledge base that people file by hand: role folders decided at

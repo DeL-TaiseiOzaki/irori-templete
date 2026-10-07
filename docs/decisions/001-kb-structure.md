@@ -7,6 +7,8 @@ record of the earlier structure. D9 and part of D10 depend on irori pull request
 in irori 0.1.6 (`v0.1.6-preview.1`), and are marked. Nothing here has been
 exercised against a real knowledge base.
 
+> ADR 006 supersedes D10: `.irori/scope.json` is now committed.
+
 ## Context
 
 The owner's organisation picture is fixed: a member's personal vault feeds a

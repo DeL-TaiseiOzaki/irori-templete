@@ -3,6 +3,8 @@
 Date: 2026-09-22. Status: proposed. Keeps ADR 002 and adds to its D2, D4, D7,
 D9 and D10.
 
+> ADR 006 replaces the seed vocabulary and the `# Years` heading; the review procedure stands.
+
 ## Context
 
 ADR 002 fixed a table of page types and made `relations` an extension key, but

@@ -11,5 +11,6 @@ later send the chosen skill with the request; earlier builds do not, so read
 given to you.
 
 Working on the template itself rather than using it? Read
-[docs/CONTRIBUTING.md](docs/CONTRIBUTING.md). The contract above is shipped
-content, not this repository's contributor guidance.
+[docs/CONTRIBUTING.md](https://github.com/DeL-TaiseiOzaki/irori-templete/blob/main/docs/CONTRIBUTING.md).
+The contract above is shipped content, not this repository's contributor
+guidance.

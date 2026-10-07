@@ -1,18 +1,18 @@
 ---
 name: init
-description: "Set up a new knowledge base once. Choose personal, team or organization, create the folder set and its indexes, fill the Folders block in AGENTS.md, and write the first identity page."
+description: "Set up a new knowledge base once: create journal/ and wiki/ with their indexes, write the first identity page and irori's note settings, and remove the template's own records."
 ---
 
 # init
 
-Run once, on a fresh copy of the template. If the **Folders** block in
-`AGENTS.md` already shows a category, stop and say the knowledge base is
-initialised.
+Run once, on a fresh copy of the template. If `Knowledge_Base/wiki/` already
+exists, stop and say the knowledge base is initialised.
 
 ## Ask
 
-1. The category: `personal`, `team` or `organization`. irori registered this
-   directory with one of these; the person knows which.
+1. The category: `personal`, `team` or `organization`. Read it from `category`
+   in `.irori/scope.json` when irori has registered this directory; ask only
+   when that file is absent.
 2. The identity that owns this scope:
    - personal: the person's handle, used as `human:<handle>`;
    - team: the project's name and a slug for it;
@@ -21,38 +21,25 @@ initialised.
 
 ## Create
 
-Create the directories below, the template's design for the category; the
-person may ask for other folders, which you then create the same way. Each
-directory's `index.md` gets, for every type it holds, that type's `heading` in
-`.property/property.json`, in the order of its `types`, with no entries yet; `journal/` gets `# Years`. An `index.md` has no
-frontmatter; the root one already carries `okf_version` and keeps it.
+The layout is the same for every category (`AGENTS.md`, **Folders**). An
+`index.md` has no frontmatter; the root one already carries `okf_version` and
+keeps it. Write each index by the rule in `AGENTS.md`, **Indexes**.
 
-| Category | Directories and types |
-| --- | --- |
-| personal | `journal/` (year folders), `journal/<this year>/` (`daily`, `meeting`), `wiki/` (`concept`, `synthesis`, `reference`, `artifact`, `decision`, `person`, `org`, `repo`, `project`, `product`) |
-| team | `journal/` (year folders), `journal/<this year>/` (`meeting`, `weekly`), `decisions/` (`decision`), `wiki/` (`concept`, `synthesis`, `reference`, `artifact`), `entities/` (`person`, `org`, `repo`, `project`, `product`) |
-| organization | `entities/` (`person`, `org`, `repo`, `project`, `product`), `policies/` (`policy`, `standard`), `wiki/` (`concept`, `synthesis`, `reference`, `artifact`) |
-
-Then:
-
-1. Write the first identity page from the answers: `type: person` in `wiki/`
-   (personal), `type: project` in `entities/` (team) or `type: org` in
-   `entities/` (organization). It carries `title`, a one-line `description`,
-   `generated: { by: human:<handle or git author>, at: <now> }` and a body of
-   what stays true about the identity. Add its line, with the description,
-   under the matching heading of the folder's `index.md`.
-2. Rewrite the body of the root `Knowledge_Base/index.md`: a `# Folders`
-   section with one line per directory, for example
+1. `Knowledge_Base/journal/<this year>/` with an `index.md` that holds only
+   `# Entries`, and `Knowledge_Base/journal/index.md` holding `# Folders` and
+   the year's line, `* [<year>](<year>/) - records of <year>`.
+2. `Knowledge_Base/wiki/` with the first identity page from the answers:
+   `type: person` (personal), `type: project` (team) or `type: org`
+   (organization), named after its slug. It carries `title`, a one-line
+   `description`, `generated: { by: human:<handle or git author>, at: <now> }`
+   and a body of what stays true about the identity. `wiki/index.md` lists it
+   under the type's heading.
+3. The body of the root `Knowledge_Base/index.md`: `# Folders` with
    `* [journal](journal/) - dated records written by people` and
-   `* [wiki](wiki/) - concepts, references, artifacts and decisions`. Keep the
-   `okf_version` frontmatter.
-3. Replace everything between `<!-- init:folders ... -->` and
-   `<!-- /init:folders -->` in `AGENTS.md` with `Category: <category>` and a
-   table of the directories created, each with the types it holds and who
-   writes there. Take the types from `.property/property.json` and the
-   discipline from the category table that follows the block. Edit nothing else in
-   `AGENTS.md`.
-4. Write `.irori/notes.json` so irori puts notes where this scope keeps them:
+   `* [wiki](wiki/) - what this scope knows, decided and made`, in the pages'
+   language.
+4. `.irori/notes.json` with `"schemaVersion": 1`, so irori puts notes where this
+   scope keeps them:
 
    | Category | `newNoteDirectory` | `daily` |
    | --- | --- | --- |
@@ -60,13 +47,12 @@ Then:
    | team | `Knowledge_Base/journal/<this year>` | none |
    | organization | `Knowledge_Base/wiki` | none |
 
-   with `"schemaVersion": 1`. For a personal scope also write
-   `.irori/templates/daily.md`; irori fills `{{date}}` and `{{datetime}}` when it
-   creates the day's entry:
+   For a personal scope also write `.irori/templates/daily.md`; irori fills
+   `{{date}}` and `{{datetime}}` when it creates the day's entry:
 
    ```markdown
    ---
-   type: daily
+   type: journal
    title: {{date}}
    description: Daily record for {{date}}.
    generated: { by: human:<handle>, at: {{datetime}} }
@@ -81,10 +67,12 @@ Then:
    ## Open
    ```
 
-5. Report what was created. Do not commit; the person reviews the diff.
+5. Remove the template's own records, which are not this knowledge base's:
+   the `docs/` directory.
+6. Report what was created and removed. Do not commit; the person reviews the
+   diff.
 
 ## Boundaries
 
-Do not create `contents/` or anything under it. Do not create folders for
-another category "just in case". Do not write example pages beyond the one
-identity page: an empty index is honest, a fake page is not.
+Do not create `contents/` or anything under it. Do not write example pages
+beyond the one identity page: an empty index is honest, a fake page is not.

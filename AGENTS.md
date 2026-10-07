@@ -12,19 +12,27 @@ organization knowledge base. A scope is one Git repository and one disclosure
 boundary. Knowledge moves between scopes by promotion (below), never by a path
 that crosses repositories.
 
-irori registers this directory and writes `.irori/scope.json` with a random
-identifier. That file is device-local and untracked; never commit it and never
-ask a person to. `.irori/cloud-mounts.json`, which irori writes when a cloud
-folder is attached, and `.irori/notes.json`, which `init` writes to tell irori
-where notes go, are portable and stay tracked.
+irori registers this directory and writes `.irori/scope.json`: its identity
+(a random `scopeId`, name and category) and the names of its layers. It is
+committed, so every device sees the same knowledge base with the same layer
+names; irori 0.1.86 and later take a pulled change to it that keeps the
+`scopeId`. Never copy it into another knowledge base, which could then not be
+registered beside this one. The category in it, `personal`, `team` or
+`organization`, decides the discipline below. `.irori/cloud-mounts.json` and
+`.irori/local-folders.json`, which irori writes when a folder is connected, and
+`.irori/notes.json`, which `init` writes to tell irori where notes go, are
+tracked too.
 
 ## Layers
 
 | Layer | What is there | Tracked |
 | --- | --- | --- |
-| schema | `AGENTS.md`, `CLAUDE.md`, `.agents/`, `.property/`, `.irori/` | yes, except `scope.json` |
+| schema | `AGENTS.md`, `CLAUDE.md`, `README.md`, `.agents/`, `.property/`, `.irori/` | yes |
 | Knowledge_Base | `Knowledge_Base/**` — knowledge: what was learned, what was decided, and pages about files | yes |
 | contents | `contents/<mount>/**` — files: source material, deliverables, incoming items | no |
+
+Nothing else sits at the root. `README.md` is this repository's front page;
+irori 0.1.86 and later count it as schema, not as a page.
 
 `Knowledge_Base/` is the center. It keeps what anyone working in this scope
 must understand, written for people and agents alike, each page tied to the
@@ -46,11 +54,23 @@ A page says what it means without its file at hand. A mount may be absent on a
 device, and a promoted page does not take `contents/` with it. A page that only
 points at a file is a catalogue entry, not knowledge.
 
-`contents/` is where irori mounts cloud folders (Google Drive through rclone).
-The mount name under `contents/` is chosen when the folder is attached and is
-recorded in `.irori/cloud-mounts.json`, so `contents/<mount>/<path>` means the
-same file for everyone who attached the same folder. A mount may be absent on a
-given device: say so rather than creating the directory.
+`contents/` is where irori connects folders: a folder on this device, usually
+one a sync app such as Drive for desktop keeps, appears as
+`contents/<mount>`. The mount name is chosen when the folder is connected and
+is recorded in `.irori/local-folders.json` (or `.irori/cloud-mounts.json` for
+older Drive connections), so `contents/<mount>/<path>` means the same file for
+everyone who connected the same folder. A mount may be absent on a given
+device: say so rather than creating the directory.
+
+Each mount keeps three folders, and each has its kind of page:
+
+| Folder | What is there | Its page |
+| --- | --- | --- |
+| `Inbox/` | what arrived and is not yet read: uploads, what a routine fetched | none yet; `ingest` reads it |
+| `source/` | originals someone else wrote, kept | `reference` |
+| `output/` | deliverables made here | `artifact` |
+
+So every file that matters has a page, and `ingest` can tell what has none.
 
 ## The bundle
 
@@ -65,9 +85,9 @@ rules that matter here:
   the new page.
 - Every directory has an `index.md` that lists what is in it, one line per entry
   with the entry's `description`. Agents read the root `index.md` first, then the
-  index of the directory they need, and only then open pages. Producers keep
-  indexes current, and `lint` writes one for a folder a person added without
-  it; nothing else is a map of this knowledge base.
+  index of the directory they need, and only then open pages. Indexes are
+  generated from the pages (see [Indexes](#indexes)); nothing else is a map of
+  this knowledge base.
 - Links are ordinary relative Markdown links. Refer to a page in another scope
   by its GitHub URL, never by a local path.
 - There is no `log.md` and no work diary. When something was made is
@@ -75,50 +95,66 @@ rules that matter here:
 
 ### Folders
 
-<!-- init:folders — the `init` skill fills this section for the chosen category. -->
+One layout for every category:
 
-Category: not set. Run the `init` skill before writing pages.
-
-<!-- /init:folders -->
-
-Folders are free. The set below is this template's design for each category,
-and `init` creates it; a person may add folders, subject folders included, and
-rename or drop the ones they do not use. What a page is comes from its `type`,
-not from its folder. The block above declares the folders this knowledge base
-uses; skills read it and do not assume folder names.
-
-| Category | Folders | Who writes by hand | `verified` |
+| Folder | Who writes | What | Promoted |
 | --- | --- | --- | --- |
-| personal | `journal/<year>/`, `wiki/` | `journal/` (daily, meeting) | not used |
-| team | `journal/<year>/`, `decisions/`, `wiki/`, `entities/` | `journal/` (meeting, weekly) | the project owner, as `human:<id>` |
-| organization | `entities/`, `policies/`, `wiki/` | `policies/` (curators) | a curator, as `human:<id>`; lint rejects a `stable` page without it |
+| `journal/<year>/` | people; an agent only in the person's words | `journal` pages: a day, a meeting, a week. Append-only; nothing here claims to be true beyond "this was said" | never; distil first |
+| `wiki/` | agents and people | every other type: concepts, decisions, policies, the `reference` and `artifact` pages of files, and the records of people, organizations and projects | yes |
+| `ontology/` | irori | the graph index ([The ontology](#the-ontology)) | no |
+
+`init` creates `journal/` and `wiki/`. What a page is comes from its `type`,
+never from its folder, so `wiki/` stays flat until one index passes about 150
+entries; then split it by topic into subfolders, each with its own index. A
+person may add other folders; a skill finds pages through the indexes, not by
+folder name. An organization usually writes no journal and may leave
+`journal/` empty.
+
+The category changes the discipline, not the layout:
+
+| Category | Who confirms pages in `wiki/` | `verified` |
+| --- | --- | --- |
+| personal | the person | not used |
+| team | the project owner | `human:<id>`; a `concept` needs `sources` |
+| organization | a curator | `human:<id>`; lint rejects a `stable` page without it |
 
 irori reads `.irori/notes.json` for two things: the folder its new-note dialog
 offers (`newNoteDirectory`), and, in a personal scope, where today's note lives
 (`daily.path`, `journal/<year>/<date>.md`) and the template it starts from
-(`.irori/templates/daily.md`). **今日のノート** in irori 0.1.8 and later creates
-the entry from that template with the date filled in; `lint` adds it to the
-year's index. `init` writes both files.
+(`.irori/templates/daily.md`). **今日のノート** creates the entry from that
+template with the date filled in. `init` writes both files.
 
-In the template's design a folder answers "who writes here and under what
-discipline", not "what subject". Within a folder the `type` in frontmatter tells
-pages apart, and the folder's `index.md` lists them under their type's
-`heading` in `.property/property.json`, in the order of its `types`; a heading
-is added with the first page of its type, and `journal/` lists its year folders
-under `# Years`. When one index grows past about 150 entries, split that folder
-by year or by topic and give each part its own `index.md`.
+### Indexes
+
+An index is not written by hand; it follows from the pages by one rule. irori
+0.1.86 and later apply it to every folder when the person presses
+**索引を更新**, together with the graph index. An agent that adds, changes or
+removes pages applies it to the folders it touched, and `lint` checks it. Both
+give the same text, so the indexes never disagree:
+
+- the root index keeps its frontmatter (`okf_version`); no other index has any;
+- `# Folders` first, one line per subfolder that has an `index.md` or pages in
+  it or below it, `* [name](name/) - description`, in name order. The
+  description is whatever the line already said; a person writes it once;
+- then one section for each type that has pages here, under the type's
+  `heading` in `.property/property.json`, in the order of its `types`, one line
+  per page in file-name order, `* [title](file.md) - description`, from the
+  page's frontmatter; pages with an undeclared type last, under `# Other pages`;
+- a line without a description ends at the link;
+- nothing else: prose written into an index is not kept.
 
 ## Properties
 
 A page's frontmatter is its properties. Which properties exist, the page types
 and the `rel` names are declared in `.property/property.json`; read it before
-writing a page. irori is to read the same file to show a page's properties
-above its body; until an irori release says it does, edit frontmatter as YAML.
+writing a page. irori 0.1.54 and later read the same file to show a page's
+properties above its body.
 
 - `properties` names each key and its kind; `required` lists the keys every
   page carries.
 - `types` gives each `type` its meaning, its index `heading` and the keys it
-  requires besides those. Where a type usually lives is the **Folders** block.
+  requires besides those. `journal` pages live in `journal/`, every other
+  type in `wiki/`.
 - `relations` gives each `rel` its meaning, the types it goes from (`any` for
   every page) and what it points at: `page` or `url`.
 - `avoid` lists names not to use as `{ "name": ..., "use": ... }`, where `use`
@@ -130,6 +166,27 @@ A link in the body is a relationship whose sentence says what kind it is. Use
 `relations` only when the kind matters to a reader or to the graph, and only
 with a declared name. `uses` is a dependency between what two pages describe;
 what a page was written from belongs in `sources`.
+
+### The ontology
+
+The ontology of this knowledge base is three things, each with one owner:
+
+| Part | Where | Who changes it | How |
+| --- | --- | --- | --- |
+| vocabulary: the page types and `rel` names | `.property/property.json` | the person | lint's vocabulary review, one agreed proposal at a time |
+| instances: what each page is and how it relates | each page's `type` and `relations` | agents and people | writing pages, with declared names only |
+| index: the graph drawn from them | `Knowledge_Base/ontology/` | irori | **索引を更新**, then the person commits |
+
+The person, organization and project records are the graph's hubs: a page
+says which of them it concerns with `about`, and a record says where it belongs
+with `part_of`. Body links stay ordinary links; irori shows them as backlinks,
+not in the graph.
+
+A table people keep by hand, such as a customer list with no page per row, is
+declared in `.irori/ontology.json` instead ([irori's ontology
+guide](https://github.com/DeL-TaiseiOzaki/irori/blob/main/docs/ONTOLOGY.md)).
+irori then draws that table and generates no graph index over it; the folder
+indexes are generated either way.
 
 ### Changing the vocabulary
 
@@ -157,13 +214,13 @@ status: stable                       # draft | stable | deprecated; absent means
 resource: contents/drive/output/proposal-v2.pptx             # pages bound to a file
 sources:                             # what this page was made from; required by the types that say so
   - { id: rfp, resource: contents/drive/source/customer-a-rfp.pdf, title: Customer A RFP, last_modified: 2026-09-01T00:00:00Z }
-  - { id: pricing, resource: ../decisions/annual-fixed-pricing.md, title: Annual fixed pricing }
+  - { id: pricing, resource: annual-fixed-pricing.md, title: Annual fixed pricing }
 verified: [{ by: human:owner, at: 2026-09-18T09:00:00Z }]   # who confirmed it; see Promotion
 stale_after: 2027-03-31T00:00:00Z    # when a time-bound claim must be re-checked
 tags: [pricing]                      # optional
 sensitivity: internal                # internal | confidential | restricted; input to promotion, not access control
 relations:                           # optional typed edges with declared names; irori's graph index draws them
-  - { rel: uses, target: ../wiki/retry-budget.md }
+  - { rel: about, target: customer-a.md }
 ---
 ```
 
@@ -179,9 +236,10 @@ an automated process is `process:<id>`. Timestamps are ISO 8601 with an explicit
 offset.
 
 `sources[].resource` is a path relative to this repository root
-(`contents/<mount>/...` for a file; a relative link such as `../decisions/...`
-for a page in this bundle) or a URL. Attribute a claim in the body to a source
-with a footnote whose label is the source's `id`: `...as the RFP requires.[^rfp]`.
+(`contents/<mount>/...` for a file; a link relative to the page, such as
+`../../wiki/...` from a journal entry, for a page in this bundle) or a URL.
+Attribute a claim in the body to a source with a footnote whose label is the
+source's `id`: `...as the RFP requires.[^rfp]`.
 Add `hash` (SHA-256 of the file) to a `sources` entry when a file's exact
 version matters.
 
@@ -221,11 +279,11 @@ to you.
 
 | Skill | Use it when |
 | --- | --- |
-| `init` | The knowledge base is new. Chooses the category, creates the folders and indexes, fills the block above. |
+| `init` | The knowledge base is new. Creates the folders and their indexes, the first identity page and irori's note settings. |
 | `ingest` | Material arrived (`contents/**/Inbox/`, a journal entry, an unregistered deliverable) and should become pages. |
 | `query` | Someone asks a question the knowledge base should answer. Answers with citations and files useful answers back. |
 | `lint` | Periodically, before a promotion, and whenever the indexes may have drifted. |
-| `journal` | A person wants a daily, meeting or weekly record written or appended. |
+| `journal` | A person wants a day, a meeting or a week recorded or appended. |
 | `promote` | A page should be shared with a higher scope. |
 
 Before editing, list the pages you will touch and why, and get agreement. Do not
@@ -243,7 +301,7 @@ of date; would a person reading it learn something. Text that answers the
 second way belongs on a page.
 
 Know-how is usually both, so split it. The criteria, facts and reasons go on a
-page, a `decision` or `concept` (in an organization, a `standard` or `policy`),
+page, a `decision`, `concept` or `policy`,
 where `sources`, `verified` and `stale_after` apply and promotion can share
 them. The skill names that page by its path from the repository root
 (`Knowledge_Base/...`) and says how to apply it, without restating it; a claim
@@ -315,18 +373,19 @@ or is rewritten, and that the identities the page refers to exist there.
 Journal entries are not promoted; distil first. From an organization scope,
 `sources` name the project page, not the personal page behind it.
 
-Identity flows the other way: the highest scope that knows a person, org or
-repo owns its record; a lower scope keeps a thin page whose `relations` carry
+Identity flows the other way: the highest scope that knows a person,
+organization or project owns its record; a lower scope keeps a thin page whose `relations` carry
 `same_as` to the upper record's URL.
 
 ## What agents must not do here
 
-- Commit `.irori/scope.json`, a credential, an account binding or an absolute
-  machine path.
+- Commit a credential, an account binding or an absolute machine path, or
+  copy `.irori/scope.json` into another knowledge base.
 - Write into `contents/` except as the explicit output of a task, or assume a
   mount is present.
 - Copy a file into `Knowledge_Base/`, or paste a large document into a page.
-- Write or edit `Knowledge_Base/ontology/`, which irori generates from the pages.
+- Write or edit `Knowledge_Base/ontology/`, which irori generates from the pages,
+  or write an `index.md` line by hand instead of by the rule in **Indexes**.
 - Edit `.property/property.json` except as an agreed change of a vocabulary
   review.
 - Reuse a path, renumber anything, or bulk-rewrite frontmatter you were not

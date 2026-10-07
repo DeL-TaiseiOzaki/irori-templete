@@ -1,23 +1,25 @@
 ---
 name: journal
-description: "Write or append a person's dated record, such as today's entry, a meeting record or a weekly summary, in journal/<year>/, in the person's own words and without rewriting what is already there."
+description: "Write or append a person's dated record, such as today's entry, a meeting record or a weekly summary, as a journal page in journal/<year>/, in the person's own words and without rewriting what is already there."
 ---
 
 # journal
 
 `journal/<year>/` holds records written by people. It is append-only: you add,
 you do not rewrite or delete, and what turned out wrong is corrected in a later
-entry. An organization scope has no journal.
+entry. An organization usually writes none.
 
 ## Which file
 
-| Ask | File | `type` |
-| --- | --- | --- |
-| today's log | `journal/<year>/<yyyy-mm-dd>.md` | `daily` (personal only) |
-| a meeting | `journal/<year>/<yyyy-mm-dd>--mtg-<slug>.md` | `meeting` |
-| a week's summary | `journal/<year>/<yyyy>-W<nn>.md` | `weekly` |
+Every entry is `type: journal`; the file name says which kind it is.
 
-In irori 0.1.8 and later, **今日のノート** opens or creates today's daily entry
+| Ask | File |
+| --- | --- |
+| today's log | `journal/<year>/<yyyy-mm-dd>.md` |
+| a meeting | `journal/<year>/<yyyy-mm-dd>--mtg-<slug>.md` |
+| a week's summary | `journal/<year>/<yyyy>-W<nn>.md` |
+
+In irori 0.1.8 and later, **今日のノート** opens or creates today's entry
 from `.irori/templates/daily.md`; this skill then appends to it. Create the
 file yourself only when the person is not using that button.
 
@@ -34,11 +36,8 @@ file yourself only when the person is not using that button.
    exist.
 3. Keep the person's wording. An entry is evidence; smoothing it destroys what
    it is for.
-4. Add the file to `journal/<year>/index.md` with its description, under the
-   heading for its type. If the year folder is new, create its `index.md` with
-   the `heading` that `.property/property.json` gives each journal type this
-   scope writes (from the **Folders** block), in the order of its `types`, and add the year under
-   `# Years` in `journal/index.md`.
+4. Update `journal/<year>/index.md`, and `journal/index.md` when the year is
+   new, by the rule in `AGENTS.md`, **Indexes**.
 5. A decision that will outlive the week belongs in a `decision` page as well;
    offer `ingest`, do not do it silently.
 

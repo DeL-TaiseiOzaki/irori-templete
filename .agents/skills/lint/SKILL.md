@@ -18,17 +18,17 @@ check every `.agents/skills/*/SKILL.md`.
 | --- | --- | --- |
 | conformance | parseable frontmatter with a non-empty `type`; `index.md` has no frontmatter except `okf_version` at the root; no `log.md` anywhere; no `AGENTS.md` under `Knowledge_Base/` | add a missing `type` only when the folder makes it obvious; otherwise report, and for an `AGENTS.md` propose moving its rules into the root `AGENTS.md` |
 | required keys | the keys `.property/property.json` requires of every page and of the page's type are present; a `select` value is one of its `options` | report; `generated` may be filled from Git history with `by: process:lint` |
-| index drift | every folder has an `index.md`; every page appears once in its folder's `index.md`, under its type's `heading`, with its current `description`; every subdirectory is listed; no entry points at a missing page | write a missing `index.md` from the folder's pages; rewrite the entry lines additively, keeping the person's headings, order and prose; add a type's heading when the index has none for it |
+| index drift | every folder with pages in it or below it has an `index.md` that is exactly what the rule in `AGENTS.md`, **Indexes**, gives from its pages | rewrite the index by that rule, keeping each folder line's description; say which lines changed |
 | links | every relative link resolves inside this repository | report; fix only a link broken by a move you can see in Git history |
 | resources | every `resource` and `sources[].resource` under `contents/` resolves when its mount is present; when the mount is absent, report "not checked" | never create anything under `contents/` |
 | orphans | a page that nothing links to and no index lists | report |
 | lifecycle | `stale_after` in the past; a `deprecated` page still linked as current | report |
 | vocabulary | every `type` and every `rel` is declared in `.property/property.json` and none is in its `avoid` list; a relation goes from a type and to a `page` or `url` as its declaration says; no page lists the same relation twice | replace an avoided name with the entry listed for it and drop an exact duplicate; report the rest, including a name listed with "a link", whose fix is prose |
 | skills | every `Knowledge_Base/` path a skill names resolves to a page that is not `deprecated`; a skill does not state a criterion, fact or reason that a page states or should state (AGENTS.md, Skills and knowledge) | repoint a path to the page its `deprecated` stub links to; report the rest; propose moving a stated claim to a page, never move it yourself |
-| identity | two identity pages that name the same person, org, repo, product or project | propose a merge with a `deprecated` stub |
+| identity | two `person`, `org` or `project` pages that name the same identity | propose a merge with a `deprecated` stub |
 | contradictions | two pages that state incompatible claims; check by re-reading the cited sources, not by comparing the pages | report both, with the source that supports each |
 | size | a page over 800 lines; a folder index over about 150 entries | propose a split |
-| category rules | organization: a `stable` page without `verified`; team and organization: a concept without `sources` | report as an error |
+| category rules | from `category` in `.irori/scope.json`: organization, a `stable` page in `wiki/` without `verified`; team and organization, a concept without `sources` | report as an error |
 | property declaration | `.property/property.json` parses; every key a type requires is a declared property; every `default` is one of its `options`; every `heading` is unique; `avoid` names no declared entry | report; never edit the file outside a vocabulary review |
 | irori declaration | `.irori/notes.json` parses; `newNoteDirectory` exists in the knowledge layer and, when it names a year, names the current one; `daily.template` exists | advance the year folder and create it with an index; otherwise report |
 
@@ -79,11 +79,11 @@ leaving the vocabulary as it is is always an acceptable outcome.
 
 ## irori graph (`lint --irori-graph`)
 
-irori 0.1.24 and later generate the graph index, `Knowledge_Base/ontology/`,
-from the pages' `type`, `title` and `relations` when the person presses
-**グラフ索引を更新** in its ontology panel, and the person commits it, so every
-device shows the same graph. Never write or edit those files. On request, check
-that the index is current:
+irori generates the graph index, `Knowledge_Base/ontology/`, from the pages'
+`type`, `title` and `relations` when the person presses **索引を更新** in its
+ontology panel (**グラフ索引を更新** before 0.1.86), and the person commits it,
+so every device shows the same graph. Never write or edit those files. On
+request, check that the index is current:
 
 - every page with a `relations` entry that resolves to a page of the bundle
   other than an `index.md`, and every page such an entry points at, has one row

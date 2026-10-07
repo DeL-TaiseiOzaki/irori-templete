@@ -24,9 +24,10 @@ A knowledge base that a person clones, registers in irori and initialises with
 the `init` skill. The structure and its reasoning are in
 [ADR 002](decisions/002-okf-bundle.md), which supersedes the folder, navigation,
 ontology, frontmatter and skill decisions of
-[ADR 001](decisions/001-kb-structure.md) and keeps the rest. Read both before
-changing the shape of `Knowledge_Base/`, the frontmatter contract or the skills,
-and update the ADR rather than leave it stale.
+[ADR 001](decisions/001-kb-structure.md) and keeps the rest; the current layout,
+vocabulary and indexes are [ADR 006](decisions/006-one-layout.md). Read them
+before changing the shape of `Knowledge_Base/`, the frontmatter contract or the
+skills, and update the ADR rather than leave it stale.
 
 Several decisions depend on what irori and the OKF specification actually say.
 When you cite either, cite the file and check the line still says what you
@@ -46,7 +47,7 @@ a toolchain for a Markdown repository is out of scope. For a change here:
 - for `.property/property.json`: it parses as JSON with `schemaVersion` 1;
   every key in `required` and in a type's `required` is a declared property;
   every `default` is one of its `options`; every type's `heading` is unique and
-  matches what `init` and the Folders table expect; a relation's `from` names
+  matches what `init` expects; a relation's `from` names
   declared types or `any`, and its `to` is `page` or `url`;
 - for a retired skill: the directory holds `RETIRED.md` and no `SKILL.md`; its
   frontmatter has `retired` as `YYYY-MM-DD`, a `reason` of at most 400
@@ -55,11 +56,12 @@ a toolchain for a Markdown repository is out of scope. For a change here:
 - for anything under `Knowledge_Base/` or in the `init` skill: copy the
   template to a disposable directory, perform `init` for each category by hand
   or with an agent, and check that every page other than `index.md` has
-  frontmatter with a non-empty `type`, every folder has an `index.md`, the root
-  index keeps `okf_version`, and no `log.md` exists (OKF §11);
-- if you touched `.gitignore`, confirm `/contents/` and `/.irori/scope.json`
-  are still ignored. irori appends `/contents/` itself when it is missing, and a
-  committed `scope.json` breaks registration and pulls for every copy.
+  frontmatter with a non-empty `type`, every folder with pages has an
+  `index.md` that follows the rule in `AGENTS.md` (**Indexes**), the root index
+  keeps `okf_version`, `docs/` is gone, and no `log.md` exists (OKF §11);
+- if you touched `.gitignore`, confirm `/contents/` is still ignored and
+  `.irori/scope.json` is not. This repository itself never holds a
+  `scope.json`: a copy made from it would share its `scopeId`.
 
 Use a disposable knowledge base for anything that mutates files. Keep
 credentials, account state, absolute machine paths and real user notes out of

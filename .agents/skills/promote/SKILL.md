@@ -20,8 +20,8 @@ entries are not promoted; distil first, then promote the distilled page.
 3. Read the page for what does not belong in the wider scope: people who are
    not part of it, unreleased plans, quotes from private material, credentials
    of any kind. Report them; do not redact silently.
-4. Copy the page into the receiving scope's folder for its type (the receiving
-   `AGENTS.md` **Folders** block says which). When the receiving vocabulary
+4. Copy the page into the receiving scope's `wiki/`, or the folder its
+   `AGENTS.md` names for the type. When the receiving vocabulary
    lacks its `type` or a `rel` it uses, take the nearest entry there and say so
    in the pull request, or stop and suggest `lint --vocabulary` in that
    repository. Set `sources[0]` to the source page's GitHub URL with its title;
@@ -31,7 +31,7 @@ entries are not promoted; distil first, then promote the distilled page.
    name the project page, not the personal page behind it.
 5. Resolve every relative link in the receiving scope or rewrite it. Every
    identity the page refers to must exist there or be added in the same change.
-   Add the page to the folder's `index.md`.
+   Update the folder's `index.md` by the receiving scope's index rule.
 6. Create a branch in the receiving repository, commit the copy, and open a
    pull request that states what is promoted, from where, and what the reviewer
    should check. Leave it open. The reviewer adds `verified` and sets
