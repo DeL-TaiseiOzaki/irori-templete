@@ -16,25 +16,27 @@
   },
   "required": ["type", "title", "description", "generated"],
   "types": {
-    "concept": { "description": "One reusable claim, pattern or explanation.", "heading": "# Concepts", "required": ["sources"] },
-    "synthesis": { "description": "An answer to a question, filed back so it is not re-derived.", "heading": "# Syntheses", "required": ["sources"] },
+    "journal": { "description": "A dated record a person wrote: a day, a meeting or a week.", "heading": "# Entries", "required": [] },
+    "concept": { "description": "One reusable claim, pattern or explanation, including an answer filed back so it is not re-derived.", "heading": "# Concepts", "required": ["sources"] },
+    "decision": { "description": "What was decided, why, and what was rejected.", "heading": "# Decisions", "required": ["sources"] },
+    "policy": { "description": "A rule or standard the scope holds.", "heading": "# Policies", "required": [] },
     "reference": { "description": "What a file someone else wrote says, and where it matters.", "heading": "# References", "required": ["resource"] },
     "artifact": { "description": "A deliverable we made: what it is, what it was made from, what was decided.", "heading": "# Artifacts", "required": ["resource", "sources"] },
-    "decision": { "description": "What was decided, why, and what was rejected.", "heading": "# Decisions", "required": ["sources"] },
-    "policy": { "description": "A rule the organization holds.", "heading": "# Policies", "required": [] },
-    "standard": { "description": "A standard the organization holds.", "heading": "# Standards", "required": [] },
     "person": { "description": "The record of a person.", "heading": "# People", "required": [] },
     "org": { "description": "The record of an organization or team.", "heading": "# Organizations", "required": [] },
-    "repo": { "description": "The record of a repository.", "heading": "# Repositories", "required": [] },
-    "project": { "description": "The record of a project.", "heading": "# Projects", "required": [] },
-    "product": { "description": "The record of a product.", "heading": "# Products", "required": [] },
-    "daily": { "description": "A day's record written by a person.", "heading": "# Daily notes", "required": [] },
-    "meeting": { "description": "A meeting record written by a person.", "heading": "# Meetings", "required": [] },
-    "weekly": { "description": "A week's record written by a person.", "heading": "# Weekly records", "required": [] }
+    "project": { "description": "The record of a project.", "heading": "# Projects", "required": [] }
   },
   "relations": {
-    "same_as": { "description": "The same identity, whose record a higher scope owns.", "from": ["person", "org", "repo", "project", "product"], "to": "url" },
-    "uses": { "description": "What this page describes depends on or applies what the target describes; what the page was written from belongs in sources.", "from": "any", "to": "page" }
+    "about": { "description": "The person, organization or project this page is about; the graph gathers pages around those records.", "from": "any", "to": "page" },
+    "part_of": { "description": "This person, organization or project belongs to the organization or project the target records.", "from": ["person", "org", "project"], "to": "page" },
+    "uses": { "description": "What this page describes depends on or applies what the target describes; what the page was written from belongs in sources.", "from": "any", "to": "page" },
+    "same_as": { "description": "The same identity, whose record a higher scope owns.", "from": ["person", "org", "project"], "to": "url" }
   },
-  "avoid": []
+  "avoid": [
+    { "name": "daily", "use": "journal" },
+    { "name": "meeting", "use": "journal" },
+    { "name": "weekly", "use": "journal" },
+    { "name": "synthesis", "use": "concept" },
+    { "name": "standard", "use": "policy" }
+  ]
 }

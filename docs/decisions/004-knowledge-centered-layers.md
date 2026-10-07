@@ -4,6 +4,8 @@ Date: 2026-09-29. Status: accepted by the owner in design. Keeps ADR 002 and
 sharpens its D1; adds a check to `lint`. Nothing here has been exercised against
 a real knowledge base.
 
+> ADR 006 folds `synthesis` into `concept` and `standard` into `policy`.
+
 ## Context
 
 ADR 002 D1 split files from knowledge "by kind, not by importance" and left the

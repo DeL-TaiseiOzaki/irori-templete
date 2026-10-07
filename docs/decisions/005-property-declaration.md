@@ -5,6 +5,8 @@ Supersedes the vocabulary's place in `AGENTS.md` (ADR 003 D1, D3 and D5, whose
 procedure stays) and ADR 002's rule that a page's `generated` changes only with
 its content. Nothing here has been exercised against a real knowledge base.
 
+> ADR 006 replaces D1's per-category folder sets and the seed vocabulary in D2.
+
 ## Context
 
 Frontmatter carries everything the bundle knows about a page, but writing it as

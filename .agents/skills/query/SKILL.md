@@ -1,6 +1,6 @@
 ---
 name: query
-description: "Answer a question from the knowledge base with citations, reading indexes first and pages second, and file a useful answer back as a synthesis page so it is not re-derived."
+description: "Answer a question from the knowledge base with citations, reading indexes first and pages second, and file a useful answer back as a concept page so it is not re-derived."
 ---
 
 # query
@@ -22,12 +22,12 @@ description: "Answer a question from the knowledge base with citations, reading 
 ## File back
 
 If the answer took real work to assemble and would be asked again, offer to
-file it as a `synthesis` page in `wiki/`: `sources` list every page and file
-used, the body is the answer with its footnotes, and the folder index gets its
-line. Do not file an answer the person did not accept, and do not turn a
-one-off lookup into a page.
+file it as a `concept` page in `wiki/` whose title is the question: `sources`
+list every page and file used, the body is the answer with its footnotes, and
+the index is updated by the rule in `AGENTS.md`, **Indexes**. Do not file an
+answer the person did not accept, and do not turn a one-off lookup into a page.
 
 ## Boundaries
 
-Do not modify any page other than the synthesis you were asked to file. Do not
+Do not modify any page other than the one you were asked to file. Do not
 promote, ingest or lint from here; name the skill that would.

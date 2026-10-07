@@ -1,9 +1,6 @@
-# irori writes this at registration with a random scope identifier.
-# Committing it makes a second KB from this template unregisterable and aborts
-# incoming pulls. See docs/decisions/001-kb-structure.md (D10).
-/.irori/scope.json
-
-# The exchange surface. irori mounts cloud folders here; nothing is tracked.
+# The exchange surface. irori links connected folders here; nothing is tracked.
+# `.irori/scope.json` is tracked: it carries this knowledge base's identity and
+# layer names (docs/decisions/006-one-layout.md).
 /contents/
 
 # Local development-agent artifacts

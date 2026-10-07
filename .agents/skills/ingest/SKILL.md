@@ -1,6 +1,6 @@
 ---
 name: ingest
-description: "Turn arrived material into pages: files in contents/**/Inbox/, new journal entries, and deliverables in contents that have no artifact page yet. Writes reference, artifact, concept, decision and identity pages and updates the indexes."
+description: "Turn arrived material into pages: files in contents/**/Inbox/, new journal entries, and deliverables in contents that have no artifact page yet. Writes reference, artifact, concept, decision and person/org/project pages and updates the indexes."
 ---
 
 # ingest
@@ -9,8 +9,8 @@ The knowledge base compiles what arrived; the files stay where they are.
 
 ## Find what is new
 
-1. Read the root `Knowledge_Base/index.md` and the indexes of the folders named
-   in the **Folders** block of `AGENTS.md`.
+1. Read the root `Knowledge_Base/index.md` and the indexes of `journal/` and
+   `wiki/` (and of any folder the root index lists).
 2. List the candidates and ask which to take:
    - files under `contents/<mount>/Inbox/` (if the mount is absent, say so and
      stop; never create it);
@@ -43,14 +43,14 @@ agreement. Then:
   page, with `sources` naming the file, journal entry or page it came from. If a
   page already makes the claim, strengthen that page and add the new source to
   its `sources` instead of writing a near-duplicate.
-- **A decision** becomes a `decision` page (`decisions/` in a team scope,
-  `wiki/` in a personal one): what was decided, why, what was rejected, what
-  would change it.
-- **A person, organization, repository, product or project not yet recorded**
-  becomes an identity page (`entities/`, or `wiki/` in a personal scope). Search
-  the index for the name and plausible spellings first; names collide, paths do
-  not. If a higher scope owns the identity, keep the page thin and add
-  `relations: [{ rel: same_as, target: <URL> }]`.
+- **A decision** becomes a `decision` page in `wiki/`: what was decided, why,
+  what was rejected, what would change it.
+- **A person, organization or project not yet recorded** becomes its record in
+  `wiki/` (`person`, `org` or `project`), with `part_of` where it belongs to
+  another. Search the index for the name and plausible spellings first; names
+  collide, paths do not. If a higher scope owns the identity, keep the page thin
+  and add `relations: [{ rel: same_as, target: <URL> }]`.
+- **Any page** that concerns one of those records says so with `about`.
 
 Every page carries the keys `.property/property.json` requires, for every page
 and for its type, with `generated { by: <you>, at }`. Take `type` and every
@@ -58,8 +58,8 @@ and for its type, with `generated { by: <you>, at }`. Take `type` and every
 ordinary link whose sentence says what the relationship is, and say so in your
 summary; never invent a name, since the vocabulary changes only through
 `lint --vocabulary`. Set `sensitivity` from what the material contains, not
-from habit. Add each new page to its folder's `index.md` with its
-`description`, under the heading for its type.
+from habit. Then update the index of each folder you wrote in by the rule in
+`AGENTS.md`, **Indexes**.
 
 ## Boundaries
 
