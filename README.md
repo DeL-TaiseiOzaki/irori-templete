@@ -56,7 +56,7 @@ the current layout in
 1. **Make it yours.** Create your repository from this template and clone it.
    Set your Git author email in the clone (`git config user.email`); its local
    part is your actor id, `human:<id>`, on every page you write.
-2. **Register it in irori.** Add the directory as a hibachi and choose
+2. **Register it in irori.** Add the directory as a vault and choose
    **personal**, **team** or **organization**, or type a category of your own
    (irori 0.1.87 and later; it keeps the personal discipline). irori writes
    `.irori/scope.json`; commit it, so every device sees the same knowledge base.
@@ -68,7 +68,7 @@ the current layout in
    indexes, one identity page and `.irori/notes.json` (with a daily template for
    a personal scope), removes `docs/`, and stops for you to review the diff.
    Commit it.
-4. **Connect a folder.** In the hibachi's connections, connect the folder this
+4. **Connect a folder.** In the vault's connections, connect the folder this
    scope exchanges files through, usually one Drive for desktop or another sync
    app keeps, and name it under `contents/`. Keep `Inbox/`, `source/` and
    `output/` inside it.
