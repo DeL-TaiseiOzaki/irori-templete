@@ -4,6 +4,8 @@ Date: 2026-10-07. Status: accepted by the owner. Supersedes the per-category
 folder sets of ADR 002 and ADR 005 D1, the seed vocabulary of ADR 003 and ADR
 005 D2, and ADR 001 D10's rule that `.irori/scope.json` is never committed.
 Nothing here has been exercised against a real knowledge base.
+[ADR 008](008-knowledge-at-the-root.md) moves the folders of D1 from
+`Knowledge_Base/` to the repository root.
 
 > ADR 007 adds a row to D1's table for a category of the scope's own.
 

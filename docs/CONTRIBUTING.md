@@ -26,7 +26,7 @@ the `init` skill. The structure and its reasoning are in
 ontology, frontmatter and skill decisions of
 [ADR 001](decisions/001-kb-structure.md) and keeps the rest; the current layout,
 vocabulary and indexes are [ADR 006](decisions/006-one-layout.md). Read them
-before changing the shape of `Knowledge_Base/`, the frontmatter contract or the
+before changing the shape of the knowledge layer, the frontmatter contract or the
 skills, and update the ADR rather than leave it stale.
 
 Several decisions depend on what irori and the OKF specification actually say.
@@ -53,7 +53,7 @@ a toolchain for a Markdown repository is out of scope. For a change here:
   frontmatter has `retired` as `YYYY-MM-DD`, a `reason` of at most 400
   characters, an optional `replacement` naming an existing skill, and no `name`
   or `description`;
-- for anything under `Knowledge_Base/` or in the `init` skill: copy the
+- for the root `index.md`, the knowledge layout or the `init` skill: copy the
   template to a disposable directory, perform `init` for each category by hand
   or with an agent, and check that every page other than `index.md` has
   frontmatter with a non-empty `type`, every folder with pages has an
