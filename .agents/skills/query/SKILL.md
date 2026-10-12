@@ -7,7 +7,7 @@ description: "Answer a question from the knowledge base with citations, reading 
 
 ## Answer
 
-1. Read the root `Knowledge_Base/index.md`, then the index of each folder that
+1. Read the root `index.md`, then the index of each folder that
    could hold the answer. Open only the pages whose `description` matches. Use
    search within a folder when the indexes are not enough.
 2. Prefer `stable` pages over `draft`; say when a page is `deprecated` or past
