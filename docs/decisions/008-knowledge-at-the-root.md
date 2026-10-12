@@ -13,7 +13,7 @@ GitHub always show it: opening the repository showed `Knowledge_Base/` before
 any page. The owner asked for the knowledge to sit at the root, and the
 personal vaults made from this template to follow.
 
-irori 0.1.100 lets a vault declare its root as the knowledge folder
+irori 0.2.0 lets a vault declare its root as the knowledge folder
 (`"knowledge": "."` in `.irori/scope.json`). It keeps classifying as before:
 `AGENTS.md`, `CLAUDE.md`, the top `README.md` and dot folders are schema,
 `contents/` is contents, and everything else is knowledge. It registers a
@@ -38,7 +38,7 @@ included.
 
 ## Consequences
 
-- A copy registered with irori older than 0.1.100 is declared with
-  `Knowledge_Base` and shows no folder indexes; README asks for 0.1.100.
+- A copy registered with irori older than 0.2.0 is declared with
+  `Knowledge_Base` and shows no folder indexes; README asks for 0.2.0.
 - Until `init` removes it, the template's own `docs/` is knowledge too; it
   carries no frontmatter, so lint before `init` reports it.

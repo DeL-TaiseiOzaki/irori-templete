@@ -62,7 +62,7 @@ and, for its place at the root,
    (irori 0.1.87 and later; it keeps the personal discipline). irori writes
    `.irori/scope.json`; commit it, so every device sees the same knowledge base.
    The schema pane shows `AGENTS.md`, `README.md`, `.agents/` and `.property/`;
-   the knowledge pane shows `index.md` and the folders beside it. irori 0.1.100
+   the knowledge pane shows `index.md` and the folders beside it. irori 0.2.0
    and later keep the knowledge at the root on their own; with an older irori,
    update it first.
 3. **Run `init`.** Pick it in the composer's skill selector and answer two
@@ -76,12 +76,12 @@ and, for its place at the root,
    app keeps, and name it under `contents/`. Keep `Inbox/`, `source/` and
    `output/` inside it.
 
-## Moving a knowledge base made before 0.1.100's layout
+## Moving a knowledge base made before 0.2.0's layout
 
 A knowledge base made from this template before the knowledge moved to the
 root keeps its pages in `Knowledge_Base/`. Ask the irori agent to run
 `irori layer <vault> knowledge .`, or choose **vault のルート** under **層** in
-the vault's settings (irori 0.1.100 and later). irori moves the pages up and
+the vault's settings (irori 0.2.0 and later). irori moves the pages up and
 rewrites the links into them, `.irori/notes.json` and the comments; it stops,
 moving nothing, when a name is already at the root. Paths written as text in
 `AGENTS.md` or a skill rather than as links stay as they were: compare them

@@ -33,7 +33,7 @@ tracked too.
 | contents | `contents/<mount>/**` — files: source material, deliverables, incoming items | no |
 
 The knowledge sits at the repository root beside the schema, so opening the
-repository shows its pages first. irori 0.1.100 and later register this layout
+repository shows its pages first. irori 0.2.0 and later register this layout
 as it is (`"knowledge": "."` in `.irori/scope.json`). `README.md` is this
 repository's front page; irori 0.1.86 and later count it as schema, not as a
 page. A Markdown file is a page when it is in the knowledge layer; `AGENTS.md`,
