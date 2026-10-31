@@ -12,7 +12,7 @@ permissions, provider accounts or machine paths in it, and do not describe it
 as this repository's contributor guidance.
 
 Guidance for working on the template belongs in this file. When this repository
-is checked out inside the `KB_design` development workspace, that workspace's
+is checked out inside the `dev-irori` development workspace, that workspace's
 `AGENTS.md` still applies: shared development skills and runtime configuration
 live at its root, and this repository's history stays independent from irori
 and irori-extention. That path does not exist in a knowledge base created from
