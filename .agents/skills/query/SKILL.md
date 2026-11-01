@@ -14,7 +14,9 @@ description: "Answer a question from the knowledge base with citations, reading 
    its `stale_after`. Prefer a page with `verified` over one without, and say
    which tier the answer rests on.
 3. When a claim matters to the answer and its page cites a file in `contents/`
-   that is mounted, re-read the cited passage before relying on it.
+   that is mounted, re-read the cited passage before relying on it. For code
+   cited by a GitHub permalink, read it at that commit; say so when the
+   repository's current code differs.
 4. Write the answer with footnotes. Each footnote names the page (relative link)
    or, through the page's `sources`, the file the claim rests on. Say what the
    knowledge base does not cover instead of filling the gap from memory.

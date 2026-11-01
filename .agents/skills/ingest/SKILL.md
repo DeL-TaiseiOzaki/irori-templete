@@ -1,6 +1,6 @@
 ---
 name: ingest
-description: "Turn arrived material into pages: files in contents/**/Inbox/, new journal entries, and deliverables in contents that have no artifact page yet. Writes reference, artifact, concept, decision and person/org/project pages and updates the indexes."
+description: "Turn arrived material into pages: files in contents/**/Inbox/, new journal entries, deliverables in contents that have no artifact page yet, and connected GitHub repositories with no reference page. Writes reference, artifact, concept, decision and person/org/project pages and updates the indexes."
 ---
 
 # ingest
@@ -16,7 +16,9 @@ The knowledge base compiles what arrived; the files stay where they are.
      stop; never create it);
    - deliverables under `contents/<mount>/output/`, or wherever the person
      keeps them, that no page names in `resource`;
-   - journal entries whose claims or decisions are not yet pages.
+   - journal entries whose claims or decisions are not yet pages;
+   - repositories in `.irori/repositories.json` whose URL no `reference`
+     page names in `resource`.
    Show each item's name, size and whether you can read it. Do not read a file
    you were not asked to read, and do not decode a binary you cannot.
 3. Choose the depth per item. **Deep**: read it all, extract claims, write the
@@ -35,6 +37,13 @@ agreement. Then:
   says what it is, what it claims and where it matters. Quote what a claim rests
   on; do not paste the document. If the person wants the file kept, they move it
   from `Inbox/` to `source/` in the mount; you do not move files.
+- **A GitHub repository** becomes a `reference` page in `wiki/` as `AGENTS.md`,
+  **GitHub repositories**, describes: `resource` is
+  `https://github.com/<owner>/<repo>`, `about` names its project or
+  organization, and the body says what it is and what in it matters here. Read
+  its README and layout, not the whole tree. Any page that rests on its code
+  cites a permalink at the commit you read (`git -C contents/<mount>
+  rev-parse HEAD`), not `contents/<mount>/...`.
 - **A deliverable we made** becomes an `artifact` page in `wiki/`: `resource` is
   the file, `sources` are the pages and files it was made from (ask if you do
   not know), and the body records background, what was done and what was

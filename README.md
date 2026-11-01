@@ -33,7 +33,8 @@ CLAUDE.md                points at it
 README.md                this page
 .agents/skills/          init · ingest · query · lint · journal · promote
 .property/property.json  the vocabulary: page properties, types and relations
-.irori/                  scope.json (irori), notes.json and templates/ (init)
+.irori/                  scope.json and repositories.json (irori),
+                         notes.json and templates/ (init)
 index.md                 the root index (okf_version 0.2)
 journal/<year>/          records people write: a day, a meeting, a week
 wiki/                    everything else: concepts, decisions, policies,
@@ -101,6 +102,13 @@ is and what it claims, and you move the file to `source/` if you keep it.
 The agent writes its `artifact` page: what it is, what it was made from, what
 was decided along the way. If you made it outside irori, `ingest` finds it and
 asks.
+
+**When a project has code on GitHub.** Connect the repository in the vault's
+connections (**GitHub**, irori 0.2.24 and later) and ask for `ingest`. It
+writes one `reference` page for the repository, tied to its project, so the
+References index lists every repository this knowledge rests on. A page that
+draws on the code cites a permalink at a commit, so it still says what was read
+after the code moves on, and on a computer without the clone.
 
 **When you catch yourself explaining something twice.** Ask for `query`. If the
 answer was worth the work, it is filed back as a `concept` page.

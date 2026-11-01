@@ -1,6 +1,6 @@
 ---
 name: lint
-description: "Check the bundle and repair what is mechanical: OKF conformance, missing descriptions, index drift, broken links and resources, orphans, stale and duplicate pages, contradictions, and the pages skills name. Also runs the pre-promotion check and checks the graph index irori generates."
+description: "Check the bundle and repair what is mechanical: OKF conformance, missing descriptions, index drift, broken links and resources, repositories without a page or a pinned commit, orphans, stale and duplicate pages, contradictions, and the pages skills name. Also runs the pre-promotion check and checks the graph index irori generates."
 ---
 
 # lint
@@ -23,6 +23,7 @@ under a dot folder or `contents/`. For the skills check every
 | index drift | every folder with pages in it or below it has an `index.md` that is exactly what the rule in `AGENTS.md`, **Indexes**, gives from its pages | rewrite the index by that rule, keeping each folder line's description; say which lines changed |
 | links | every relative link resolves inside this repository | report; fix only a link broken by a move you can see in Git history |
 | resources | every `resource` and `sources[].resource` under `contents/` resolves when its mount is present; when the mount is absent, report "not checked" | never create anything under `contents/` |
+| repositories | every repository in `.irori/repositories.json` has a `reference` page whose `resource` is its `https://github.com/<owner>/<repo>` URL; a `sources[].resource` or link into GitHub code (`/blob/`, `/tree/`) names a full commit hash, not a branch or tag; no `sources[].resource` points into a repository's `contents/<mount>` | report; rewrite a `contents/<mount>/<path>` source to the permalink at the clone's `HEAD` only when the person agrees that commit is the one read |
 | orphans | a page that nothing links to and no index lists | report |
 | lifecycle | `stale_after` in the past; a `deprecated` page still linked as current | report |
 | vocabulary | every `type` and every `rel` is declared in `.property/property.json` and none is in its `avoid` list; a relation goes from a type and to a `page` or `url` as its declaration says; no page lists the same relation twice | replace an avoided name with the entry listed for it and drop an exact duplicate; report the rest, including a name listed with "a link", whose fix is prose |

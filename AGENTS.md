@@ -20,9 +20,10 @@ names; irori 0.1.86 and later take a pulled change to it that keeps the
 registered beside this one. The category in it decides the discipline below:
 `personal`, `team` and `organization` are irori's presets, and irori 0.1.87 and
 later also accept a name of the scope's own. `.irori/cloud-mounts.json` and
-`.irori/local-folders.json`, which irori writes when a folder is connected, and
-`.irori/notes.json`, which `init` writes to tell irori where notes go, are
-tracked too.
+`.irori/local-folders.json`, which irori writes when a folder is connected,
+`.irori/repositories.json`, which irori 0.2.24 and later write when a GitHub
+repository is connected, and `.irori/notes.json`, which `init` writes to tell
+irori where notes go, are tracked too.
 
 ## Layers
 
@@ -76,6 +77,43 @@ Each mount keeps three folders, and each has its kind of page:
 | `output/` | deliverables made here | `artifact` |
 
 So every file that matters has a page, and `ingest` can tell what has none.
+
+### GitHub repositories
+
+irori 0.2.24 and later also connect a GitHub repository: each device clones it
+and links the clone at `contents/<mount>`, and `.irori/repositories.json`
+records its URL and branch, never a path. A repository keeps no `Inbox/`,
+`source/` or `output/`; its original is on GitHub. So that anyone can later
+find which repositories this knowledge rests on, and which version of their
+code a claim was read from, without the clone at hand:
+
+- **One `reference` page per repository** the knowledge rests on, connected or
+  not. `resource` is the repository's URL, `https://github.com/<owner>/<repo>`
+  (no `.git`, never an SSH or local path); `relations` carry `about` to the
+  project or organization it serves; the body says what the repository is,
+  what in it matters here, and its `contents/<mount>` name when connected. The
+  References index then lists every repository, and the graph places each one
+  at its project. Search the index for the URL before writing a second page.
+- **Cite code by a permalink at a commit**, never by a branch or by
+  `contents/<mount>/...`:
+  `https://github.com/<owner>/<repo>/blob/<commit>/<path>`, with `#L10-L20` for
+  lines, or `/tree/<commit>` for the whole repository; `<commit>` is the full
+  hash (`git -C contents/<mount> rev-parse HEAD`). A branch moves, a clone may
+  be absent and a promoted page leaves `contents/` behind; the permalink keeps
+  saying what was read. Add the repository's page to the same page's `sources`
+  or `relations` (`uses`) so the claim is reached from it too.
+
+On a page in `wiki/`:
+
+```yaml
+sources:
+  - { id: repo, resource: acme-api-repository.md, title: acme-api repository }
+  - { id: auth, resource: "https://github.com/acme/acme-api/blob/3f9c2e1b7a4d5c6e8f0a1b2c3d4e5f6a7b8c9d0e/src/auth.ts#L40-L72", title: acme-api token check }
+```
+
+A commit, a tag or a pull request worth remembering is cited the same way, by
+its URL. A repository's own history stays in GitHub; a page records what was
+learned or decided from it.
 
 ## The bundle
 
@@ -299,7 +337,7 @@ to you.
 | Skill | Use it when |
 | --- | --- |
 | `init` | The knowledge base is new. Creates the folders and their indexes, the first identity page and irori's note settings. |
-| `ingest` | Material arrived (`contents/**/Inbox/`, a journal entry, an unregistered deliverable) and should become pages. |
+| `ingest` | Material arrived (`contents/**/Inbox/`, a journal entry, an unregistered deliverable, a connected repository without a page) and should become pages. |
 | `query` | Someone asks a question the knowledge base should answer. Answers with citations and files useful answers back. |
 | `lint` | Periodically, before a promotion, and whenever the indexes may have drifted. |
 | `journal` | A person wants a day, a meeting or a week recorded or appended. |
