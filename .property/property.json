@@ -12,7 +12,7 @@
     "stale_after": { "kind": "datetime", "description": "When a time-bound claim must be re-checked." },
     "tags": { "kind": "multi-select", "description": "Free labels; offered from the tags already in use." },
     "sensitivity": { "kind": "select", "options": ["internal", "confidential", "restricted"], "default": "internal", "description": "Input to promotion, not access control." },
-    "relations": { "kind": "relations", "description": "Typed edges to other pages or URLs; the graph index draws them." }
+    "relations": { "kind": "relations", "description": "Relations to other pages or URLs, each with a declared name." }
   },
   "required": ["type", "title", "description", "generated"],
   "types": {
@@ -27,8 +27,8 @@
     "project": { "description": "The record of a project.", "heading": "# Projects", "required": [] }
   },
   "relations": {
-    "about": { "description": "The person, organization or project this page is about; the graph gathers pages around those records.", "from": "any", "to": "page" },
-    "part_of": { "description": "This person, organization or project belongs to the organization or project the target records.", "from": ["person", "org", "project"], "to": "page" },
+    "about": { "description": "The person, organization or project this page is about.", "from": "any", "to": ["person", "org", "project"] },
+    "part_of": { "description": "This person, organization or project belongs to the organization or project the target records.", "from": ["person", "org", "project"], "to": ["org", "project"] },
     "uses": { "description": "What this page describes depends on or applies what the target describes; what the page was written from belongs in sources.", "from": "any", "to": "page" },
     "same_as": { "description": "The same identity, whose record a higher scope owns.", "from": ["person", "org", "project"], "to": "url" }
   },

@@ -1,6 +1,6 @@
 ---
 name: lint
-description: "Check the bundle and repair what is mechanical: OKF conformance, missing descriptions, index drift, broken links and resources, orphans, stale and duplicate pages, contradictions, and the pages skills name. Also runs the pre-promotion check and checks the graph index irori generates."
+description: "Check the bundle and repair what is mechanical: OKF conformance, missing descriptions, index drift, broken links and resources, orphans, stale and duplicate pages, contradictions, and the pages skills name. Also runs the pre-promotion check and the vocabulary review."
 ---
 
 # lint
@@ -25,14 +25,20 @@ under a dot folder or `contents/`. For the skills check every
 | resources | every `resource` and `sources[].resource` under `contents/` resolves when its mount is present; when the mount is absent, report "not checked" | never create anything under `contents/` |
 | orphans | a page that nothing links to and no index lists | report |
 | lifecycle | `stale_after` in the past; a `deprecated` page still linked as current | report |
-| vocabulary | every `type` and every `rel` is declared in `.property/property.json` and none is in its `avoid` list; a relation goes from a type and to a `page` or `url` as its declaration says; no page lists the same relation twice | replace an avoided name with the entry listed for it and drop an exact duplicate; report the rest, including a name listed with "a link", whose fix is prose |
+| vocabulary | every `type` and every `rel` is declared in `.property/property.json` and none is in its `avoid` list; a relation goes from a type its declaration lists, and points at a `url`, at any page, or at a page of one of the types its declaration lists; no page lists the same relation twice | replace an avoided name with the entry listed for it and drop an exact duplicate; report the rest, including a name listed with "a link", whose fix is prose |
 | skills | every knowledge page path a skill names resolves to a page that is not `deprecated`; a skill does not state a criterion, fact or reason that a page states or should state (AGENTS.md, Skills and knowledge) | repoint a path to the page its `deprecated` stub links to; report the rest; propose moving a stated claim to a page, never move it yourself |
 | identity | two `person`, `org` or `project` pages that name the same identity | propose a merge with a `deprecated` stub |
 | contradictions | two pages that state incompatible claims; check by re-reading the cited sources, not by comparing the pages | report both, with the source that supports each |
 | size | a page over 800 lines; a folder index over about 150 entries | propose a split |
 | category rules | from `category` in `.irori/scope.json`: organization, a `stable` page in `wiki/` without `verified`; team and organization, a concept without `sources`; any other category, or none, adds no rule | report as an error |
-| property declaration | `.property/property.json` parses; every key a type requires is a declared property; every `default` is one of its `options`; every `heading` is unique; `avoid` names no declared entry | report; never edit the file outside a vocabulary review |
+| property declaration | `.property/property.json` parses; every key a type requires is a declared property; every `default` is one of its `options`; every `heading` is unique; every type a relation names in `from` or `to` is declared; `avoid` names no declared entry | report; never edit the file outside a vocabulary review |
 | irori declaration | `.irori/notes.json` parses; `newNoteDirectory` exists in the knowledge layer and, when it names a year, names the current one; `daily.template` exists | advance the year folder and create it with an index; otherwise report |
+
+Inside irori 0.2.65 or later, run `irori check` first. It applies the
+declaration to every page and prints each page that differs, covering the
+vocabulary row and the required keys; check those two by reading only when the
+command is not there. Its findings are yours to fix or report by the rules
+above: it writes nothing.
 
 Report by folder, errors first. Then apply the mechanical fixes as one change
 the person can read in the diff.
@@ -54,8 +60,9 @@ types and `rel` names in `.property/property.json` only as far as the person
 agrees, and
 leaving the vocabulary as it is is always an acceptable outcome.
 
-1. **Evidence.** From the indexes and the pages' frontmatter: pages per `type`
-   and per `rel`, values outside the vocabulary, and index lines whose
+1. **Evidence.** From the indexes and the pages' frontmatter (and `irori check`,
+   where there is one): pages per `type` and per `rel`, values outside the
+   vocabulary, relations from or to a type their declaration does not list, and index lines whose
    description does not fit the type they are filed under; by searching the
    bodies, the same relationship written as prose on several pages.
 2. **Propose one change** with the whole vocabulary in view, including the
@@ -79,24 +86,15 @@ leaving the vocabulary as it is is always an acceptable outcome.
    result. In a team or organization scope the change is a branch and a pull
    request, which you do not merge.
 
-## irori graph (`lint --irori-graph`)
+## An `ontology/` folder from an earlier irori
 
-irori generates the graph index, `ontology/`, from the pages'
-`type`, `title` and `relations` when the person presses **索引を更新** in its
-ontology panel (**グラフ索引を更新** before 0.1.86), and the person commits it,
-so every device shows the same graph. Never write or edit those files. On
-request, check that the index is current:
-
-- every page with a `relations` entry that resolves to a page of the bundle
-  other than an `index.md`, and every page such an entry points at, has one row
-  in `entities.csv` with its `type` and its `title`, or its file name when it
-  has none;
-- every such entry has one row in `relations.csv`, and no row names a page or a
-  relation that is gone.
-
-Report the differences and ask the person to update the index in irori. A
-knowledge base with `.irori/ontology.json` keeps the tables it declares; leave
-them to the person.
+irori before 0.2.65 generated `ontology/entities.csv`, `ontology/relations.csv`
+and an `ontology/index.md` from the pages' relations, and the person committed
+them. Nothing reads them now: the ontology is `.property/property.json`, and
+there is no graph of the pages to keep. When the folder is there, say so and
+propose deleting it; delete it only when the person agrees, then update the
+root index. A `.irori/ontology.json` is likewise read by nothing; the CSV files
+it named are ordinary tables, and the person decides whether to keep them.
 
 ## Boundaries
 

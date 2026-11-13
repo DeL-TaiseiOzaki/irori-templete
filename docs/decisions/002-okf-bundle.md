@@ -117,6 +117,9 @@ irori already knows the category.
 
 ### D8 — The ontology CSV is a generated view
 
+> Superseded by ADR 009: irori 0.2.65 generates and reads no graph of the
+> pages, and the ontology is `.property/property.json`.
+
 irori draws a graph from a declared CSV pair. The template no longer ships
 `.irori/ontology.json` or `Knowledge_Base/ontology/`; `lint --irori-graph`
 generates both from identity pages and `relations`, so the graph is available

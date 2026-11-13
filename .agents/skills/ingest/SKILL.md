@@ -54,12 +54,14 @@ agreement. Then:
 
 Every page carries the keys `.property/property.json` requires, for every page
 and for its type, with `generated { by: <you>, at }`. Take `type` and every
-`rel` from that file. When nothing fits, use the nearest type, or an
+`rel` from that file, and state a relation only from a type that may carry it
+and to a page of a type it points at. When nothing fits, use the nearest type, or an
 ordinary link whose sentence says what the relationship is, and say so in your
 summary; never invent a name, since the vocabulary changes only through
 `lint --vocabulary`. Set `sensitivity` from what the material contains, not
 from habit. Then update the index of each folder you wrote in by the rule in
-`AGENTS.md`, **Indexes**.
+`AGENTS.md`, **Indexes**, and, inside irori 0.2.65 or later, run `irori check`
+and put right what it lists for the pages you wrote.
 
 ## Boundaries
 

@@ -29,7 +29,7 @@ tracked too.
 | Layer | What is there | Tracked |
 | --- | --- | --- |
 | schema | `AGENTS.md`, `CLAUDE.md`, `README.md`, `.agents/`, `.property/`, `.irori/` | yes |
-| knowledge | everything else: `index.md`, `journal/`, `wiki/`, `ontology/` and any folder a person adds — what was learned, what was decided, and pages about files | yes |
+| knowledge | everything else: `index.md`, `journal/`, `wiki/` and any folder a person adds — what was learned, what was decided, and pages about files | yes |
 | contents | `contents/<mount>/**` — files: source material, deliverables, incoming items | no |
 
 The knowledge sits at the repository root beside the schema, so opening the
@@ -107,7 +107,6 @@ One layout for every category:
 | --- | --- | --- | --- |
 | `journal/<year>/` | people; an agent only in the person's words | `journal` pages: a day, a meeting, a week. Append-only; nothing here claims to be true beyond "this was said" | never; distil first |
 | `wiki/` | agents and people | every other type: concepts, decisions, policies, the `reference` and `artifact` pages of files, and the records of people, organizations and projects | yes |
-| `ontology/` | irori | the graph index ([The ontology](#the-ontology)) | no |
 
 `init` creates `journal/` and `wiki/`. What a page is comes from its `type`,
 never from its folder, so `wiki/` stays flat until one index passes about 150
@@ -139,8 +138,9 @@ template with the date filled in. `init` writes both files.
 
 An index is not written by hand; it follows from the pages by one rule. irori
 0.1.86 and later apply it to every folder when the person presses
-**索引を更新**, together with the graph index. An agent that adds, changes or
-removes pages applies it to the folders it touched, and `lint` checks it. Both
+**索引を更新**. An agent that adds, changes or
+removes pages applies it to the folders it touched (`irori index` does it when
+the agent runs inside irori), and `lint` checks it. Both
 give the same text, so the indexes never disagree:
 
 - the root index keeps its frontmatter (`okf_version`); no other index has any;
@@ -174,38 +174,44 @@ properties above its body.
 - `types` gives each `type` its meaning, its index `heading` and the keys it
   requires besides those. `journal` pages live in `journal/`, every other
   type in `wiki/`.
-- `relations` gives each `rel` its meaning, the types it goes from (`any` for
-  every page) and what it points at: `page` or `url`.
+- `relations` gives each `rel` its meaning, the types it goes `from` (`any` for
+  every page) and what it points `to`: `page` for any page, `url`, or the list
+  of types of page it may point at.
 - `avoid` lists names not to use as `{ "name": ..., "use": ... }`, where `use`
   is the entry to use instead, or "a link" when no relation fits: a name the person turned down, and a name a
   review folded into an existing entry. A listed name is neither proposed nor
   written again.
 
 A link in the body is a relationship whose sentence says what kind it is. Use
-`relations` only when the kind matters to a reader or to the graph, and only
-with a declared name. `uses` is a dependency between what two pages describe;
+`relations` only when the kind matters to a reader, and only with a declared
+name, from a type that may carry it, to a page of a type it points at. `uses` is a dependency between what two pages describe;
 what a page was written from belongs in `sources`.
 
 ### The ontology
 
-The ontology of this knowledge base is three things, each with one owner:
+The ontology of this knowledge base is `.property/property.json`: the page
+types it has and the relations a page may state, each with its meaning. It says
+what kinds of things there are and how they may relate. The pages are instances
+of it, not part of it, and there is no graph of the pages to keep.
 
-| Part | Where | Who changes it | How |
-| --- | --- | --- | --- |
-| vocabulary: the page types and `rel` names | `.property/property.json` | the person | lint's vocabulary review, one agreed proposal at a time |
-| instances: what each page is and how it relates | each page's `type` and `relations` | agents and people | writing pages, with declared names only |
-| index: the graph drawn from them | `ontology/` | irori | **索引を更新**, then the person commits |
+| It declares | For example | Which means |
+| --- | --- | --- |
+| a type | `decision` | a page may be one, and must carry the keys the type requires |
+| a relation | `about`, from `any`, to `person`, `org`, `project` | any page may say which of those records it is about |
+| a relation | `part_of`, from `person`, `org`, `project`, to `org`, `project` | a record may say which organization or project it belongs to |
+| a name to avoid | `depends_on`, use `uses` | the name is not written; the listed one is |
 
-The person, organization and project records are the graph's hubs: a page
-says which of them it concerns with `about`, and a record says where it belongs
-with `part_of`. Body links stay ordinary links; irori shows them as backlinks,
-not in the graph.
+A page states a relation in `relations` as `{ rel, target }`, the target a link
+relative to the page or a URL. A page says which person, organization or
+project it concerns with `about`, and a record says where it belongs with
+`part_of`. Body links stay ordinary links; irori shows them as backlinks.
 
-A table people keep by hand, such as a customer list with no page per row, is
-declared in `.irori/ontology.json` instead ([irori's ontology
-guide](https://github.com/DeL-TaiseiOzaki/irori/blob/main/docs/ONTOLOGY.md)).
-irori then draws that table and generates no graph index over it; the folder
-indexes are generated either way.
+irori 0.2.65 and later apply the declaration to the pages and list the ones
+that differ, in **オントロジー** for the person and with `irori check` for an
+agent running inside irori: an undeclared type or relation name, a required key
+missing, a relation from a type that may not carry it, and a relation that
+points at the wrong kind of target. `lint` checks the same rules where irori is
+not at hand.
 
 ### Changing the vocabulary
 
@@ -238,7 +244,7 @@ verified: [{ by: human:owner, at: 2026-09-18T09:00:00Z }]   # who confirmed it; 
 stale_after: 2027-03-31T00:00:00Z    # when a time-bound claim must be re-checked
 tags: [pricing]                      # optional
 sensitivity: internal                # internal | confidential | restricted; input to promotion, not access control
-relations:                           # optional typed edges with declared names; irori's graph index draws them
+relations:                           # optional; declared names only, checked against the declaration
   - { rel: about, target: customer-a.md }
 ---
 ```
@@ -404,8 +410,7 @@ organization or project owns its record; a lower scope keeps a thin page whose `
 - Write into `contents/` except as the explicit output of a task, or assume a
   mount is present.
 - Copy a file into the knowledge layer, or paste a large document into a page.
-- Write or edit `ontology/`, which irori generates from the pages,
-  or write an `index.md` line by hand instead of by the rule in **Indexes**.
+- Write an `index.md` line by hand instead of by the rule in **Indexes**.
 - Edit `.property/property.json` except as an agreed change of a vocabulary
   review.
 - Reuse a path, renumber anything, or bulk-rewrite frontmatter you were not
