@@ -206,7 +206,7 @@ relative to the page or a URL. A page says which person, organization or
 project it concerns with `about`, and a record says where it belongs with
 `part_of`. Body links stay ordinary links; irori shows them as backlinks.
 
-irori 0.2.65 and later apply the declaration to the pages and list the ones
+irori 0.2.66 and later apply the declaration to the pages and list the ones
 that differ, in **オントロジー** for the person and with `irori check` for an
 agent running inside irori: an undeclared type or relation name, a required key
 missing, a relation from a type that may not carry it, and a relation that

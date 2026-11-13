@@ -60,7 +60,7 @@ ordinary link whose sentence says what the relationship is, and say so in your
 summary; never invent a name, since the vocabulary changes only through
 `lint --vocabulary`. Set `sensitivity` from what the material contains, not
 from habit. Then update the index of each folder you wrote in by the rule in
-`AGENTS.md`, **Indexes**, and, inside irori 0.2.65 or later, run `irori check`
+`AGENTS.md`, **Indexes**, and, inside irori 0.2.66 or later, run `irori check`
 and put right what it lists for the pages you wrote.
 
 ## Boundaries

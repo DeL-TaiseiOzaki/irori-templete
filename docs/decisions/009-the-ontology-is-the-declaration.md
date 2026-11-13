@@ -24,7 +24,7 @@ relation name went into the graph unnoticed, and only an agent running `lint`
 could catch it.
 
 The owner asked for the simplest mechanism and for an ontology rather than a
-knowledge graph. irori 0.2.65 applies the declaration to the pages, lists the
+knowledge graph. irori 0.2.66 applies the declaration to the pages, lists the
 pages that differ, draws the declaration itself, and keeps no graph of the
 pages.
 
@@ -55,7 +55,7 @@ pages.
 
 ## Consequences
 
-- The declaration needs irori 0.2.65 or later: an earlier irori cannot read a
+- The declaration needs irori 0.2.66 or later: an earlier irori cannot read a
   list in `to`, falls back to generic property rows and offers no folder
   indexes.
 - A knowledge base made from an earlier template keeps working. Its `to: "page"`

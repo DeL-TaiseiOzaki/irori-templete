@@ -34,7 +34,7 @@ under a dot folder or `contents/`. For the skills check every
 | property declaration | `.property/property.json` parses; every key a type requires is a declared property; every `default` is one of its `options`; every `heading` is unique; every type a relation names in `from` or `to` is declared; `avoid` names no declared entry | report; never edit the file outside a vocabulary review |
 | irori declaration | `.irori/notes.json` parses; `newNoteDirectory` exists in the knowledge layer and, when it names a year, names the current one; `daily.template` exists | advance the year folder and create it with an index; otherwise report |
 
-Inside irori 0.2.65 or later, run `irori check` first. It applies the
+Inside irori 0.2.66 or later, run `irori check` first. It applies the
 declaration to every page and prints each page that differs, covering the
 vocabulary row and the required keys; check those two by reading only when the
 command is not there. Its findings are yours to fix or report by the rules
@@ -88,7 +88,7 @@ leaving the vocabulary as it is is always an acceptable outcome.
 
 ## An `ontology/` folder from an earlier irori
 
-irori before 0.2.65 generated `ontology/entities.csv`, `ontology/relations.csv`
+irori before 0.2.66 generated `ontology/entities.csv`, `ontology/relations.csv`
 and an `ontology/index.md` from the pages' relations, and the person committed
 them. Nothing reads them now: the ontology is `.property/property.json`, and
 there is no graph of the pages to keep. When the folder is there, say so and

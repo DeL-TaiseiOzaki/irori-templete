@@ -22,7 +22,7 @@ that agents compile and keep consistent, in a format any agent can read.
 - **One file is the ontology.** `.property/property.json` declares the kinds
   of pages there are and how they may relate: each type with its meaning and
   required properties, each relation with the types it goes from and the types
-  it points at. irori 0.2.65 and later apply it to the pages and list the ones
+  it points at. irori 0.2.66 and later apply it to the pages and list the ones
   that differ; nothing else is kept about how pages relate.
 - **Agents do the bookkeeping.** Six skills, `init`, `ingest`, `query`, `lint`,
   `journal` and `promote`, cover the loop of Karpathy's LLM wiki: material
@@ -69,7 +69,7 @@ What the ontology is and is not is in
    `.irori/scope.json`; commit it, so every device sees the same knowledge base.
    The schema pane shows `AGENTS.md`, `README.md`, `.agents/` and `.property/`;
    the knowledge pane shows `index.md` and the folders beside it. irori 0.2.0
-   and later keep the knowledge at the root on their own, and 0.2.65 and later
+   and later keep the knowledge at the root on their own, and 0.2.66 and later
    read a relation that names the types it points at; with an older irori,
    update it first.
 3. **Run `init`.** Pick it in the composer's skill selector and answer two
