@@ -25,7 +25,8 @@ the `init` skill. The structure and its reasoning are in
 [ADR 002](decisions/002-okf-bundle.md), which supersedes the folder, navigation,
 ontology, frontmatter and skill decisions of
 [ADR 001](decisions/001-kb-structure.md) and keeps the rest; the current layout,
-vocabulary and indexes are [ADR 006](decisions/006-one-layout.md). Read them
+vocabulary and indexes are [ADR 006](decisions/006-one-layout.md), and what the
+ontology is, [ADR 009](decisions/009-the-ontology-is-the-declaration.md). Read them
 before changing the shape of the knowledge layer, the frontmatter contract or the
 skills, and update the ADR rather than leave it stale.
 
@@ -48,7 +49,8 @@ a toolchain for a Markdown repository is out of scope. For a change here:
   every key in `required` and in a type's `required` is a declared property;
   every `default` is one of its `options`; every type's `heading` is unique and
   matches what `init` expects; a relation's `from` names
-  declared types or `any`, and its `to` is `page` or `url`;
+  declared types or `any`, and its `to` is `page`, `url` or a list of declared
+  types;
 - for a retired skill: the directory holds `RETIRED.md` and no `SKILL.md`; its
   frontmatter has `retired` as `YYYY-MM-DD`, a `reason` of at most 400
   characters, an optional `replacement` naming an existing skill, and no `name`

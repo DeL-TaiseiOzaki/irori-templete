@@ -8,6 +8,9 @@ Nothing here has been exercised against a real knowledge base.
 `Knowledge_Base/` to the repository root.
 
 > ADR 007 adds a row to D1's table for a category of the scope's own.
+>
+> ADR 009 replaces D4: the ontology is the declaration alone, a relation names
+> the types it points at, and there is no `ontology/` folder.
 
 ## Context
 

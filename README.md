@@ -19,6 +19,11 @@ that agents compile and keep consistent, in a format any agent can read.
   (`sources`) and lifecycle (`status`, `verified`, `stale_after`). Every folder
   has an `index.md` that follows from its pages, so an agent reads indexes first
   and pages second. Tools that speak OKF read it as is.
+- **One file is the ontology.** `.property/property.json` declares the kinds
+  of pages there are and how they may relate: each type with its meaning and
+  required properties, each relation with the types it goes from and the types
+  it points at. irori 0.2.66 and later apply it to the pages and list the ones
+  that differ; nothing else is kept about how pages relate.
 - **Agents do the bookkeeping.** Six skills, `init`, `ingest`, `query`, `lint`,
   `journal` and `promote`, cover the loop of Karpathy's LLM wiki: material
   comes in, pages are written with citations, questions are answered from the
@@ -32,13 +37,12 @@ AGENTS.md                the contract every agent reads
 CLAUDE.md                points at it
 README.md                this page
 .agents/skills/          init · ingest · query · lint · journal · promote
-.property/property.json  the vocabulary: page properties, types and relations
+.property/property.json  the ontology: page types and relations, and the properties
 .irori/                  scope.json (irori), notes.json and templates/ (init)
 index.md                 the root index (okf_version 0.2)
 journal/<year>/          records people write: a day, a meeting, a week
 wiki/                    everything else: concepts, decisions, policies,
                          pages about files, people, organizations, projects
-ontology/                the graph index irori generates
 contents/<folder>/       a connected folder; never committed
   Inbox/                 arrived, not yet read
   source/                originals someone else wrote
@@ -51,6 +55,8 @@ the current layout in
 [ADR 006](https://github.com/DeL-TaiseiOzaki/irori-templete/blob/main/docs/decisions/006-one-layout.md)
 and, for its place at the root,
 [ADR 008](https://github.com/DeL-TaiseiOzaki/irori-templete/blob/main/docs/decisions/008-knowledge-at-the-root.md).
+What the ontology is and is not is in
+[ADR 009](https://github.com/DeL-TaiseiOzaki/irori-templete/blob/main/docs/decisions/009-the-ontology-is-the-declaration.md).
 
 ## Getting started
 
@@ -63,7 +69,8 @@ and, for its place at the root,
    `.irori/scope.json`; commit it, so every device sees the same knowledge base.
    The schema pane shows `AGENTS.md`, `README.md`, `.agents/` and `.property/`;
    the knowledge pane shows `index.md` and the folders beside it. irori 0.2.0
-   and later keep the knowledge at the root on their own; with an older irori,
+   and later keep the knowledge at the root on their own, and 0.2.66 and later
+   read a relation that names the types it points at; with an older irori,
    update it first.
 3. **Run `init`.** Pick it in the composer's skill selector and answer two
    questions: your handle (or the project's or organization's name) and the
@@ -105,8 +112,9 @@ asks.
 **When you catch yourself explaining something twice.** Ask for `query`. If the
 answer was worth the work, it is filed back as a `concept` page.
 
-**After a batch of changes.** Press **索引を更新** in the ontology panel and
-commit: the folder indexes and the graph follow the pages.
+**After a batch of changes.** Open **オントロジー**: it lists the pages that
+differ from the declared types and relations. Press **索引を更新** there and
+commit, so the folder indexes follow the pages.
 
 **Once a week.** Ask for `lint`. It reports what drifted and repairs the
 mechanical part.
