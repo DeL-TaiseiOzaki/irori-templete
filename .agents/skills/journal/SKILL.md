@@ -1,43 +1,41 @@
 ---
 name: journal
-description: "Write or append a person's dated record, such as today's entry, a meeting record or a weekly summary, as a journal page in journal/<year>/, in the person's own words and without rewriting what is already there."
+description: "Write or append a person's dated record, such as today's entry, a meeting record or a weekly summary, as a journal page, in the person's own words and without rewriting what is already there."
 ---
 
 # journal
 
-`journal/<year>/` holds records written by people. It is append-only: you add,
+Journal entries are records written by people. They are append-only: you add,
 you do not rewrite or delete, and what turned out wrong is corrected in a later
-entry. An organization usually writes none.
+entry.
 
 ## Which file
 
-Every entry is `type: journal`; the file name says which kind it is.
+Every entry is `type: journal`, in `<folder>/<year>/` where `<folder>` is the
+`folder` the `journal` type declares; the file name says which kind it is.
 
 | Ask | File |
 | --- | --- |
-| today's log | `journal/<year>/<yyyy-mm-dd>.md` |
-| a meeting | `journal/<year>/<yyyy-mm-dd>--mtg-<slug>.md` |
-| a week's summary | `journal/<year>/<yyyy>-W<nn>.md` |
+| today's log | `<yyyy-mm-dd>.md` |
+| a meeting | `<yyyy-mm-dd>--mtg-<slug>.md` |
+| a week's summary | `<yyyy>-W<nn>.md` |
 
-In irori 0.1.8 and later, **今日のノート** opens or creates today's entry
-from `.irori/templates/daily.md`; this skill then appends to it. Create the
-file yourself only when the person is not using that button.
+**今日のノート** opens or creates today's entry from `.irori/notes.json`; this
+skill then appends to it.
 
 ## Steps
 
 1. Work out the date: the day it happened, not today, if the person is
    recording something earlier.
 2. If the file exists, append under the right heading and leave the rest
-   untouched. If not, create it with `type`, `title`, a one-line `description`,
-   `generated: { by: human:<id>, at: <now> }` (an entry in the person's own
-   words names the person even when you type it; see `AGENTS.md`) and the headings `## Log`, `## Decided`, `## Open` for a daily
-   or weekly entry, or `## Present`, `## Discussed`, `## Decided`, `## Actions`
-   for a meeting. List attendees with links to their identity pages where they
-   exist.
+   untouched. If not, create it with the keys the declaration requires,
+   `generated` naming the person, and the headings `## Log`, `## Decided`,
+   `## Open` for a daily or weekly entry, or `## Present`, `## Discussed`,
+   `## Decided`, `## Actions` for a meeting. Link attendees to their identity
+   pages where they exist.
 3. Keep the person's wording. An entry is evidence; smoothing it destroys what
    it is for.
-4. Update `journal/<year>/index.md`, and `journal/index.md` when the year is
-   new, by the rule in `AGENTS.md`, **Indexes**.
+4. Run `irori index`.
 5. A decision that will outlive the week belongs in a `decision` page as well;
    offer `ingest`, do not do it silently.
 

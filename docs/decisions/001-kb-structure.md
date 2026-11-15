@@ -8,6 +8,8 @@ in irori 0.1.6 (`v0.1.6-preview.1`), and are marked. Nothing here has been
 exercised against a real knowledge base.
 
 > ADR 006 supersedes D10: `.irori/scope.json` is now committed.
+>
+> ADR 010 removes `CLAUDE.md` from D12: the template ships `AGENTS.md` alone.
 
 ## Context
 

@@ -8,7 +8,7 @@
     "status": { "kind": "select", "options": ["draft", "stable", "deprecated"], "default": "stable", "description": "Lifecycle; absent means stable." },
     "resource": { "kind": "link", "description": "The file or URL the page is about: contents/<mount>/<path>, or a URL." },
     "sources": { "kind": "sources", "description": "What the page was made from: pages, files in contents/, or URLs." },
-    "verified": { "kind": "actor-time-list", "description": "Who confirmed the page, and when; the review that shares it." },
+    "verified": { "kind": "actor-time-list", "description": "Who confirmed the page, and when." },
     "stale_after": { "kind": "datetime", "description": "When a time-bound claim must be re-checked." },
     "tags": { "kind": "multi-select", "description": "Free labels; offered from the tags already in use." },
     "sensitivity": { "kind": "select", "options": ["internal", "confidential", "restricted"], "default": "internal", "description": "Input to promotion, not access control." },
@@ -16,21 +16,21 @@
   },
   "required": ["type", "title", "description", "generated"],
   "types": {
-    "journal": { "description": "A dated record a person wrote: a day, a meeting or a week.", "heading": "# Entries", "required": [] },
-    "concept": { "description": "One reusable claim, pattern or explanation, including an answer filed back so it is not re-derived.", "heading": "# Concepts", "required": ["sources"] },
-    "decision": { "description": "What was decided, why, and what was rejected.", "heading": "# Decisions", "required": ["sources"] },
-    "policy": { "description": "A rule or standard the scope holds.", "heading": "# Policies", "required": [] },
-    "reference": { "description": "What a file someone else wrote says, and where it matters.", "heading": "# References", "required": ["resource"] },
-    "artifact": { "description": "A deliverable we made: what it is, what it was made from, what was decided.", "heading": "# Artifacts", "required": ["resource", "sources"] },
-    "person": { "description": "The record of a person.", "heading": "# People", "required": [] },
-    "org": { "description": "The record of an organization or team.", "heading": "# Organizations", "required": [] },
-    "project": { "description": "The record of a project.", "heading": "# Projects", "required": [] }
+    "journal": { "description": "A dated record a person wrote: a day, a meeting or a week. Append-only, in the person's words; cited, never promoted.", "heading": "# Entries", "folder": "journal", "required": [] },
+    "concept": { "description": "One reusable claim, pattern or explanation, including an answer filed back so it is not re-derived.", "heading": "# Concepts", "folder": "wiki", "required": ["sources"] },
+    "decision": { "description": "What was decided, why, and what was rejected.", "heading": "# Decisions", "folder": "wiki", "required": ["sources"] },
+    "policy": { "description": "A rule or standard this knowledge base holds, including how its agents should work.", "heading": "# Policies", "folder": "wiki", "required": [] },
+    "reference": { "description": "What a file someone else wrote says, and where it matters.", "heading": "# References", "folder": "wiki", "required": ["resource"] },
+    "artifact": { "description": "A deliverable we made: what it is, what it was made from, what was decided.", "heading": "# Artifacts", "folder": "wiki", "required": ["resource", "sources"] },
+    "person": { "description": "The record of a person.", "heading": "# People", "folder": "wiki", "required": [] },
+    "org": { "description": "The record of an organization or team.", "heading": "# Organizations", "folder": "wiki", "required": [] },
+    "project": { "description": "The record of a project.", "heading": "# Projects", "folder": "wiki", "required": [] }
   },
   "relations": {
     "about": { "description": "The person, organization or project this page is about.", "from": "any", "to": ["person", "org", "project"] },
     "part_of": { "description": "This person, organization or project belongs to the organization or project the target records.", "from": ["person", "org", "project"], "to": ["org", "project"] },
     "uses": { "description": "What this page describes depends on or applies what the target describes; what the page was written from belongs in sources.", "from": "any", "to": "page" },
-    "same_as": { "description": "The same identity, whose record a higher scope owns.", "from": ["person", "org", "project"], "to": "url" }
+    "same_as": { "description": "The same identity, whose record another knowledge base owns.", "from": ["person", "org", "project"], "to": "url" }
   },
   "avoid": [
     { "name": "daily", "use": "journal" },

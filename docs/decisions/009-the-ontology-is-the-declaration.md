@@ -6,6 +6,8 @@ Replaces [ADR 006](006-one-layout.md) D4 and [ADR 002](002-okf-bundle.md) D8,
 and amends ADR 006 D3 and [ADR 008](008-knowledge-at-the-root.md) decision 1.
 Nothing here has been exercised against a real knowledge base.
 
+> ADR 010 replaces decision 4's reading fallback: the template needs irori, and `lint` runs `irori check`.
+
 ## Context
 
 ADR 006 D4 said the ontology has three parts: the vocabulary in

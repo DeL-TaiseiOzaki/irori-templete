@@ -1,6 +1,6 @@
 # The exchange surface. irori links connected folders here; nothing is tracked.
 # `.irori/scope.json` is tracked: it carries this knowledge base's identity and
-# layer names (docs/decisions/006-one-layout.md).
+# layer names.
 /contents/
 
 # Local development-agent artifacts

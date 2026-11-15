@@ -1,59 +1,40 @@
 ---
 name: init
-description: "Set up a new knowledge base once: create journal/ and wiki/ with their indexes, write the first identity page and irori's note settings, and remove the template's own records."
+description: "Set up a new knowledge base once: write the owner's identity page and irori's note settings, index the knowledge layer, and remove the template's own records."
 ---
 
 # init
 
-Run once, on a fresh copy of the template. If `wiki/` already
-exists, stop and say the knowledge base is initialised.
+Run once, on a fresh copy of the template. If the knowledge layer already holds
+a page whose `type` is declared, stop and say the knowledge base is
+initialised.
 
 ## Ask
 
-1. The category. Read it from `category` in `.irori/scope.json` when irori has
-   registered this directory; ask only when that file is absent. `personal`,
-   `team` and `organization` are presets; any other name, or none, is a category
-   of the scope's own (`AGENTS.md`, **Folders**).
-2. The identity that owns this scope:
-   - personal: the person's handle, used as `human:<handle>`;
-   - team: the project's name and a slug for it;
-   - organization: the organization's name and a slug for it;
-   - a category of its own: whether a person, a project or an organization owns
-     it, then the answer above for that owner. Its rows below are the owner's:
-     personal for a person, team for a project, organization for an
-     organization.
+1. Who owns this knowledge base: a person, a project or an organization. Take
+   it from `category` in `.irori/scope.json` when that is `personal` (a
+   person), `team` (a project) or `organization`; ask otherwise.
+2. The owner's handle for a person, used as `human:<handle>`; otherwise its
+   name and a slug.
 3. The language of the pages (default: the language the person is writing in).
 
 ## Create
 
-The layout is the same for every category (`AGENTS.md`, **Folders**). An
-`index.md` has no frontmatter; the root one already carries `okf_version` and
-keeps it. Write each index by the rule in `AGENTS.md`, **Indexes**.
+1. The owner's identity page, of type `person`, `project` or `org`, named
+   `<slug>.md` in the `folder` that type declares in `.property/property.json`.
+   It carries the keys the declaration requires, with
+   `generated: { by: human:<handle or git author>, at: <now> }`, and a body of
+   what stays true about the owner.
+2. `.irori/notes.json`, which tells irori where notes go. Take the journal
+   folder from the `journal` type's `folder`:
 
-1. `journal/<this year>/` with an `index.md` that holds only
-   `# Entries`, and `journal/index.md` holding `# Folders` and
-   the year's line, `* [<year>](<year>/) - records of <year>`.
-2. `wiki/` with the first identity page from the answers:
-   `type: person` (personal), `type: project` (team) or `type: org`
-   (organization), named after its slug. It carries `title`, a one-line
-   `description`, `generated: { by: human:<handle or git author>, at: <now> }`
-   and a body of what stays true about the identity. `wiki/index.md` lists it
-   under the type's heading.
-3. The body of the root `index.md`: `# Folders` with
-   `* [journal](journal/) - dated records written by people` and
-   `* [wiki](wiki/) - what this scope knows, decided and made`, in the pages'
-   language.
-4. `.irori/notes.json` with `"schemaVersion": 1`, so irori puts notes where this
-   scope keeps them:
+   | Owner | Content |
+   | --- | --- |
+   | a person | `{ "schemaVersion": 1, "newNoteDirectory": "<journal folder>/<this year>", "daily": { "path": "<journal folder>/{{yyyy}}/{{date}}.md", "template": ".irori/templates/daily.md" } }` |
+   | a project or an organization | `{ "schemaVersion": 1, "newNoteDirectory": "<the identity page's folder>" }` |
 
-   | Category | `newNoteDirectory` | `daily` |
-   | --- | --- | --- |
-   | personal | `journal/<this year>` | `{ "path": "journal/{{yyyy}}/{{date}}.md", "template": ".irori/templates/daily.md" }` |
-   | team | `journal/<this year>` | none |
-   | organization | `wiki` | none |
-
-   For a personal scope also write `.irori/templates/daily.md`; irori fills
-   `{{date}}` and `{{datetime}}` when it creates the day's entry:
+   For a person also write `.irori/templates/daily.md`; irori fills `{{date}}`
+   and `{{datetime}}` when it creates the day's entry:
 
    ```markdown
    ---
@@ -72,12 +53,15 @@ keeps it. Write each index by the rule in `AGENTS.md`, **Indexes**.
    ## Open
    ```
 
-5. Remove the template's own records, which are not this knowledge base's:
-   the `docs/` directory.
-6. Report what was created and removed. Do not commit; the person reviews the
+3. Remove the template's own records, which are not this knowledge base's: the
+   `docs/` directory.
+4. Run `irori index`, then give each folder line of the root `index.md` a short
+   description in the pages' language of what the folder holds.
+5. Report what was created and removed. Do not commit; the person reviews the
    diff.
 
 ## Boundaries
 
 Do not create `contents/` or anything under it. Do not write example pages
-beyond the one identity page: an empty index is honest, a fake page is not.
+beyond the identity page: an empty index is honest, a fake page is not. A
+folder with no pages yet is created by the first page written into it.
