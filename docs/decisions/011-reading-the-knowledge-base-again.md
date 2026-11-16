@@ -5,6 +5,9 @@ Date: 2026-11-16. Status: owner decision. Adds to
 skill): a `review` skill, and the `stale_after` check moves to it from `lint`.
 Nothing here has been exercised against a real knowledge base.
 
+> ADR 012 adds `interview`, a ninth skill; its unanswered questions go under
+> `## Open`, where `review` finds them.
+
 ## Context
 
 The seven shipped skills write pages and check them. `ingest`, `journal` and

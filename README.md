@@ -7,7 +7,7 @@ checks them against one declaration and keeps their indexes.
 
 ```text
 AGENTS.md                the contract every agent reads
-.agents/skills/          init · ingest · query · lint · review · journal · promote · vocabulary
+.agents/skills/          init · interview · ingest · query · lint · review · journal · promote · vocabulary
 .property/property.json  the vocabulary: properties, page types (and their folders), relations
 index.md                 the root index of an Open Knowledge Format 0.2 bundle
 journal/  wiki/          the pages, created as they are written
@@ -44,6 +44,7 @@ contents/<folder>/       folders irori connects: Inbox/, source/, output/; never
 | When | Do |
 | --- | --- |
 | Every day | Press **今日のノート** and write; ask `journal` to append |
+| Something is still vague: an idea, a plan, a decision | Ask `interview`; it asks until the pages can be written |
 | Something arrives | Put it in `Inbox/` and ask `ingest` |
 | You make something with an agent | The deliverable goes to `output/`; the agent writes its `artifact` page |
 | A question worth keeping | Ask `query`; a good answer is filed back as a `concept` page |

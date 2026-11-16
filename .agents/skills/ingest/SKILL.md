@@ -23,6 +23,14 @@ The knowledge base compiles what arrived; the files stay where they are.
    page with a three-to-five sentence summary. Shallow is the default for a
    large or low-priority file; the person can ask for deep later.
 
+## Discuss
+
+For each item taken deep, play back in a few lines what it says and what you
+would write, then ask one round, as `AGENTS.md`, **Asking**, describes: why the
+person kept it or what question it should answer, what to emphasize, and,
+where it contradicts an existing page, which holds. Skip what the person
+already said; a shallow item needs no round.
+
 ## Write
 
 List every page you will create or change and why, and get agreement. Then

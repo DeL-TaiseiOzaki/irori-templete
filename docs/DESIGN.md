@@ -29,13 +29,16 @@ follows the loop of Karpathy's LLM wiki (ingest, query, lint) in the
    Criteria, facts and reasons are pages, where they carry sources and can be
    checked and shared. Skills apply them; `contents/` holds the files they are
    about.
+5. **Ask for what only the person knows** ([ADR 012](decisions/012-asking-for-what-only-the-person-knows.md)).
+   Agents look facts up, ask few questions that change what gets written, each
+   with a recommended answer, and keep the answers in the person's words.
 
 ## Layout
 
 ```text
 AGENTS.md                template-owned: the contract
 README.md                the front page
-.agents/skills/          template-owned: init ingest query lint review journal promote vocabulary
+.agents/skills/          template-owned: init interview ingest query lint review journal promote vocabulary
 .property/property.json  knowledge-base-owned: the declaration
 .irori/                  knowledge-base-owned: scope.json, notes.json, templates/
 index.md                 the root index (okf_version 0.2)
@@ -93,6 +96,7 @@ has a `decision` page.
 | Skill | Does |
 | --- | --- |
 | `init` | once: the owner's identity page, `.irori/notes.json`, the indexes; removes `docs/` |
+| `interview` | asks in rounds until what the person has in mind can be written as pages; answers go to the journal under `## Asked` |
 | `ingest` | arrived material and unregistered deliverables into pages |
 | `query` | answers with citations; files a useful answer back as a `concept` |
 | `lint` | the health check after `irori check`; fixes only what is mechanical |

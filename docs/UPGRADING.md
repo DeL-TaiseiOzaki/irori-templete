@@ -4,6 +4,12 @@ A knowledge base keeps the template it was created from. These steps bring one
 made from an earlier version of this template up to the current one. Do them on
 a branch, review the diff, then commit.
 
+## To asking (ADR 012)
+
+Copy `AGENTS.md` and `.agents/skills/interview/`, `ingest/`, `query/` and
+`journal/` from this template. Answers that pages rest on now go under
+`## Asked` in the day's journal entry.
+
 ## To the review skill (ADR 011)
 
 Copy `.agents/skills/review/` and `.agents/skills/lint/` from this template.
@@ -12,8 +18,9 @@ person.
 
 ## To the declared-folder contract (ADR 010)
 
-1. Copy `AGENTS.md` and the shipped skills (`init`, `ingest`, `query`, `lint`,
-   `review`, `journal`, `promote`, `vocabulary`) from this template over yours.
+1. Copy `AGENTS.md` and the shipped skills (`init`, `interview`, `ingest`,
+   `query`, `lint`, `review`, `journal`, `promote`, `vocabulary`) from this
+   template over yours.
    Keep skills of your own.
 2. In `.property/property.json`, give each type a `folder`: `"journal"` for
    `journal` and `"wiki"` for the others, or wherever you keep them.
