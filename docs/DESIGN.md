@@ -35,7 +35,7 @@ follows the loop of Karpathy's LLM wiki (ingest, query, lint) in the
 ```text
 AGENTS.md                template-owned: the contract
 README.md                the front page
-.agents/skills/          template-owned: init ingest query lint journal promote vocabulary
+.agents/skills/          template-owned: init ingest query lint review journal promote vocabulary
 .property/property.json  knowledge-base-owned: the declaration
 .irori/                  knowledge-base-owned: scope.json, notes.json, templates/
 index.md                 the root index (okf_version 0.2)
@@ -96,6 +96,7 @@ has a `decision` page.
 | `ingest` | arrived material and unregistered deliverables into pages |
 | `query` | answers with citations; files a useful answer back as a `concept` |
 | `lint` | the health check after `irori check`; fixes only what is mechanical |
+| `review` | looks back over a period with the person: what waits, what is open, what is due, what should connect ([ADR 011](decisions/011-reading-the-knowledge-base-again.md)) |
 | `journal` | appends a person's dated record |
 | `promote` | copies a page into another knowledge base as a pull request |
 | `vocabulary` | changes the declaration by agreed proposals |

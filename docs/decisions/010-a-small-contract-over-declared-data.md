@@ -9,6 +9,9 @@ discipline), and [ADR 009](009-the-ontology-is-the-declaration.md) decision 4
 (no reading fallback outside irori). Nothing here has been exercised against a
 real knowledge base.
 
+> ADR 011 adds the `review` skill and moves the `stale_after` check from `lint`
+> to it; D6's one procedure per skill stands.
+
 ## Context
 
 On 2026-11-15 the owner asked for a more refined template: simpler, more
