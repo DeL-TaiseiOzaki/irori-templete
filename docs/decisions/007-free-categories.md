@@ -4,6 +4,8 @@ Date: 2026-10-08. Status: follows the owner's request in irori
 ([ADR 029](https://github.com/DeL-TaiseiOzaki/irori/blob/main/docs/decisions/029-free-categories.md)).
 Amends [ADR 006](006-one-layout.md) D1, where the category was one of three.
 
+> ADR 010 removes the discipline itself: no category, preset or not, carries a rule.
+
 ## Context
 
 The owner asked that categories be set up freely. irori 0.1.87 stores any

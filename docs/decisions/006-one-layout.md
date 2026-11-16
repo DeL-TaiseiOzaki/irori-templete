@@ -11,6 +11,9 @@ Nothing here has been exercised against a real knowledge base.
 >
 > ADR 009 replaces D4: the ontology is the declaration alone, a relation names
 > the types it points at, and there is no `ontology/` folder.
+>
+> ADR 010 replaces D1's discipline by category (the category is a label) and
+> D5's statement of the index rule in `AGENTS.md` (the rule is irori's).
 
 ## Context
 

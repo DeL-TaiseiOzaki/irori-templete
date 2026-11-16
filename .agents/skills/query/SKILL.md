@@ -7,25 +7,24 @@ description: "Answer a question from the knowledge base with citations, reading 
 
 ## Answer
 
-1. Read the root `index.md`, then the index of each folder that
-   could hold the answer. Open only the pages whose `description` matches. Use
-   search within a folder when the indexes are not enough.
-2. Prefer `stable` pages over `draft`; say when a page is `deprecated` or past
-   its `stale_after`. Prefer a page with `verified` over one without, and say
-   which tier the answer rests on.
+1. Read the root `index.md`, then the index of each folder that could hold the
+   answer. Open only the pages whose `description` matches. Search within a
+   folder when the indexes are not enough.
+2. Prefer `stable` pages over `draft`, and a page with `verified` over one
+   without; say when a page is `deprecated` or past its `stale_after`.
 3. When a claim matters to the answer and its page cites a file in `contents/`
    that is mounted, re-read the cited passage before relying on it.
-4. Write the answer with footnotes. Each footnote names the page (relative link)
-   or, through the page's `sources`, the file the claim rests on. Say what the
+4. Write the answer with footnotes. Each names the page (relative link) or,
+   through the page's `sources`, the file the claim rests on. Say what the
    knowledge base does not cover instead of filling the gap from memory.
 
 ## File back
 
 If the answer took real work to assemble and would be asked again, offer to
-file it as a `concept` page in `wiki/` whose title is the question: `sources`
-list every page and file used, the body is the answer with its footnotes, and
-the index is updated by the rule in `AGENTS.md`, **Indexes**. Do not file an
-answer the person did not accept, and do not turn a one-off lookup into a page.
+file it as a `concept` page whose title is the question: `sources` list every
+page and file used, and the body is the answer with its footnotes. Then run
+`irori index`. Do not file an answer the person did not accept, and do not turn
+a one-off lookup into a page.
 
 ## Boundaries
 

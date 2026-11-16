@@ -20,20 +20,25 @@ this template, which is why it is not linked.
 
 ## What the template is
 
-A knowledge base that a person clones, registers in irori and initialises with
-the `init` skill. The structure and its reasoning are in
-[ADR 002](decisions/002-okf-bundle.md), which supersedes the folder, navigation,
-ontology, frontmatter and skill decisions of
-[ADR 001](decisions/001-kb-structure.md) and keeps the rest; the current layout,
-vocabulary and indexes are [ADR 006](decisions/006-one-layout.md), and what the
-ontology is, [ADR 009](decisions/009-the-ontology-is-the-declaration.md). Read them
-before changing the shape of the knowledge layer, the frontmatter contract or the
-skills, and update the ADR rather than leave it stale.
+[DESIGN.md](DESIGN.md) is the current design. Read it before changing the shape
+of the knowledge layer, the declaration or the skills, and keep it current:
+a change to the design updates `DESIGN.md` and adds a record to
+[decisions/](decisions/). Steps an existing knowledge base needs to follow the
+change go in [UPGRADING.md](UPGRADING.md).
+
+Keep each fact with its owner ([ADR 010](decisions/010-a-small-contract-over-declared-data.md)):
+
+- what may exist goes in `.property/property.json`, and skills read it rather
+  than naming types or folders;
+- irori's behaviour is cited from irori's documentation, not restated, and
+  shipped files carry no per-version notes; the minimum irori version is in
+  README alone;
+- `AGENTS.md` holds invariants and boundaries only; a procedure goes in its
+  skill.
 
 Several decisions depend on what irori and the OKF specification actually say.
-When you cite either, cite the file and check the line still says what you
-claim; the references were verified on 2026-09-17 and will drift. The OKF
-specification is versioned; this template targets 0.2.
+When you cite either, cite the file and check it still says what you claim.
+The OKF specification is versioned; this template targets 0.2.
 
 ## Validation
 
@@ -47,20 +52,20 @@ a toolchain for a Markdown repository is out of scope. For a change here:
   digits, `-` and `_`, each at most 64 characters;
 - for `.property/property.json`: it parses as JSON with `schemaVersion` 1;
   every key in `required` and in a type's `required` is a declared property;
-  every `default` is one of its `options`; every type's `heading` is unique and
-  matches what `init` expects; a relation's `from` names
-  declared types or `any`, and its `to` is `page`, `url` or a list of declared
-  types;
+  every `default` is one of its `options`; every type has a unique `heading`
+  and a `folder` that is a relative path inside the knowledge layer (no leading
+  `.`, no `..`, not `contents`); a relation's `from` names declared types or
+  `any`, and its `to` is `page`, `url` or a list of declared types;
 - for a retired skill: the directory holds `RETIRED.md` and no `SKILL.md`; its
   frontmatter has `retired` as `YYYY-MM-DD`, a `reason` of at most 400
   characters, an optional `replacement` naming an existing skill, and no `name`
   or `description`;
-- for the root `index.md`, the knowledge layout or the `init` skill: copy the
-  template to a disposable directory, perform `init` for each category by hand
-  or with an agent, and check that every page other than `index.md` has
-  frontmatter with a non-empty `type`, every folder with pages has an
-  `index.md` that follows the rule in `AGENTS.md` (**Indexes**), the root index
-  keeps `okf_version`, `docs/` is gone, and no `log.md` exists (OKF §11);
+- for the root `index.md`, the declaration's folders or the `init` skill: copy
+  the template to a disposable directory, perform `init` for each owner (a
+  person, a project, an organization) by hand or with an agent, and check that
+  every page other than `index.md` has frontmatter with the declared required
+  keys, every folder with pages has the `index.md` irori generates, the root
+  index keeps `okf_version`, `docs/` is gone, and no `log.md` exists (OKF §11);
 - if you touched `.gitignore`, confirm `/contents/` is still ignored and
   `.irori/scope.json` is not. This repository itself never holds a
   `scope.json`: a copy made from it would share its `scopeId`.

@@ -1,141 +1,83 @@
 # irori-templete
 
-The recommended starting point for a knowledge base used inside
-[irori](https://github.com/DeL-TaiseiOzaki/irori). Create a repository from it,
-register the copy in irori, run the `init` skill, and you have a knowledge base
-that agents compile and keep consistent, in a format any agent can read.
-
-## What it is
-
-- **Knowledge is the center.** The repository root holds what anyone working
-  here must understand: what was learned and decided, including one page per
-  file that matters, saying what it is and what it was made from. Skills turn
-  that knowledge into procedures and name the pages they apply. `contents/` is
-  where irori connects your folders: incoming items, source material,
-  deliverables. Nothing there is committed.
-- **The knowledge is an [Open Knowledge Format](https://github.com/GoogleCloudPlatform/open-knowledge-format)
-  0.2 bundle at the root.** Every page has typed frontmatter, its properties as
-  `.property/property.json` declares them: a one-line description, provenance
-  (`sources`) and lifecycle (`status`, `verified`, `stale_after`). Every folder
-  has an `index.md` that follows from its pages, so an agent reads indexes first
-  and pages second. Tools that speak OKF read it as is.
-- **One file is the ontology.** `.property/property.json` declares the kinds
-  of pages there are and how they may relate: each type with its meaning and
-  required properties, each relation with the types it goes from and the types
-  it points at. irori 0.2.66 and later apply it to the pages and list the ones
-  that differ; nothing else is kept about how pages relate.
-- **Agents do the bookkeeping.** Six skills, `init`, `ingest`, `query`, `lint`,
-  `journal` and `promote`, cover the loop of Karpathy's LLM wiki: material
-  comes in, pages are written with citations, questions are answered from the
-  pages and filed back, and a lint pass keeps links and claims honest.
-- **One layout for every scope.** A personal vault, a project knowledge base
-  and an organization knowledge base have the same folders; the category you
-  register in irori decides who confirms pages.
+The recommended starting point for a knowledge base used in
+[irori](https://github.com/DeL-TaiseiOzaki/irori) 0.2.66 or later. Agents turn
+what you read, decide and make into pages with citations; irori shows them,
+checks them against one declaration and keeps their indexes.
 
 ```text
 AGENTS.md                the contract every agent reads
-CLAUDE.md                points at it
-README.md                this page
-.agents/skills/          init · ingest · query · lint · journal · promote
-.property/property.json  the ontology: page types and relations, and the properties
-.irori/                  scope.json (irori), notes.json and templates/ (init)
-index.md                 the root index (okf_version 0.2)
-journal/<year>/          records people write: a day, a meeting, a week
-wiki/                    everything else: concepts, decisions, policies,
-                         pages about files, people, organizations, projects
-contents/<folder>/       a connected folder; never committed
-  Inbox/                 arrived, not yet read
-  source/                originals someone else wrote
-  output/                deliverables made here
+.agents/skills/          init · ingest · query · lint · journal · promote · vocabulary
+.property/property.json  the vocabulary: properties, page types (and their folders), relations
+index.md                 the root index of an Open Knowledge Format 0.2 bundle
+journal/  wiki/          the pages, created as they are written
+contents/<folder>/       folders irori connects: Inbox/, source/, output/; never committed
 ```
 
-The reasoning is in the template's
-[decisions](https://github.com/DeL-TaiseiOzaki/irori-templete/tree/main/docs/decisions),
-the current layout in
-[ADR 006](https://github.com/DeL-TaiseiOzaki/irori-templete/blob/main/docs/decisions/006-one-layout.md)
-and, for its place at the root,
-[ADR 008](https://github.com/DeL-TaiseiOzaki/irori-templete/blob/main/docs/decisions/008-knowledge-at-the-root.md).
-What the ontology is and is not is in
-[ADR 009](https://github.com/DeL-TaiseiOzaki/irori-templete/blob/main/docs/decisions/009-the-ontology-is-the-declaration.md).
+- **Knowledge is the center.** The repository root holds what was learned,
+  decided and made, including one page per file that matters. Files stay in
+  `contents/`.
+- **One file declares what can exist.** `.property/property.json` is the
+  ontology: each page type with its meaning, required keys, index heading and
+  folder; each relation with the types it goes from and points at. Skills read
+  it rather than naming types themselves.
+- **The pages are portable.** They are an
+  [Open Knowledge Format](https://github.com/GoogleCloudPlatform/open-knowledge-format)
+  0.2 bundle that any agent or OKF tool can read: typed frontmatter, provenance
+  in `sources`, and an `index.md` per folder.
 
 ## Getting started
 
-1. **Make it yours.** Create your repository from this template and clone it.
-   Set your Git author email in the clone (`git config user.email`); its local
-   part is your actor id, `human:<id>`, on every page you write.
-2. **Register it in irori.** Add the directory as a vault and choose
-   **personal**, **team** or **organization**, or type a category of your own
-   (irori 0.1.87 and later; it keeps the personal discipline). irori writes
-   `.irori/scope.json`; commit it, so every device sees the same knowledge base.
-   The schema pane shows `AGENTS.md`, `README.md`, `.agents/` and `.property/`;
-   the knowledge pane shows `index.md` and the folders beside it. irori 0.2.0
-   and later keep the knowledge at the root on their own, and 0.2.66 and later
-   read a relation that names the types it points at; with an older irori,
-   update it first.
-3. **Run `init`.** Pick it in the composer's skill selector and answer two
-   questions: your handle (or the project's or organization's name) and the
-   language you write in. The agent creates `journal/` and `wiki/` with their
-   indexes, one identity page and `.irori/notes.json` (with a daily template for
-   a personal scope), removes `docs/`, and stops for you to review the diff.
-   Commit it.
-4. **Connect a folder.** In the vault's connections, connect the folder this
-   scope exchanges files through, usually one Drive for desktop or another sync
-   app keeps, and name it under `contents/`. Keep `Inbox/`, `source/` and
-   `output/` inside it.
+1. Create your repository from this template and clone it. Set your Git author
+   email in the clone (`git config user.email`); its local part is your actor
+   id, `human:<id>`.
+2. Add the directory as a vault in irori and pick any category; it is a label.
+   Commit the `.irori/scope.json` irori writes.
+3. Pick `init` in the composer's skill selector and answer who owns the
+   knowledge base and which language you write in. Review the diff and commit.
+4. In the vault's connections, connect the folder you exchange files through,
+   usually one a sync app keeps, and keep `Inbox/`, `source/` and `output/`
+   inside it.
 
-## Moving a knowledge base made before 0.2.0's layout
+## Using it
 
-A knowledge base made from this template before the knowledge moved to the
-root keeps its pages in `Knowledge_Base/`. Ask the irori agent to run
-`irori layer <vault> knowledge .`, or choose **vault のルート** under **層** in
-the vault's settings (irori 0.2.0 and later). irori moves the pages up and
-rewrites the links into them, `.irori/notes.json` and the comments; it stops,
-moving nothing, when a name is already at the root. Paths written as text in
-`AGENTS.md` or a skill rather than as links stay as they were: compare them
-with this template's, then commit.
+| When | Do |
+| --- | --- |
+| Every day | Press **今日のノート** and write; ask `journal` to append |
+| Something arrives | Put it in `Inbox/` and ask `ingest` |
+| You make something with an agent | The deliverable goes to `output/`; the agent writes its `artifact` page |
+| A question worth keeping | Ask `query`; a good answer is filed back as a `concept` page |
+| After a batch of changes | Open **オントロジー**, press **索引を更新**, commit |
+| Once a week | Ask `lint` |
+| Pages keep not fitting a type | Ask `vocabulary` |
+| A page should be shared with another knowledge base | Ask `promote`; it opens a pull request there |
 
-## The first weeks
+## Extending it
 
-**Every day (personal).** Press **今日のノート**: today's entry opens, created
-from the template on first use. Write into it during the day, or ask for
-`journal` to append. Do not tidy it.
+| To | Change |
+| --- | --- |
+| add or change a page type or relation | `.property/property.json`, through the `vocabulary` skill |
+| put a type's pages somewhere else | that type's `folder`; existing pages may be moved by hand |
+| add a rule of your own | a `policy` page, not `AGENTS.md` |
+| add a procedure | `.agents/skills/<name>/SKILL.md` (below) |
+| take a newer template | copy its `AGENTS.md` and skills over yours; your declaration, pages and `.irori/` stay yours |
 
-**When something arrives.** Put it in `Inbox/` and ask for `ingest`. The file
-stays where it is; the knowledge base gets a `reference` page that says what it
-is and what it claims, and you move the file to `source/` if you keep it.
-
-**When you make something with an agent.** The deliverable goes to `output/`.
-The agent writes its `artifact` page: what it is, what it was made from, what
-was decided along the way. If you made it outside irori, `ingest` finds it and
-asks.
-
-**When you catch yourself explaining something twice.** Ask for `query`. If the
-answer was worth the work, it is filed back as a `concept` page.
-
-**After a batch of changes.** Open **オントロジー**: it lists the pages that
-differ from the declared types and relations. Press **索引を更新** there and
-commit, so the folder indexes follow the pages.
-
-**Once a week.** Ask for `lint`. It reports what drifted and repairs the
-mechanical part.
-
-**When something should be shared.** Ask for `promote`. It copies the page into
-the receiving knowledge base with its provenance and opens a pull request there.
-It does not merge it, and it stops if the page is `confidential` or `restricted`
-and you have not said otherwise.
-
-irori runs Codex, Claude Code, OpenCode and Pi; every one of them reads
-`AGENTS.md`. Read it yourself before the first week rather than after it.
+A skill's `name` equals its directory, its `description` is at most 400
+characters, and the file is under 16 KiB. It names the pages whose criteria it
+applies rather than restating them. Optional `metadata.roles` and
+`metadata.projects` (comma- or space-separated names) narrow whom irori lists it
+for; this is a view, not a permission. To retire a skill, replace its
+`SKILL.md` with a `RETIRED.md` holding `retired` (`YYYY-MM-DD`), `reason` (at
+most 400 characters) and an optional `replacement`, but no `name` or
+`description`; never reuse the name.
 
 ## Status
 
-The contract, the skills and the root index are here. Folder indexes are
-generated by irori 0.1.86 and later; with an earlier build an agent writes them
-by the same rule. Nothing has been exercised against a real knowledge base over
-time; the first months will tell whether two folders, nine types and the
-150-entry index rule hold.
-
-irori provides the desktop environment and this repository the knowledge
-structure used within it; the two have independent histories and releases.
+Nothing has been exercised against a real knowledge base over time. The design
+and its reasoning are in
+[docs/DESIGN.md](https://github.com/DeL-TaiseiOzaki/irori-templete/blob/main/docs/DESIGN.md);
+a knowledge base made from an earlier version of this template is brought up to
+date with
+[docs/UPGRADING.md](https://github.com/DeL-TaiseiOzaki/irori-templete/blob/main/docs/UPGRADING.md).
 To work on the template itself, read
 [docs/CONTRIBUTING.md](https://github.com/DeL-TaiseiOzaki/irori-templete/blob/main/docs/CONTRIBUTING.md).

@@ -4,6 +4,8 @@ Date: 2026-09-22. Status: proposed. Keeps ADR 002 and adds to its D2, D4, D7,
 D9 and D10.
 
 > ADR 006 replaces the seed vocabulary and the `# Years` heading; the review procedure stands.
+>
+> ADR 010 moves the review from `lint --vocabulary` to the `vocabulary` skill and drops its own pull request rule.
 
 ## Context
 

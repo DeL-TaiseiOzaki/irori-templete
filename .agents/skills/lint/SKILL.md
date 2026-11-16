@@ -1,6 +1,6 @@
 ---
 name: lint
-description: "Check the bundle and repair what is mechanical: OKF conformance, missing descriptions, index drift, broken links and resources, orphans, stale and duplicate pages, contradictions, and the pages skills name. Also runs the pre-promotion check and the vocabulary review."
+description: "Check the knowledge base and repair what is mechanical: declaration conformance, index drift, broken links and resources, orphans, stale and duplicate pages, contradictions, and the pages skills name."
 ---
 
 # lint
@@ -11,93 +11,37 @@ not made.
 
 ## Checks
 
-Walk every `.md` of the knowledge layer except `index.md`: every one in the
-repository except `AGENTS.md`, `CLAUDE.md`, `README.md` at the root and those
-under a dot folder or `contents/`. For the skills check every
-`.agents/skills/*/SKILL.md`.
+Run `irori check` first. It applies `.property/property.json` to every page and
+lists each that differs: an undeclared type or relation, a missing required
+key, a relation from a type that may not carry it or to the wrong kind of
+target. For each finding, replace a name the declaration's `avoid` lists with
+the entry it names and drop an exact duplicate relation; report the rest. A
+missing `generated` may be filled from Git history with `by: process:lint`.
+
+Then check by reading, over the pages (every `.md` of the knowledge layer except
+`index.md`) and the skills (`.agents/skills/*/SKILL.md`):
 
 | Check | Rule | Fix |
 | --- | --- | --- |
-| conformance | parseable frontmatter with a non-empty `type`; `index.md` has no frontmatter except `okf_version` at the root; no `log.md` anywhere; no `AGENTS.md` in the knowledge layer | add a missing `type` only when the folder makes it obvious; otherwise report, and for an `AGENTS.md` propose moving its rules into the root `AGENTS.md` |
-| required keys | the keys `.property/property.json` requires of every page and of the page's type are present; a `select` value is one of its `options` | report; `generated` may be filled from Git history with `by: process:lint` |
-| index drift | every folder with pages in it or below it has an `index.md` that is exactly what the rule in `AGENTS.md`, **Indexes**, gives from its pages | rewrite the index by that rule, keeping each folder line's description; say which lines changed |
+| values | a `select` value is one of its `options` | report |
+| bundle | no `log.md`; no `AGENTS.md` in the knowledge layer; no `index.md` has frontmatter except the root one's `okf_version` | for an `AGENTS.md`, propose moving its rules to a `policy` page |
+| indexes | `irori index` changes nothing | run it and say which lines changed |
 | links | every relative link resolves inside this repository | report; fix only a link broken by a move you can see in Git history |
-| resources | every `resource` and `sources[].resource` under `contents/` resolves when its mount is present; when the mount is absent, report "not checked" | never create anything under `contents/` |
+| resources | every `resource` and `sources[].resource` under `contents/` resolves when its mount is present; when it is absent, report "not checked" | never create anything under `contents/` |
 | orphans | a page that nothing links to and no index lists | report |
 | lifecycle | `stale_after` in the past; a `deprecated` page still linked as current | report |
-| vocabulary | every `type` and every `rel` is declared in `.property/property.json` and none is in its `avoid` list; a relation goes from a type its declaration lists, and points at a `url`, at any page, or at a page of one of the types its declaration lists; no page lists the same relation twice | replace an avoided name with the entry listed for it and drop an exact duplicate; report the rest, including a name listed with "a link", whose fix is prose |
-| skills | every knowledge page path a skill names resolves to a page that is not `deprecated`; a skill does not state a criterion, fact or reason that a page states or should state (AGENTS.md, Skills and knowledge) | repoint a path to the page its `deprecated` stub links to; report the rest; propose moving a stated claim to a page, never move it yourself |
+| skills | every page path a skill names resolves to a page that is not `deprecated`; a skill does not state a criterion, fact or reason that a page states or should state | repoint a path to the page its `deprecated` stub links to; propose moving a stated claim to a page, never move it yourself |
 | identity | two `person`, `org` or `project` pages that name the same identity | propose a merge with a `deprecated` stub |
 | contradictions | two pages that state incompatible claims; check by re-reading the cited sources, not by comparing the pages | report both, with the source that supports each |
-| size | a page over 800 lines; a folder index over about 150 entries | propose a split |
-| category rules | from `category` in `.irori/scope.json`: organization, a `stable` page in `wiki/` without `verified`; team and organization, a concept without `sources`; any other category, or none, adds no rule | report as an error |
-| property declaration | `.property/property.json` parses; every key a type requires is a declared property; every `default` is one of its `options`; every `heading` is unique; every type a relation names in `from` or `to` is declared; `avoid` names no declared entry | report; never edit the file outside a vocabulary review |
-| irori declaration | `.irori/notes.json` parses; `newNoteDirectory` exists in the knowledge layer and, when it names a year, names the current one; `daily.template` exists | advance the year folder and create it with an index; otherwise report |
-
-Inside irori 0.2.66 or later, run `irori check` first. It applies the
-declaration to every page and prints each page that differs, covering the
-vocabulary row and the required keys; check those two by reading only when the
-command is not there. Its findings are yours to fix or report by the rules
-above: it writes nothing.
+| size | a page over 800 lines; a folder index over about 150 entries | propose a split, by topic into subfolders |
+| note settings | in `.irori/notes.json`, a `newNoteDirectory` that names a year names the current one, and `daily.template` exists | advance the year; otherwise report |
 
 Report by folder, errors first. Then apply the mechanical fixes as one change
 the person can read in the diff.
 
-## Before a promotion (`lint --for <receiving scope>`)
-
-For the pages to be promoted: `sensitivity` is `internal`, or the person said
-otherwise for this page in this conversation; every link and every
-`sources[].resource` either resolves in the receiving repository or is
-rewritten to a URL; every identity the page refers to exists there; the page's
-`type` and every `rel` it uses are in the receiving scope's vocabulary. Report
-what does not hold; do not redact silently.
-
-## Vocabulary review (`lint --vocabulary`)
-
-Run it when the person asks, and suggest it when pages keep landing under the
-nearest type or an ordinary link because nothing fitted. It changes the page
-types and `rel` names in `.property/property.json` only as far as the person
-agrees, and
-leaving the vocabulary as it is is always an acceptable outcome.
-
-1. **Evidence.** From the indexes and the pages' frontmatter (and `irori check`,
-   where there is one): pages per `type` and per `rel`, values outside the
-   vocabulary, relations from or to a type their declaration does not list, and index lines whose
-   description does not fit the type they are filed under; by searching the
-   bodies, the same relationship written as prose on several pages.
-2. **Propose one change** with the whole vocabulary in view, including the
-   `avoid` list: sharpen a definition the evidence shows is misread, add an
-   entry the evidence needs and no entry covers, fold a name in use outside the
-   vocabulary into the entry that already means it, merge two entries that mean
-   the same, or retire one that no page uses although its folder exists here.
-3. **Check it before anyone sees it.** Discard it and propose a different one,
-   keeping the discarded one in view so it does not come back, unless it differs
-   in meaning, not only in spelling, from every entry and every avoided name;
-   it names the pages it would change (at least three for a new entry) or the
-   recurring question it answers; and every page stays conformant without
-   moving. A proposal is never kept because others were discarded.
-4. **Stop** after three kept proposals, or sooner when new ones repeat earlier
-   ones.
-5. **Show** each kept proposal with its evidence and its exact edits: the
-   entries in `.property/property.json`, the pages whose `type` or `rel` changes and the index lines
-   that move. The person accepts or turns down each one.
-6. **Apply** what was accepted as one change, add to `avoid` each name the change folded or merged away and each new name the person
-   turned down, with what to use instead, and run the other checks on the
-   result. In a team or organization scope the change is a branch and a pull
-   request, which you do not merge.
-
-## An `ontology/` folder from an earlier irori
-
-irori before 0.2.66 generated `ontology/entities.csv`, `ontology/relations.csv`
-and an `ontology/index.md` from the pages' relations, and the person committed
-them. Nothing reads them now: the ontology is `.property/property.json`, and
-there is no graph of the pages to keep. When the folder is there, say so and
-propose deleting it; delete it only when the person agrees, then update the
-root index. A `.irori/ontology.json` is likewise read by nothing; the CSV files
-it named are ordinary tables, and the person decides whether to keep them.
-
 ## Boundaries
 
-Do not rewrite prose. Do not delete a page; deprecate it. When you change a
-page, set its `generated` to yourself and now; leave it alone on a page you did
-not change.
+Do not rewrite prose. Do not delete a page; deprecate it. Do not edit
+`.property/property.json`; a vocabulary problem goes to the `vocabulary` skill.
+When you change a page, set its `generated` to yourself and now; leave it alone
+on a page you did not change.
