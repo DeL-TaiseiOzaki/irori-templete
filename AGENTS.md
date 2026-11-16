@@ -132,6 +132,25 @@ names those pages by path and does not restate them. Rules for working in a
 folder are `policy` pages too, never an `AGENTS.md` inside the knowledge layer,
 where every Markdown file is a page.
 
+## Asking
+
+The person's time goes to what only they know. Look before you ask: the
+indexes, the pages, the files in `contents/` and Git history answer facts, and
+you say what you found. Ask about intent, judgement, preference and what
+happened, and only when the answer changes what you will write; otherwise state
+your assumption so it can be corrected.
+
+- Ask one round at a time: only questions that depend on no unanswered one,
+  few, most important first, each with your recommended answer worded so "yes"
+  accepts it. Use the CLI's question tool when it has one.
+- Ask for what can be answered now: an example, a value, a date, a source.
+  Offer options only once you know why the person wants it.
+- When what the person says differs from a page, say so and ask which holds.
+- Before writing pages, play back what you understood and what you assumed.
+- An answer a page will rest on is kept in the person's words in the day's
+  journal entry, under `## Asked`, and the page cites that entry. Do not ask
+  again what a page or an earlier answer settles.
+
 ## Working here
 
 - Before editing, list the pages you will touch and why, and get agreement. Do

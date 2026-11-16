@@ -7,16 +7,21 @@ description: "Answer a question from the knowledge base with citations, reading 
 
 ## Answer
 
-1. Read the root `index.md`, then the index of each folder that could hold the
+1. If the question can be read in ways that lead to different answers, and the
+   knowledge base does not settle which, ask one question first or answer
+   under a reading you state.
+2. Read the root `index.md`, then the index of each folder that could hold the
    answer. Open only the pages whose `description` matches. Search within a
    folder when the indexes are not enough.
-2. Prefer `stable` pages over `draft`, and a page with `verified` over one
+3. Prefer `stable` pages over `draft`, and a page with `verified` over one
    without; say when a page is `deprecated` or past its `stale_after`.
-3. When a claim matters to the answer and its page cites a file in `contents/`
+4. When a claim matters to the answer and its page cites a file in `contents/`
    that is mounted, re-read the cited passage before relying on it.
-4. Write the answer with footnotes. Each names the page (relative link) or,
+5. Write the answer with footnotes. Each names the page (relative link) or,
    through the page's `sources`, the file the claim rests on. Say what the
-   knowledge base does not cover instead of filling the gap from memory.
+   knowledge base does not cover instead of filling the gap from memory, and
+   ask whether the person knows; an answer they give is kept as `AGENTS.md`,
+   **Asking**, describes and can be filed back below.
 
 ## File back
 

@@ -32,7 +32,8 @@ skill then appends to it.
    `generated` naming the person, and the headings `## Log`, `## Decided`,
    `## Open` for a daily or weekly entry, or `## Present`, `## Discussed`,
    `## Decided`, `## Actions` for a meeting. Link attendees to their identity
-   pages where they exist.
+   pages where they exist. Answers to an agent's questions go under
+   `## Asked` (`AGENTS.md`, **Asking**).
 3. Keep the person's wording. An entry is evidence; smoothing it destroys what
    it is for.
 4. Run `irori index`.
