@@ -4,11 +4,17 @@ A knowledge base keeps the template it was created from. These steps bring one
 made from an earlier version of this template up to the current one. Do them on
 a branch, review the diff, then commit.
 
+## To the review skill (ADR 011)
+
+Copy `.agents/skills/review/` and `.agents/skills/lint/` from this template.
+`lint` no longer reports pages past `stale_after`; `review` lists them with the
+person.
+
 ## To the declared-folder contract (ADR 010)
 
 1. Copy `AGENTS.md` and the shipped skills (`init`, `ingest`, `query`, `lint`,
-   `journal`, `promote`, `vocabulary`) from this template over yours. Keep
-   skills of your own.
+   `review`, `journal`, `promote`, `vocabulary`) from this template over yours.
+   Keep skills of your own.
 2. In `.property/property.json`, give each type a `folder`: `"journal"` for
    `journal` and `"wiki"` for the others, or wherever you keep them.
 3. Move any rule you wrote into `AGENTS.md` or `CLAUDE.md` into a `policy`

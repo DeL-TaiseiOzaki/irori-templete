@@ -1,6 +1,6 @@
 ---
 name: lint
-description: "Check the knowledge base and repair what is mechanical: declaration conformance, index drift, broken links and resources, orphans, stale and duplicate pages, contradictions, and the pages skills name."
+description: "Check the knowledge base and repair what is mechanical: declaration conformance, index drift, broken links and resources, orphans, deprecated pages still linked, duplicate pages, contradictions, and the pages skills name."
 ---
 
 # lint
@@ -29,7 +29,7 @@ Then check by reading, over the pages (every `.md` of the knowledge layer except
 | links | every relative link resolves inside this repository | report; fix only a link broken by a move you can see in Git history |
 | resources | every `resource` and `sources[].resource` under `contents/` resolves when its mount is present; when it is absent, report "not checked" | never create anything under `contents/` |
 | orphans | a page that nothing links to and no index lists | report |
-| lifecycle | `stale_after` in the past; a `deprecated` page still linked as current | report |
+| lifecycle | a `deprecated` page still linked as current | report |
 | skills | every page path a skill names resolves to a page that is not `deprecated`; a skill does not state a criterion, fact or reason that a page states or should state | repoint a path to the page its `deprecated` stub links to; propose moving a stated claim to a page, never move it yourself |
 | identity | two `person`, `org` or `project` pages that name the same identity | propose a merge with a `deprecated` stub |
 | contradictions | two pages that state incompatible claims; check by re-reading the cited sources, not by comparing the pages | report both, with the source that supports each |
@@ -41,7 +41,8 @@ the person can read in the diff.
 
 ## Boundaries
 
-Do not rewrite prose. Do not delete a page; deprecate it. Do not edit
+Do not rewrite prose. Do not delete a page; deprecate it. What time has made
+due, such as a page past its `stale_after`, is for `review`. Do not edit
 `.property/property.json`; a vocabulary problem goes to the `vocabulary` skill.
 When you change a page, set its `generated` to yourself and now; leave it alone
 on a page you did not change.
